@@ -1,3 +1,5 @@
+﻿export const dynamic = "force-dynamic";
+
 import { testimonials } from "@/lib/public-content";
 
 export default function AdminTemoignagesPage() {

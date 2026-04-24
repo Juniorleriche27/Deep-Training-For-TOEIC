@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 export default function AdherentParametresPage() {
   return (
     <section className="card-surface p-6">

@@ -1,3 +1,5 @@
+﻿export const dynamic = "force-dynamic";
+
 const resources = [
   ["NT", "Feuille de prise de notes", "PDF - Etape 1 - 14 consultations", "Visible"],
   ["GR", "Resume grammaire TOEIC", "PDF - Etape 3 - 9 consultations", "Visible"],

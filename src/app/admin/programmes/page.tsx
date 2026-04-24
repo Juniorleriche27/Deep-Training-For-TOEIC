@@ -1,3 +1,5 @@
+﻿export const dynamic = "force-dynamic";
+
 const steps = [
   ["1", "Etape 1 - Embarquement", "Publiee", "var(--accent)"],
   ["2", "Etape 2 - Training Listening", "Publiee", "#0098CC"],

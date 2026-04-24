@@ -1,3 +1,5 @@
+﻿export const dynamic = "force-dynamic";
+
 const globalRules = [
   {
     title: "Identite et ton",

@@ -1,3 +1,5 @@
+﻿export const dynamic = "force-dynamic";
+
 const accesses = [
   ["Amara S.", "12 Jan 2026", "12 Avr 2026", "J-34", "Actif"],
   ["Fatou L.", "15 Jan 2026", "15 Avr 2026", "J-12", "Actif"],
