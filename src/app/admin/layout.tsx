@@ -1,3 +1,5 @@
+﻿export const dynamic = "force-dynamic";
+
 import { AppShell } from "@/components/workspace/app-shell";
 import { adminNav } from "@/lib/navigation";
 

@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
@@ -6,10 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint",
-    "graphify:update": "graphify update ..",
-    "graphify:watch": "graphify watch ..",
-    "graphify:summary": "graphify summary ../.graphify/graph.json"
+    "lint": "eslint"
   },
   "dependencies": {
     "next": "16.2.4",
@@ -23,7 +20,6 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.4",
-    "graphifyy": "^0.4.23",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

@@ -1,3 +1,5 @@
+﻿export const dynamic = "force-dynamic";
+
 import { AppShell } from "@/components/workspace/app-shell";
 import { adherentNav } from "@/lib/navigation";
 import { api } from "@/lib/api";
