@@ -1954,6 +1954,50 @@ html[data-theme="light"] {
   );
 }
 
+html[data-theme="light"] .panel-card,
+html[data-theme="light"] .profile-card,
+html[data-theme="light"] .chat-main,
+html[data-theme="light"] .card,
+html[data-theme="light"] .widget {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(243, 249, 244, 0.98));
+  border-color: #c5dbca;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 14px 34px rgba(23, 52, 31, 0.08);
+}
+
+html[data-theme="light"] .panel-title,
+html[data-theme="light"] .widget-label,
+html[data-theme="light"] .chat-ai-status,
+html[data-theme="light"] .muted {
+  color: #4b6554;
+}
+
+html[data-theme="light"] .btn-secondary,
+html[data-theme="light"] .qa-btn {
+  background: #e8efff;
+  border-color: #b9c8ea;
+  color: #31445a;
+}
+
+html[data-theme="light"] .btn-secondary:hover,
+html[data-theme="light"] .qa-btn:hover {
+  background: #dfe8fb;
+  border-color: #94abd9;
+  color: #1f3045;
+}
+
+html[data-theme="light"] .chat-input {
+  background: #ffffff;
+  border-color: #c5dbca;
+  color: #203127;
+}
+
+html[data-theme="light"] .msg-ai .msg-bubble {
+  background: #f3f7f4;
+  border-color: #c7d9cb;
+}
+
 body {
   background:
     radial-gradient(circle at 15% 0%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 36%),
@@ -2387,7 +2431,7 @@ body::before {
   gap: 0.28rem;
   position: relative;
   top: -0.28rem;
-  width: 9.5rem;
+  min-width: 11.5rem;
 }
 
 .public-brand-copy {
@@ -2411,6 +2455,7 @@ body::before {
 
 .public-brand-title span {
   display: block;
+  white-space: nowrap;
 }
 
 .public-nav-links {
@@ -2926,7 +2971,7 @@ body::before {
   }
 
   .public-brand-lockup {
-    width: 6.7rem;
+    min-width: 6.7rem;
     gap: 0.18rem;
     top: -0.14rem;
   }
