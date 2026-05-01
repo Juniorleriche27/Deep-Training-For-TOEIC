@@ -7,12 +7,11 @@ export type NavItem = {
 
 export const publicNav: NavItem[] = [
   { href: "/", label: "Accueil" },
-  { href: "/methode", label: "Methode" },
+  { href: "/methode", label: "Méthode" },
   { href: "/programme", label: "Programme" },
-  { href: "/resultats", label: "Resultats" },
+  { href: "/resultats", label: "Résultats" },
   { href: "/tarifs", label: "Tarifs" },
   { href: "/faq", label: "FAQ" },
-  { href: "/contact", label: "Candidature" },
 ];
 
 export const adherentNav: NavItem[] = [

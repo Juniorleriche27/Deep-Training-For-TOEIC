@@ -1,161 +1,146 @@
 import Link from "next/link";
 
 const classicApproach = [
-  "Tests blancs en boucle sans analyse de cause racine",
-  "Focus volume au lieu de focus execution",
-  "Grammaire memorisee hors contexte de decision",
-  "Prise de notes absente ou non exploitable",
-  "Aucun pilotage clair de progression",
+  "Enchaîner les tests blancs sans analyse de fond",
+  "Confondre volume de travail et qualité d'exécution",
+  "Mémoriser hors contexte au lieu de décider plus vite",
+  "Travailler sans protocole de mission ni rythme stable",
 ];
 
 const deepApproach = [
-  "Programme en 5 etapes avec criteres de passage",
-  "Consignes strictes de mise en oeuvre",
-  "Prise de notes operationnelle et relue",
-  "Suivi de score + retests pour correction rapide",
-  "Coach IA contextuel et coaching humain strategique",
+  "Un programme progressif en 5 étapes",
+  "Des consignes d'exécution claires à chaque séance",
+  "Une prise de notes utile, relue et exploitable",
+  "Un pilotage précis par scores, retests et points faibles",
 ];
 
 const pillars = [
   {
-    title: "Architecture du programme",
-    body: "Tu executes un systeme sequence, pas une pile de contenus.",
+    title: "Architecture claire",
+    body: "Chaque étape prépare la suivante pour éviter la dispersion et donner une vraie trajectoire.",
     code: "P1",
   },
   {
-    title: "Consignes d'execution",
-    body: "Chaque session precise quoi faire, comment faire et quoi mesurer.",
+    title: "Exécution guidée",
+    body: "Tu sais quoi faire, dans quel ordre, avec quel niveau d'exigence et quels critères de validation.",
     code: "P2",
   },
   {
-    title: "Discipline quotidienne",
-    body: "Routines, chrono, notes, retours: la progression devient reproductible.",
+    title: "Discipline productive",
+    body: "Le cadre transforme la régularité en progression visible, au lieu de laisser l'effort se diluer.",
     code: "P3",
   },
   {
-    title: "Pilotage par donnees",
-    body: "Scores, deltas, zones faibles: decisions prises sur faits, pas impressions.",
+    title: "Décisions basées sur les faits",
+    body: "Les choix ne reposent pas sur l'impression, mais sur les scores, les écarts et les erreurs répétées.",
     code: "P4",
   },
   {
-    title: "Coach IA contextuel",
-    body: "Un assistant integre a ton etape, ton historique et ton objectif score.",
+    title: "Coach IA intégré",
+    body: "Le Coach IA accompagne le travail quotidien, renforce la cadence et sécurise l'exécution.",
     code: "P5",
   },
   {
-    title: "Accompagnement humain",
-    body: "Arbitrages critiques, relances et ajustements au bon moment.",
+    title: "Progression mesurable",
+    body: "Tout le système vise un résultat officiel, pas une sensation de travail bien rempli.",
     code: "P6",
   },
 ];
 
 export default function MethodePage() {
   return (
-    <div>
-      <section className="section-shell surface-container">
-        <div className="section-header reveal-up">
-          <div className="section-tag">Methode</div>
-          <h1
-            className="section-title"
-            style={{ fontSize: "clamp(2.15rem, 5vw, 3.1rem)" }}
-          >
-            Ce n&apos;est pas un cours.
-            <br />
-            C&apos;est un systeme d&apos;execution.
-          </h1>
-          <p className="section-sub">
-            Deep Training For TOEIC transforme la preparation en protocole de
-            performance: cadence, consignes, notes, retests et pilotage precis.
-          </p>
-        </div>
-
-        <div className="cards-2">
-          <article className="card reveal-up delay-1" style={{ borderLeft: "2px solid var(--danger)" }}>
-            <p className="section-tag" style={{ color: "var(--danger)" }}>
-              Approche qui stagne
+    <div className="stack" style={{ gap: "1.15rem" }}>
+      <section className="public-page">
+        <div className="public-page-hero">
+          <div className="public-page-copy reveal-up">
+            <p className="public-page-kicker">Méthode</p>
+            <h1 className="public-page-title">
+              Ici, la préparation
+              <br />
+              devient un système.
+            </h1>
+            <p className="public-page-sub">
+              Deep Training For TOEIC ne vend pas un simple cours. Le site repose sur une méthode
+              d&apos;exécution structurée, pensée pour transformer le temps de travail en progression réelle.
             </p>
-            <div className="stack" style={{ marginTop: "0.8rem", gap: "0.45rem" }}>
-              {classicApproach.map((item) => (
-                <p
-                  key={item}
-                  className="card-desc"
-                  style={{
-                    marginTop: 0,
-                    border: "1px solid rgba(255,102,134,.25)",
-                    background: "var(--danger-dim)",
-                    borderRadius: "0.6rem",
-                    padding: "0.6rem 0.75rem",
-                    color: "var(--text)",
-                  }}
-                >
-                  {item}
-                </p>
-              ))}
+            <div className="public-chip-row">
+              <span className="public-chip">Cadre clair</span>
+              <span className="public-chip">Progression pilotée</span>
+              <span className="public-chip">Coach IA intégré</span>
             </div>
+          </div>
+
+          <aside className="public-page-spotlight reveal-up delay-1">
+            <h2 className="public-spotlight-title">Ce que la méthode change vraiment</h2>
+            <p className="public-spotlight-copy">
+              Elle remplace l&apos;improvisation par une logique simple: comprendre, exécuter, mesurer, corriger.
+            </p>
+            <ul className="public-spotlight-list">
+              <li>Une progression lisible au lieu d&apos;un empilement de ressources.</li>
+              <li>Une charge de travail utile au lieu d&apos;un volume subi.</li>
+              <li>Une préparation cohérente, plus fluide et plus crédible.</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section className="public-section-stack">
+        <div className="public-two-grid">
+          <article className="public-panel reveal-up">
+            <p className="public-page-kicker" style={{ color: "var(--danger)" }}>Approche qui épuise</p>
+            <ul className="public-list">
+              {classicApproach.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
           </article>
 
-          <article className="card reveal-up delay-2" style={{ borderLeft: "2px solid var(--success)" }}>
-            <p className="section-tag" style={{ color: "var(--success)" }}>
-              Approche Deep Training For TOEIC
-            </p>
-            <div className="stack" style={{ marginTop: "0.8rem", gap: "0.45rem" }}>
+          <article className="public-panel reveal-up delay-1">
+            <p className="public-page-kicker">Approche Deep Training For TOEIC</p>
+            <ul className="public-list">
               {deepApproach.map((item) => (
-                <p
-                  key={item}
-                  className="card-desc"
-                  style={{
-                    marginTop: 0,
-                    border: "1px solid rgba(41,211,159,.3)",
-                    background: "var(--success-dim)",
-                    borderRadius: "0.6rem",
-                    padding: "0.6rem 0.75rem",
-                    color: "var(--text)",
-                  }}
-                >
-                  {item}
-                </p>
+                <li key={item}>{item}</li>
               ))}
-            </div>
+            </ul>
           </article>
         </div>
       </section>
 
-      <section className="section-shell surface-container">
-        <div className="section-header reveal-up">
-          <div className="section-tag">Piliers</div>
-          <h2 className="section-title">Les mecanismes qui creent le score</h2>
+      <section className="public-section-stack">
+        <div className="public-section-head">
+          <p className="public-page-kicker">Piliers</p>
+          <h2 className="section-title">Les mécanismes qui rendent la progression plus solide</h2>
         </div>
-        <div className="cards-3">
-          {pillars.map((item, index) => (
-            <article key={item.title} className={`card reveal-up delay-${(index % 3) + 1}`}>
+
+        <div className="public-three-grid">
+          {pillars.map((item) => (
+            <article key={item.title} className="public-showcase-card reveal-up">
               <div className="card-icon icon-accent">{item.code}</div>
-              <h3 className="card-title">{item.title}</h3>
-              <p className="card-desc">{item.body}</p>
+              <h3 className="public-panel-title">{item.title}</h3>
+              <p className="public-panel-copy">{item.body}</p>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="section-shell surface-container">
-        <article className="card reveal-up">
-          <div className="row-sb" style={{ flexWrap: "wrap", gap: "0.8rem" }}>
-            <div>
-              <p className="section-tag">Execution</p>
-              <h2 className="card-title" style={{ fontSize: "1.5rem", marginTop: "0.4rem" }}>
-                Tu veux sortir du hasard?
-              </h2>
-              <p className="card-desc">Entre dans un cadre structure et mesurable.</p>
-            </div>
-            <div className="row">
-              <Link href="/programme" className="btn-secondary rounded-md px-4 py-2 text-xs font-semibold">
-                Voir le programme
-              </Link>
-              <Link href="/contact" className="btn-primary rounded-md px-4 py-2 text-xs font-semibold">
-                Soumettre ma candidature
-              </Link>
-            </div>
+      <section className="public-cta-band reveal-up delay-2">
+        <div className="row-sb" style={{ flexWrap: "wrap", gap: "0.9rem" }}>
+          <div>
+            <p className="public-page-kicker">Étape suivante</p>
+            <h2 className="card-title" style={{ marginTop: "0.45rem", fontSize: "1.55rem" }}>
+              Voir comment la méthode se déploie dans le programme.
+            </h2>
+            <p className="card-desc">Découvre les 5 étapes et la logique complète du parcours.</p>
           </div>
-        </article>
+          <div className="row" style={{ flexWrap: "wrap" }}>
+            <Link href="/programme" className="btn-secondary rounded-xl px-4 py-3 text-xs font-semibold">
+              Voir le programme
+            </Link>
+            <Link href="/contact" className="btn-primary rounded-xl px-4 py-3 text-xs font-semibold">
+              Soumettre ma candidature
+            </Link>
+          </div>
+        </div>
       </section>
     </div>
   );

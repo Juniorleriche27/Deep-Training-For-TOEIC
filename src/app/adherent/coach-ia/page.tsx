@@ -20,6 +20,7 @@ export default function AdherentCoachIaPage() {
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
+  const messageSeqRef = useRef(0);
 
   useEffect(() => {
     Promise.all([api.getChatHistory(), api.getCoachContext()]).then(([history, ctx]) => {
@@ -35,8 +36,9 @@ export default function AdherentCoachIaPage() {
   async function send(text: string) {
     if (!text.trim() || sending) return;
     setSending(true);
+    const tempId = `tmp-${messageSeqRef.current++}`;
     const userMsg: ChatMessage = {
-      id: `tmp-${Date.now()}`,
+      id: tempId,
       role: "user",
       content: text.trim(),
       timestamp: new Date().toISOString(),
@@ -45,7 +47,7 @@ export default function AdherentCoachIaPage() {
     setInput("");
     try {
       const reply = await api.sendChatMessage(text.trim());
-      setMessages((prev) => [...prev.filter((m) => m.id !== userMsg.id), { ...userMsg, id: `user-${Date.now()}` }, reply]);
+      setMessages((prev) => [...prev.filter((m) => m.id !== userMsg.id), { ...userMsg, id: `user-${tempId}` }, reply]);
     } catch {
       setMessages((prev) => prev.filter((m) => m.id !== userMsg.id));
     } finally {

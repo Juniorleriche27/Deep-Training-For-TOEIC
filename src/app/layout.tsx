@@ -22,7 +22,7 @@ const dmMono = DM_Mono({
 
 export const metadata: Metadata = {
   title: "Deep Training For TOEIC",
-  description: "Plateforme d'entrainement TOEIC - public, adherent et admin",
+  description: "Plateforme d'entraînement TOEIC premium avec espace public, adhérent et administration.",
 };
 
 export default function RootLayout({

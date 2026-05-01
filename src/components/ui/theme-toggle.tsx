@@ -31,14 +31,12 @@ function getInitialTheme(): ThemeMode {
 }
 
 export function ThemeToggle({ compact = false }: { compact?: boolean }) {
-  const [theme, setTheme] = useState<ThemeMode>("dark");
+  const [theme, setTheme] = useState<ThemeMode>(() => getInitialTheme());
   const next = theme === "dark" ? "light" : "dark";
 
   useEffect(() => {
-    const initial = getInitialTheme();
-    setTheme(initial);
-    document.documentElement.dataset.theme = initial;
-  }, []);
+    document.documentElement.dataset.theme = theme;
+  }, [theme]);
 
   const toggleTheme = () => {
     const target: ThemeMode = theme === "dark" ? "light" : "dark";

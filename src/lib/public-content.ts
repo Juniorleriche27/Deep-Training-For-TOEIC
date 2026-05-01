@@ -26,102 +26,102 @@ export type ProgrammeStep = {
 
 export const homeMyths: Myth[] = [
   {
-    belief: "Le test adaptatif d'une heure est forcement plus facile.",
-    truth: "Format different ne veut pas dire facilite. La strategie change totalement.",
+    belief: "Le test adaptatif d'une heure est forcément plus facile.",
+    truth: "Un format différent n'est pas forcément plus simple. La stratégie de réponse change en profondeur.",
   },
   {
     belief: "Faire des tests blancs tous les jours suffit pour progresser.",
-    truth: "Sans analyse structuree, tu renforces les mauvaises habitudes.",
+    truth: "Sans analyse structurée, tu renforces surtout tes automatismes faibles.",
   },
   {
-    belief: "4 heures par jour garantissent une progression rapide.",
-    truth: "La saturation cognitive casse la retention. Intensite n'est pas efficacite.",
+    belief: "Quatre heures par jour garantissent une progression rapide.",
+    truth: "La saturation cognitive casse la rétention. L'intensité seule ne crée pas l'efficacité.",
   },
   {
-    belief: "On peut changer de programme a J-7 sans risque.",
-    truth: "Les changements tardifs desorganisent l'execution et le rythme.",
+    belief: "On peut changer de programme à J-7 sans risque.",
+    truth: "Les changements tardifs désorganisent l'exécution, le rythme et la confiance.",
   },
   {
     belief: "Copier le plan d'un autre candidat est la meilleure option.",
-    truth: "Chaque profil a des faiblesses propres. Le plan doit etre contextualise.",
+    truth: "Chaque profil a ses fragilités. Le plan doit être cadré selon le niveau, l'objectif et le délai.",
   },
   {
-    belief: "La prise de notes recommandee est secondaire.",
-    truth: "La methode de notes impacte directement le score Listening.",
+    belief: "La prise de notes recommandée est secondaire.",
+    truth: "La méthode de notes influence directement la précision en Listening.",
   },
   {
-    belief: "Un bon score sur telephone assure le score officiel.",
-    truth: "Conditions reel test: casque, cadence et stress ne sont pas les memes.",
+    belief: "Un bon score sur téléphone garantit le score officiel.",
+    truth: "Les conditions réelles du test changent tout: casque, cadence, fatigue et pression.",
   },
   {
-    belief: "Memoriser beaucoup de grammaire suffit pour un grand score.",
-    truth: "Le TOEIC teste surtout la comprehension en contexte et la vitesse de decision.",
+    belief: "Mémoriser beaucoup de grammaire suffit pour atteindre un grand score.",
+    truth: "Le TOEIC évalue surtout la compréhension en contexte et la vitesse de décision.",
   },
   {
-    belief: "Aller dans tous les sens aide a progresser vite.",
-    truth: "La dispersion fait perdre du temps. Un plan unique et suivi gagne.",
+    belief: "Aller dans tous les sens aide à progresser plus vite.",
+    truth: "La dispersion fait perdre du temps. Un plan clair, stable et suivi produit de meilleurs résultats.",
   },
   {
-    belief: "Les formations les plus cheres sont automatiquement meilleures.",
-    truth: "Le resultat vient de la structure, du suivi et de l'execution quotidienne.",
+    belief: "Les formations les plus chères sont automatiquement meilleures.",
+    truth: "Le résultat vient surtout de la structure, du suivi et de l'exécution quotidienne.",
   },
 ];
 
 export const shortFaq = [
   {
-    q: "Ce programme convient-il aux debutants ?",
-    a: "Oui, le cadrage initial adapte le rythme et la charge selon le niveau de depart.",
+    q: "Ce programme convient-il aux débutants ?",
+    a: "Oui. Le parcours est cadré selon le niveau de départ, le score visé et l'échéance du test.",
   },
   {
     q: "Combien de temps par jour faut-il ?",
-    a: "En general 1h a 2h. La regularite compte plus que le volume.",
+    a: "En général, entre 1 h et 2 h. La régularité compte davantage que le volume brut.",
   },
   {
-    q: "Le Coach IA remplace-t-il le coach humain ?",
-    a: "Non. L'IA assiste l'execution quotidienne, le coach humain pilote les decisions critiques.",
+    q: "Comment fonctionne l'accompagnement ?",
+    a: "L'accompagnement s'appuie sur un Coach IA intégré à l'espace d'entraînement pour guider la progression au quotidien.",
   },
   {
-    q: "Comment se passe l'acces ?",
-    a: "Apres validation de candidature, les acces sont transmis sous 24h.",
+    q: "Comment se passe l'accès ?",
+    a: "Après validation de la candidature, les accès sont transmis rapidement et le parcours peut démarrer sans friction.",
   },
 ];
 
 export const fullFaq = [
   {
-    q: "Est-ce adapte aux debutants en anglais ?",
-    a: "Le programme s'adapte au point de depart. Le calibrage est fait a l'entree.",
+    q: "Est-ce adapté aux débutants en anglais ?",
+    a: "Oui. Le programme s'ajuste au point de départ et au score cible dès l'entrée dans le parcours.",
   },
   {
     q: "Combien de temps par jour dois-je consacrer au programme ?",
-    a: "Entre 1h et 1h30 en moyenne. La regularite reste la variable principale.",
+    a: "Entre 1 h et 1 h 30 en moyenne. La régularité reste la variable la plus décisive.",
   },
   {
     q: "Faut-il un bon niveau de grammaire pour commencer ?",
-    a: "Non. Les points de grammaire utiles sont integres au parcours.",
+    a: "Non. Les points de grammaire utiles sont intégrés au parcours, dans un contexte directement exploitable.",
   },
   {
-    q: "La prise de notes est-elle vraiment obligatoire ?",
-    a: "Oui, car elle structure l'analyse et accelere les gains en Listening.",
+    q: "La prise de notes est-elle vraiment nécessaire ?",
+    a: "Oui. Elle structure l'analyse, améliore la concentration et accélère les gains en Listening.",
   },
   {
     q: "Puis-je commencer si mon test est dans 6 semaines ?",
-    a: "C'est possible selon ton niveau de depart et ton objectif cible.",
+    a: "Oui, selon ton niveau de départ, ton objectif et la marge de progression disponible.",
   },
   {
-    q: "Comment fonctionne le suivi avec le coach ?",
-    a: "Le suivi se fait via la messagerie de la plateforme et les retests.",
+    q: "Comment fonctionne le suivi ?",
+    a: "Le suivi se fait dans l'espace d'entraînement avec un Coach IA aligné sur ton étape, tes erreurs récurrentes et ton objectif de score.",
   },
   {
-    q: "Le Coach IA remplace-t-il le coach humain ?",
-    a: "Non, l'IA complete le suivi humain mais ne le remplace pas.",
+    q: "Que m'apporte concrètement le Coach IA ?",
+    a: "Il apporte des consignes d'exécution, un cadre de travail clair, des rappels utiles et une continuité dans la progression.",
   },
   {
-    q: "Puis-je m'entrainer surtout sur telephone ?",
-    a: "Le mobile est utile en appoint, mais le mode principal doit rester proche des conditions reelles.",
+    q: "Puis-je m'entraîner surtout sur téléphone ?",
+    a: "Le mobile peut dépanner, mais le travail principal doit rester proche des conditions réelles du test.",
   },
   {
-    q: "Que se passe-t-il si les 3 mois sont termines ?",
-    a: "Un renouvellement est possible selon progression et date du test.",
+    q: "Que se passe-t-il si les 3 mois sont terminés ?",
+    a: "Un prolongement peut être envisagé selon la progression observée et la date du test officiel.",
   },
 ];
 
@@ -131,31 +131,31 @@ export const programmeOverview = [
   {
     step: "ETAPE 1",
     title: "Embarquement",
-    summary: "Configuration, outils, tableau de bord, regles de jeu",
+    summary: "Configuration, outils, tableau de bord et cadre d'exécution",
     color: "var(--accent)",
   },
   {
     step: "ETAPE 2",
     title: "Listening",
-    summary: "Neuro training, challenge mode, consignes speciales",
+    summary: "Neuro training, challenge mode et consignes spéciales",
     color: "#0098cc",
   },
   {
     step: "ETAPE 3",
     title: "Reading",
-    summary: "Grammaire en contexte, business reading, strategies",
+    summary: "Grammaire en contexte, business reading et stratégies",
     color: "var(--gold)",
   },
   {
     step: "ETAPE 4",
     title: "Deep Boost 2.0",
-    summary: "Machinal level, revision ciblee, renforcement",
+    summary: "Machinal level, révision ciblée et renforcement",
     color: "var(--success)",
   },
   {
     step: "ETAPE 5",
     title: "Anti Derangement",
-    summary: "Mindset, resistance, preparation mentale finale",
+    summary: "Mindset, résistance et préparation mentale finale",
     color: "var(--danger)",
   },
 ];
@@ -163,60 +163,60 @@ export const programmeOverview = [
 export const programmeSteps: ProgrammeStep[] = [
   {
     num: 1,
-    label: "Etape 1 - Demarrage",
+    label: "Étape 1 - Démarrage",
     title: "Embarquement",
-    summary: "Poser les bases, configurer les outils et fixer les regles d'execution.",
+    summary: "Poser les bases, configurer les outils et fixer les règles d'exécution.",
     items: [
       "Conditions de performance",
       "Feuille de prise de notes",
       "Guide d'astuces",
       "Tableau de bord",
-      "Auto-penalisations a eviter",
-      "Acces training plateforme",
-      "Configuration et deroulement",
+      "Auto-pénalisations à éviter",
+      "Accès à la plateforme",
+      "Configuration et déroulement",
     ],
   },
   {
     num: 2,
-    label: "Etape 2 - Listening",
+    label: "Étape 2 - Listening",
     title: "Training Listening",
-    summary: "Developper ecoute active, vitesse de traitement et precision.",
-    items: ["Consignes speciales", "Neuro Training Listening", "Challenge Mode"],
+    summary: "Développer l'écoute active, la vitesse de traitement et la précision.",
+    items: ["Consignes spéciales", "Neuro Training Listening", "Challenge Mode"],
     color: "#0098cc",
   },
   {
     num: 3,
-    label: "Etape 3 - Reading",
+    label: "Étape 3 - Reading",
     title: "Training Reading",
-    summary: "Consolider la lecture en contexte et maitriser la pression du temps.",
-    items: ["Consignes speciales", "Resume grammaire", "Training Reading", "Business Training"],
+    summary: "Consolider la lecture en contexte et maîtriser la pression du temps.",
+    items: ["Consignes spéciales", "Résumé de grammaire", "Training Reading", "Business Training"],
     color: "var(--gold)",
   },
   {
     num: 4,
-    label: "Etape 4 - Consolidation",
+    label: "Étape 4 - Consolidation",
     title: "Deep Boost 2.0",
     summary: "Automatiser les acquis et renforcer les zones encore fragiles.",
-    items: ["Consignes speciales", "Machinal Level", "Spectacular", "Revision ciblee", "Renforcement"],
+    items: ["Consignes spéciales", "Machinal Level", "Spectacular", "Révision ciblée", "Renforcement"],
     color: "var(--success)",
   },
   {
     num: 5,
-    label: "Etape 5 - Final",
+    label: "Étape 5 - Final",
     title: "Anti Derangement",
-    summary: "Stabiliser le mental et preparer les conditions du jour J.",
-    items: ["Mindset Record", "Resistance", "Objectif Record", "Alimentation"],
+    summary: "Stabiliser le mental et préparer les conditions du jour J.",
+    items: ["Mindset Record", "Résistance", "Objectif Record", "Alimentation"],
     color: "var(--danger)",
   },
 ];
 
 export const resources = [
-  "Resume grammaire",
+  "Résumé de grammaire",
   "Feuille de prise de notes",
   "Guide d'astuces",
   "Tableau de bord de suivi",
-  "Training configure",
-  "Coach IA integre",
+  "Training configuré",
+  "Coach IA intégré",
   "Communaute Discord VIP",
-  "Accompagnement humain",
+  "Protocole de mission",
 ];

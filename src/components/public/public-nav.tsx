@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
@@ -9,10 +10,6 @@ import { ThemeToggle } from "@/components/ui/theme-toggle";
 export function PublicNav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
 
   useEffect(() => {
     if (open) {
@@ -26,49 +23,58 @@ export function PublicNav() {
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--border)] public-nav-shell backdrop-blur-lg">
-        <div className="surface-container flex h-16 items-center gap-5">
-          <Link href="/" className="font-[var(--font-heading)] text-sm font-extrabold tracking-[0.14em]">
-            Deep <span className="text-[var(--accent)]">Training</span> For TOEIC
+        <div className="surface-container public-nav-bar">
+          <Link href="/" className="public-brand-lockup">
+            <Image
+              src="/logo.jpeg"
+              alt="Deep Training For TOEIC"
+              width={44}
+              height={44}
+              className="h-11 w-11 shrink-0 object-contain"
+              priority
+            />
+            <span className="public-brand-copy">
+              <span className="public-brand-title">
+                <span>Deep Training</span>
+                <span>For TOEIC</span>
+              </span>
+            </span>
           </Link>
-          <span className="badge badge-accent hidden lg:inline-flex">Systeme Premium</span>
-          <nav className="hidden items-center md:flex">
+          <span className="badge badge-accent hidden 2xl:inline-flex">Programme premium</span>
+          <nav className="public-nav-links hidden lg:flex">
             {publicNav.map((item) => {
               const active = pathname === item.href;
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`rounded-md px-3 py-2 text-xs font-medium tracking-[0.05em] transition ${
-                    active
-                      ? "text-[var(--accent)]"
-                      : "text-[var(--text-soft)] hover:text-[var(--text)]"
-                  }`}
+                  className={`public-nav-link ${active ? "public-nav-link-active" : ""}`}
                 >
                   {item.label}
                 </Link>
               );
             })}
           </nav>
-          <div className="ml-auto flex items-center gap-2">
+          <div className="public-nav-actions">
             <ThemeToggle compact />
             <Link
               href="/adherent/dashboard"
-              className="hidden rounded-md border border-[var(--border)] px-3 py-2 text-xs font-semibold text-[var(--text-soft)] transition hover:text-[var(--text)] md:inline-flex"
+              className="hidden rounded-xl border border-[var(--border)] px-4 py-3 text-sm font-semibold text-[var(--text-soft)] transition hover:border-[var(--accent)] hover:text-[var(--text)] md:inline-flex"
             >
-              Acces Espace
+              Accès Espace
             </Link>
             <Link
               href="/contact"
-              className="btn-primary hidden rounded-md px-3 py-2 text-xs font-semibold tracking-[0.04em] md:inline-flex"
+              className="btn-primary hidden rounded-xl px-4 py-3 text-sm font-semibold tracking-[0.04em] md:inline-flex"
             >
-              Candidature -&gt;
+              Candidature →
             </Link>
             <button
               type="button"
               aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
               aria-expanded={open}
               onClick={() => setOpen((v) => !v)}
-              className="ml-1 flex h-9 w-9 flex-col items-center justify-center gap-[5px] rounded-md border border-[var(--border)] bg-transparent md:hidden"
+              className="ml-1 flex h-10 w-10 flex-col items-center justify-center gap-[5px] rounded-xl border border-[var(--border)] bg-transparent lg:hidden"
             >
               <span
                 style={{
@@ -110,23 +116,25 @@ export function PublicNav() {
 
       {open && (
         <div
-          className="fixed inset-0 z-40 md:hidden"
+          className="fixed inset-0 z-40 lg:hidden"
           style={{ background: "rgba(7,11,18,0.72)", backdropFilter: "blur(4px)" }}
           onClick={() => setOpen(false)}
         />
       )}
 
       <div
-        className="fixed inset-x-0 top-16 z-40 md:hidden"
+        className="fixed inset-x-3 top-[4.65rem] z-40 lg:hidden"
         style={{
           background: "var(--bg-2)",
-          borderBottom: "1px solid var(--border)",
+          border: "1px solid var(--border)",
+          borderRadius: "1.2rem",
+          boxShadow: "0 22px 60px rgba(0,0,0,0.28)",
           transform: open ? "translateY(0)" : "translateY(-110%)",
           transition: "transform 260ms cubic-bezier(0.22,0.68,0.2,1)",
           pointerEvents: open ? "auto" : "none",
         }}
       >
-        <nav className="surface-container flex flex-col py-3">
+        <nav className="flex flex-col p-3">
           {publicNav.map((item) => {
             const active = pathname === item.href;
             return (
@@ -134,10 +142,10 @@ export function PublicNav() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className={`rounded-md px-3 py-3 text-sm font-medium tracking-[0.04em] transition ${
+                className={`rounded-xl px-3 py-3 text-sm font-semibold tracking-[0.02em] transition ${
                   active
-                    ? "text-[var(--accent)]"
-                    : "text-[var(--text-soft)]"
+                    ? "bg-[var(--accent-dim)] text-[var(--accent)]"
+                    : "text-[var(--text-soft)] hover:bg-[var(--accent-dim-2)] hover:text-[var(--text)]"
                 }`}
               >
                 {item.label}
@@ -148,14 +156,14 @@ export function PublicNav() {
             <Link
               href="/adherent/dashboard"
               onClick={() => setOpen(false)}
-              className="flex-1 rounded-md border border-[var(--border)] px-3 py-2 text-center text-xs font-semibold text-[var(--text-soft)]"
+              className="flex-1 rounded-xl border border-[var(--border)] px-3 py-3 text-center text-xs font-semibold text-[var(--text-soft)]"
             >
-              Acces Espace
+              Accès Espace
             </Link>
             <Link
               href="/contact"
               onClick={() => setOpen(false)}
-              className="btn-primary flex-1 rounded-md px-3 py-2 text-center text-xs font-semibold"
+              className="btn-primary flex-1 rounded-xl px-3 py-3 text-center text-xs font-semibold"
             >
               Candidature
             </Link>

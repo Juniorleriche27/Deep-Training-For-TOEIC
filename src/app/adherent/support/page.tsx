@@ -34,7 +34,7 @@ export default function AdherentSupportPage() {
     <div>
       <div className="page-header">
         <h1 className="page-title">Messages & Support</h1>
-        <p className="page-sub">Echanges avec le coach humain.</p>
+        <p className="page-sub">Echanges de support et difficultes rencontrees.</p>
       </div>
 
       <div style={{ maxWidth: "780px" }} className="stack">

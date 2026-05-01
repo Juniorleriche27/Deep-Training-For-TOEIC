@@ -236,21 +236,21 @@ export function PremiumLanding() {
           <div className={styles.heroPanel}>
             <p className={styles.heroKicker}>Deep Training For TOEIC - Performance System</p>
             <h1 className={styles.heroTitle}>
-              Tu ne revises plus au hasard.
+              Tu ne révises plus au hasard.
               <br />
-              <span>Tu entres dans un systeme.</span>
+              <span>Tu entres dans un système.</span>
             </h1>
             <p className={styles.heroLead}>
-              Une methode rigoureuse, un plan d&apos;execution, un Coach IA
-              integre et un suivi structure. Ici, la progression n&apos;est pas
-              une promesse marketing, c&apos;est un protocole.
+              Une méthode rigoureuse, un plan d&apos;exécution, un Coach IA intégré,
+              des ressources bien ordonnées et un suivi structuré pour transformer
+              l&apos;effort en score officiel.
             </p>
             <div className={styles.heroActions}>
               <Link href="/contact" className={styles.primaryBtn}>
-                Entrer dans le systeme
+                Entrer dans le système
               </Link>
               <Link href="/programme" className={styles.secondaryBtn}>
-                Explorer les 5 etapes
+                Explorer les 5 étapes
               </Link>
             </div>
             <div className={styles.heroStats}>
@@ -259,7 +259,7 @@ export function PremiumLanding() {
                 value={averageGain}
                 prefix="+"
                 suffix=" pts"
-                hint="Progression mesuree"
+                hint="Progression mesurée"
               />
               <CounterCard
                 label="Scores 785+"
@@ -272,13 +272,13 @@ export function PremiumLanding() {
                 hint="Performances elite"
               />
             </div>
-            <div className={styles.scrollCue}>Scroll pour voir le systeme</div>
+            <div className={styles.scrollCue}>Découvrir le système</div>
           </div>
 
           <div className={styles.commandCard}>
             <div className={styles.commandTop}>
-              <p className={styles.commandTitle}>Mode mission active</p>
-              <span className={styles.commandTag}>Coach IA ON</span>
+              <p className={styles.commandTitle}>Mission en cours</p>
+              <span className={styles.commandTag}>Coach IA actif</span>
             </div>
             <div className={styles.commandValueRow}>
               <span className={styles.scoreBadge}>545</span>
@@ -311,13 +311,36 @@ export function PremiumLanding() {
               </div>
             </div>
             <div className={styles.commandFoot}>
-              <span>Etape 3 - Reading sous chrono</span>
+              <span>Étape 3 - Reading sous chrono</span>
               <span className={styles.commandHint}>J-34</span>
             </div>
             <div className={styles.floatingCluster}>
               <span className={styles.floatingBadge}>Discipline</span>
-              <span className={styles.floatingBadge}>Methode</span>
-              <span className={styles.floatingBadge}>Execution</span>
+              <span className={styles.floatingBadge}>Méthode</span>
+              <span className={styles.floatingBadge}>Exécution</span>
+            </div>
+            <div className={styles.commandProtocol}>
+              <article className={styles.protocolCard}>
+                <p className={styles.protocolLabel}>Avant mission</p>
+                <p className={styles.protocolBody}>
+                  45 min au calme, guide d&apos;astuces, tableau de bord, notes
+                  et reprise ciblée des erreurs précédentes.
+                </p>
+              </article>
+              <article className={styles.protocolCard}>
+                <p className={styles.protocolLabel}>Pendant mission</p>
+                <p className={styles.protocolBody}>
+                  Concentration totale et exécution stricte vers l&apos;objectif
+                  de performance.
+                </p>
+              </article>
+              <article className={styles.protocolCard}>
+                <p className={styles.protocolLabel}>Après mission</p>
+                <p className={styles.protocolBody}>
+                  Capture des résultats, score de première tentative et feedbacks
+                  réintégrés au programme.
+                </p>
+              </article>
             </div>
           </div>
         </div>
@@ -334,27 +357,72 @@ export function PremiumLanding() {
             l&apos;effort en score officiel.
           </h2>
           <p className={styles.sectionLead}>
-            Deep Training For TOEIC n&apos;est pas un cours d&apos;anglais. C&apos;est
-            un systeme de performance construit pour une execution stricte.
+            Deep Training For TOEIC n&apos;est pas un simple cours d&apos;anglais.
+            C&apos;est un système de performance construit pour une exécution plus nette.
           </p>
         </Reveal>
 
         <div className={styles.valueGrid}>
           {[
             {
-              title: "Systeme structure",
-              body: "Plan unique, sequence precise, progression guidee. Tu sais exactement quoi faire chaque jour.",
+              title: "Système structuré",
+              body: "Plan unique, séquence précise, progression guidée. Tu sais quoi faire, quand et pourquoi.",
               tag: "SYSTEM",
             },
             {
-              title: "Discipline operationnelle",
-              body: "Consignes claires, cadence controlee, prise de notes exploitable et suivi de regularite.",
+              title: "Discipline opérationnelle",
+              body: "Consignes claires, cadence contrôlée, prise de notes utile et suivi régulier.",
               tag: "DISCIPLINE",
             },
             {
-              title: "Coaching hybride",
-              body: "Coach humain pour les decisions critiques et Coach IA pour l'execution quotidienne contextuelle.",
+              title: "Coach IA intégré",
+              body: "Le Coach IA accompagne la progression, relance l'exécution et maintient le cap au quotidien.",
               tag: "COACH IA",
+            },
+          ].map((item, index) => (
+            <Reveal key={item.title} delay={index * 110}>
+              <article className={styles.valueCard}>
+                <span className={styles.valueTag}>{item.tag}</span>
+                <h3 className={styles.valueCardTitle}>{item.title}</h3>
+                <p className={styles.valueCardBody}>{item.body}</p>
+              </article>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      <div className={styles.divider} />
+
+      <section className={styles.section}>
+        <Reveal className={styles.sectionHeader}>
+          <p className={styles.sectionKicker}>Protocole de mission</p>
+          <h2 className={styles.sectionTitle}>
+            Avant, pendant et après:
+            <br />
+            une exécution précise.
+          </h2>
+          <p className={styles.sectionLead}>
+            Chaque mission suit un protocole clair pour protéger la concentration,
+            mesurer la première tentative et accélérer la progression.
+          </p>
+        </Reveal>
+
+        <div className={styles.valueGrid}>
+          {[
+            {
+              title: "Avant la mission",
+              body: "Analyser la consigne, prévoir 45 minutes minimum au calme, consulter le guide d'astuces, vérifier la mission sur le tableau de bord et reprendre les points ratés.",
+              tag: "01",
+            },
+            {
+              title: "Pendant la mission",
+              body: "Réaliser la mission avec concentration, en visant l'objectif de performance sans dispersion.",
+              tag: "02",
+            },
+            {
+              title: "Après la mission",
+              body: "Partager la capture des résultats, noter le score de première tentative et réintégrer les feedbacks dans le programme d'entraînement.",
+              tag: "03",
             },
           ].map((item, index) => (
             <Reveal key={item.title} delay={index * 110}>
@@ -396,21 +464,21 @@ export function PremiumLanding() {
 
       <section className={styles.section}>
         <Reveal className={styles.sectionHeader}>
-          <p className={styles.sectionKicker}>Programme en 5 etapes</p>
+          <p className={styles.sectionKicker}>Programme en 5 étapes</p>
           <h2 className={styles.sectionTitle}>
             Une timeline de transformation,
             <br />
             pas une pile de ressources.
           </h2>
           <p className={styles.sectionLead}>
-            Chaque etape construit la suivante. Tu progresses avec une logique
-            d&apos;execution, pas par improvisation.
+            Chaque étape construit la suivante. Tu progresses avec une logique
+            d&apos;exécution, pas par improvisation.
           </p>
         </Reveal>
 
         <div className={styles.timelineWrap}>
           <aside className={styles.stickyPanel}>
-            <p className={styles.stickyLabel}>Etape active</p>
+            <p className={styles.stickyLabel}>Étape active</p>
             <h3 className={styles.stickyTitle} style={{ color: activeProgramStep.color }}>
               {activeProgramStep.label}
             </h3>
@@ -421,7 +489,7 @@ export function PremiumLanding() {
               ))}
             </ul>
             <Link href="/programme" className={styles.secondaryBtn}>
-              Voir le detail complet
+              Voir le détail complet
             </Link>
           </aside>
 
@@ -463,11 +531,11 @@ export function PremiumLanding() {
 
       <section className={styles.section}>
         <Reveal className={styles.sectionHeader}>
-          <p className={styles.sectionKicker}>Ressources integrees</p>
+          <p className={styles.sectionKicker}>Ressources intégrées</p>
           <h2 className={styles.sectionTitle}>
-            Tout est pret pour executer.
+            Tout est prêt pour exécuter.
             <br />
-            Rien a assembler toi-meme.
+            Rien à assembler toi-même.
           </h2>
         </Reveal>
 
@@ -496,18 +564,18 @@ export function PremiumLanding() {
           {[
             {
               icon: "01",
-              title: "Prise de notes operationnelle",
-              body: "Une methode exploitable sous pression pour convertir l'ecoute en points.",
+              title: "Prise de notes opérationnelle",
+              body: "Une méthode exploitable sous pression pour convertir l'écoute en points.",
             },
             {
               icon: "02",
               title: "Tableau de pilotage",
-              body: "Suivi de scores, zones faibles, routines. Tu progresses avec des donnees claires.",
+              body: "Suivi des scores, zones faibles, routines. Tu progresses avec des données claires.",
             },
             {
               icon: "03",
               title: "Coach IA contextuel",
-              body: "Assistance instantanee basee sur ton etape, tes erreurs et ton objectif de score.",
+              body: "Accompagnement guidé selon ton étape, tes erreurs fréquentes, ton score cible et le protocole de mission.",
             },
           ].map((item, index) => (
             <Reveal key={item.title} delay={index * 110}>
@@ -525,11 +593,11 @@ export function PremiumLanding() {
 
       <section className={styles.section}>
         <Reveal className={styles.sectionHeader}>
-          <p className={styles.sectionKicker}>Resultats documentes</p>
+          <p className={styles.sectionKicker}>Résultats documentés</p>
           <h2 className={styles.sectionTitle}>
-            Des progressions reelles.
+            Des progressions réelles.
             <br />
-            Une execution qui se voit.
+            Une exécution qui se voit.
           </h2>
         </Reveal>
 
@@ -566,11 +634,11 @@ export function PremiumLanding() {
                             <span>{item.after}</span>
                           </>
                         ) : (
-                          <span>Temoignage valide</span>
+                          <span>Témoignage validé</span>
                         )}
                       </div>
                       <span className={styles.slideGain}>
-                        {gain !== null ? `+${gain} pts` : "Progression guidee"}
+                        {gain !== null ? `+${gain} pts` : "Progression guidée"}
                       </span>
                     </div>
                     <p className={styles.slideQuote}>&quot;{quote}&quot;</p>
@@ -596,7 +664,7 @@ export function PremiumLanding() {
               onClick={goPrev}
               aria-label="Temoignage precedent"
             >
-              Prev
+              Précédent
             </button>
             <div className={styles.sliderDots}>
               {featuredTestimonials.map((item, index) => (
@@ -607,7 +675,7 @@ export function PremiumLanding() {
                     slideIndex === index ? styles.sliderDotActive : ""
                   }`}
                   onClick={() => setSlideIndex(index)}
-                  aria-label={`Aller au temoignage ${index + 1}`}
+                  aria-label={`Aller au témoignage ${index + 1}`}
                 />
               ))}
             </div>
@@ -615,9 +683,9 @@ export function PremiumLanding() {
               type="button"
               className={styles.sliderBtn}
               onClick={goNext}
-              aria-label="Temoignage suivant"
+              aria-label="Témoignage suivant"
             >
-              Next
+              Suivant
             </button>
           </div>
         </div>
@@ -631,18 +699,18 @@ export function PremiumLanding() {
           <h2 className={styles.finalTitle}>
             Si ton objectif est clair,
             <br />
-            entre dans un systeme qui execute.
+            entre dans un système qui exécute.
           </h2>
           <p className={styles.finalLead}>
-            Tu ne viens pas chercher des astuces. Tu viens chercher un cadre
-            d&apos;execution, de la rigueur et une progression mesurable.
+            Tu ne viens pas chercher des astuces isolées. Tu viens chercher un cadre
+            d&apos;exécution, de la rigueur et une progression mesurable.
           </p>
           <div className={styles.finalActions}>
             <Link href="/contact" className={styles.primaryBtn}>
               Soumettre ma candidature
             </Link>
             <Link href="/methode" className={styles.secondaryBtn}>
-              Comprendre la methode
+              Comprendre la méthode
             </Link>
           </div>
         </Reveal>

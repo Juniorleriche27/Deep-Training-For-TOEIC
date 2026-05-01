@@ -35,8 +35,6 @@ export default async function AdherentDashboardPage() {
     );
   }
 
-  const activeStepIndex = data.progression.findIndex((s) => s.status === "Active");
-
   return (
     <div>
       <div className="page-header reveal-up">
@@ -142,7 +140,7 @@ export default async function AdherentDashboardPage() {
               <span className="badge badge-accent">{data.progressionPercent}%</span>
             </div>
             <div className="stack" style={{ gap: "0.38rem" }}>
-              {data.progression.map((step, index) => (
+              {data.progression.map((step) => (
                 <div
                   key={step.num}
                   className="row-sb"

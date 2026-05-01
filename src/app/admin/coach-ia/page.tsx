@@ -10,13 +10,13 @@ const globalRules = [
   {
     title: "Rappels de consignes",
     body:
-      "Rappeler les consignes speciales de l'etape en cours et ne jamais contredire les regles coach humain.",
+      "Rappeler les consignes speciales de l'etape en cours et respecter strictement le programme configure.",
     tags: ["Global"],
   },
   {
     title: "Limites d'intervention",
     body:
-      "Le Coach IA ne modifie pas le programme. Toute demande de changement doit etre redirigee vers support humain.",
+      "Le Coach IA ne modifie pas le programme. Toute demande de changement doit etre redirigee vers la configuration initiale ou le support.",
     tags: ["Critique"],
   },
 ];

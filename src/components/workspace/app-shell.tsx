@@ -30,22 +30,32 @@ export function AppShell({
 }: AppShellProps) {
   const pathname = usePathname();
   const adminMode = accent === "gold";
+  const workspaceHome = adminMode ? "/admin" : "/adherent/dashboard";
 
   return (
     <div className="app-layout">
       <header className="app-topbar">
-        <div className="topbar-logo">
+        <Link href="/" className="topbar-logo">
           Deep <span>Training</span> For TOEIC
-        </div>
+        </Link>
         <span className={`badge ${adminMode ? "badge-gold" : "badge-accent"}`}>
           {adminMode ? "Control Center" : "Mission Cockpit"}
         </span>
         <div className="topbar-sep" />
-        <div
-          className="topbar-context"
-          style={adminMode ? { color: "var(--gold)" } : undefined}
-        >
-          {context}
+        <div className="topbar-switch">
+          <Link href="/" className={`topbar-switch-link ${pathname === "/" ? "topbar-switch-link-active" : ""}`}>
+            Site public
+          </Link>
+          <Link
+            href={workspaceHome}
+            className={`topbar-switch-link ${
+              pathname.startsWith(adminMode ? "/admin" : "/adherent")
+                ? "topbar-switch-link-active"
+                : ""
+            }`}
+          >
+            {context}
+          </Link>
         </div>
         <div className="topbar-right">
           <ThemeToggle compact />
@@ -111,7 +121,7 @@ export function AppShell({
         >
           <Link href="/" className="sidebar-item">
             <span className="sidebar-icon">WB</span>
-            <span>Site public</span>
+            <span>Retour au site public</span>
           </Link>
         </div>
       </aside>

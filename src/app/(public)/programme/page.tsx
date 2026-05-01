@@ -3,82 +3,79 @@ import { programmeSteps } from "@/lib/public-content";
 
 export default function ProgrammePage() {
   return (
-    <div>
-      <section className="section-shell surface-container">
-        <div className="section-header reveal-up">
-          <div className="section-tag">Programme complet</div>
-          <h1
-            className="section-title"
-            style={{ fontSize: "clamp(2.15rem, 5vw, 3.1rem)" }}
-          >
-            5 etapes.
-            <br />
-            Un systeme de transformation.
-          </h1>
-          <p className="section-sub">
-            Chaque etape est construite pour debloquer la suivante: execution,
-            progression, consolidation, validation.
-          </p>
+    <div className="stack" style={{ gap: "1.15rem" }}>
+      <section className="public-page">
+        <div className="public-page-hero">
+          <div className="public-page-copy reveal-up">
+            <p className="public-page-kicker">Programme</p>
+            <h1 className="public-page-title">
+              Cinq étapes.
+              <br />
+              Une trajectoire claire.
+            </h1>
+            <p className="public-page-sub">
+              Le programme avance par séquences logiques. Chaque étape prépare la suivante pour
+              rendre la montée en score plus lisible, plus stable et plus maîtrisée.
+            </p>
+          </div>
+
+          <aside className="public-page-spotlight reveal-up delay-1">
+            <h2 className="public-spotlight-title">Ce que tu gagnes</h2>
+            <ul className="public-spotlight-list">
+              <li>Un ordre de travail clair au lieu d&apos;une préparation floue.</li>
+              <li>Une progression mesurable sur Listening, Reading et rigueur.</li>
+              <li>Une charge d&apos;entraînement alignée sur l&apos;objectif officiel.</li>
+            </ul>
+          </aside>
         </div>
       </section>
 
-      <section className="section-shell surface-container">
-        <div className="steps-timeline">
-          {programmeSteps.map((step, index) => (
+      <section className="public-section-stack">
+        <div className="public-section-head">
+          <p className="public-page-kicker">Déploiement</p>
+          <h2 className="section-title">Le parcours complet, étape par étape</h2>
+        </div>
+
+        <div className="public-two-grid">
+          {programmeSteps.map((step) => (
             <article
-              key={step.title}
-              className={`step-row reveal-up delay-${(index % 3) + 1}`}
+              key={step.label}
+              className="public-panel reveal-up"
+              style={{ borderColor: step.color ?? "var(--border)" }}
             >
-              <div className="step-line">
-                <span
-                  className="step-dot"
-                  style={{ background: step.color ?? "var(--accent)" }}
-                >
-                  {step.num}
-                </span>
-                {index < programmeSteps.length - 1 ? (
-                  <span className="step-connector" />
-                ) : null}
-              </div>
-              <div className="step-body">
-                <p className="step-label" style={{ color: step.color ?? "var(--accent)" }}>
-                  {step.label}
-                </p>
-                <h2 className="step-title">{step.title}</h2>
-                <p className="card-desc">{step.summary}</p>
-                <div className="step-items">
-                  {step.items.map((item) => (
-                    <span key={item} className="step-item">
-                      {item}
-                    </span>
-                  ))}
-                </div>
+              <p className="public-page-kicker" style={{ color: step.color ?? "var(--accent)" }}>
+                {step.label}
+              </p>
+              <h3 className="public-panel-title">{step.title}</h3>
+              <p className="public-panel-copy">{step.summary}</p>
+              <div className="public-chip-row">
+                {step.items.map((item) => (
+                  <span key={item} className="public-chip">{item}</span>
+                ))}
               </div>
             </article>
           ))}
         </div>
       </section>
 
-      <section className="section-shell surface-container">
-        <article className="card reveal-up">
-          <div className="row-sb" style={{ flexWrap: "wrap", gap: "0.8rem" }}>
-            <div>
-              <p className="section-tag">Acces</p>
-              <h2 className="card-title" style={{ fontSize: "1.45rem", marginTop: "0.4rem" }}>
-                Pret a entrer dans le programme?
-              </h2>
-              <p className="card-desc">Validation de profil puis acces sous 24h.</p>
-            </div>
-            <div className="row">
-              <Link href="/tarifs" className="btn-secondary rounded-md px-4 py-2 text-xs font-semibold">
-                Voir l'acces
-              </Link>
-              <Link href="/contact" className="btn-primary rounded-md px-4 py-2 text-xs font-semibold">
-                Candidater
-              </Link>
-            </div>
+      <section className="public-cta-band reveal-up delay-2">
+        <div className="row-sb" style={{ flexWrap: "wrap", gap: "0.9rem" }}>
+          <div>
+            <p className="public-page-kicker">Accès</p>
+            <h2 className="card-title" style={{ marginTop: "0.45rem", fontSize: "1.55rem" }}>
+              Le programme est prêt. Reste à cadrer ton entrée.
+            </h2>
+            <p className="card-desc">Découvre l&apos;offre, les conditions d&apos;accès et la logique d&apos;activation.</p>
           </div>
-        </article>
+          <div className="row" style={{ flexWrap: "wrap" }}>
+            <Link href="/tarifs" className="btn-secondary rounded-xl px-4 py-3 text-xs font-semibold">
+              Voir les tarifs
+            </Link>
+            <Link href="/contact" className="btn-primary rounded-xl px-4 py-3 text-xs font-semibold">
+              Candidater
+            </Link>
+          </div>
+        </div>
       </section>
     </div>
   );

@@ -1,122 +1,139 @@
 export default function ContactPage() {
   return (
-    <section className="section-shell surface-container">
-      <div className="section-header reveal-up">
-        <div className="section-tag">Candidature</div>
-        <h1 className="section-title" style={{ fontSize: "clamp(2.1rem, 4.8vw, 3rem)" }}>
-          Entrer dans le programme
-        </h1>
-        <p className="section-sub">
-          Renseigne ton contexte. Le cadrage sert a verifier l&apos;adequation
-          entre ton objectif et la methode.
-        </p>
-      </div>
-
-      <div className="cards-2">
-        <article className="card reveal-up delay-1">
-          <h2 className="card-title">Formulaire de candidature</h2>
-          <form className="stack" style={{ marginTop: "0.8rem" }}>
-            <div className="form-grid">
-              <label className="form-group">
-                <span className="form-label">Prenom & Nom</span>
-                <input className="form-input" placeholder="Ex: Sophie Martin" type="text" />
-              </label>
-              <label className="form-group">
-                <span className="form-label">Email</span>
-                <input className="form-input" placeholder="votre@email.com" type="email" />
-              </label>
-              <label className="form-group">
-                <span className="form-label">Telephone</span>
-                <input className="form-input" placeholder="+33 6 ..." type="tel" />
-              </label>
-              <label className="form-group">
-                <span className="form-label">Score actuel</span>
-                <input className="form-input" placeholder="Ex: 520" type="number" />
-              </label>
-              <label className="form-group">
-                <span className="form-label">Score cible</span>
-                <input className="form-input" placeholder="Ex: 785" type="number" />
-              </label>
-              <label className="form-group">
-                <span className="form-label">Date prevue du test</span>
-                <input className="form-input" type="date" />
-              </label>
-              <label className="form-group">
-                <span className="form-label">Format TOEIC</span>
-                <select className="form-select" defaultValue="">
-                  <option value="">Selectionnez</option>
-                  <option>TOEIC 2h (full)</option>
-                  <option>TOEIC adaptatif 1h</option>
-                  <option>Pas encore decide</option>
-                </select>
-              </label>
-              <label className="form-group">
-                <span className="form-label">Difficulte dominante</span>
-                <select className="form-select" defaultValue="">
-                  <option value="">Selectionnez</option>
-                  <option>Listening</option>
-                  <option>Reading</option>
-                  <option>Les deux</option>
-                  <option>Gestion du temps</option>
-                </select>
-              </label>
-              <label className="form-group form-full">
-                <span className="form-label">Contexte et contraintes</span>
-                <textarea
-                  className="form-textarea"
-                  placeholder="Date limite diplome, historique de scores, ressources deja testees..."
-                />
-              </label>
-            </div>
-            <div className="row-sb" style={{ flexWrap: "wrap", gap: "0.8rem" }}>
-              <p className="muted text-xs">
-                Donnees traitees de maniere confidentielle dans le cadre du
-                coaching.
-              </p>
-              <button type="submit" className="btn-primary rounded-md px-6 py-3 text-sm font-semibold">
-                Envoyer ma candidature
-              </button>
-            </div>
-          </form>
-        </article>
-
-        <article className="stack">
-          <div className="card reveal-up delay-2">
-            <p className="section-tag">Ce qui se passe ensuite</p>
-            <div className="steps-timeline mt-4">
-              {[
-                ["1", "Analyse du profil", "Lecture de ton contexte et de ton objectif score."],
-                ["2", "Retour de qualification", "Validation de l'adequation au programme."],
-                ["3", "Activation", "Acces plateforme et lancement du parcours."],
-              ].map(([num, title, desc], index) => (
-                <div key={title} className="step-row">
-                  <div className="step-line">
-                    <span className="step-dot" style={{ width: "1.7rem", height: "1.7rem", fontSize: "0.72rem" }}>
-                      {num}
-                    </span>
-                    {index < 2 ? <span className="step-connector" /> : null}
-                  </div>
-                  <div className="step-body pb-4">
-                    <h3 className="card-title text-sm">{title}</h3>
-                    <p className="card-desc">{desc}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="card reveal-up delay-3">
-            <p className="section-tag">Positionnement</p>
-            <h2 className="card-title" style={{ marginTop: "0.4rem" }}>
-              Tu n&apos;achetes pas un cours.
-            </h2>
-            <p className="card-desc">
-              Tu entres dans un systeme de progression guidee avec execution
-              stricte et suivi precis.
+    <div className="stack" style={{ gap: "1.15rem" }}>
+      <section className="public-page">
+        <div className="public-page-hero">
+          <div className="public-page-copy reveal-up">
+            <p className="public-page-kicker">Candidature</p>
+            <h1 className="public-page-title">
+              Entrer dans le programme
+              <br />
+              avec un cadre clair.
+            </h1>
+            <p className="public-page-sub">
+              Décris ton contexte, ton niveau actuel et ton objectif. Le cadrage permet de vérifier
+              l&apos;adéquation entre ton besoin, ton délai et la méthode proposée.
             </p>
           </div>
-        </article>
-      </div>
-    </section>
+
+          <aside className="public-page-spotlight reveal-up delay-1">
+            <h2 className="public-spotlight-title">Ce que nous voulons comprendre</h2>
+            <ul className="public-spotlight-list">
+              <li>Ton score actuel, ton score cible et ton échéance.</li>
+              <li>Ta difficulté dominante: Listening, Reading ou gestion du temps.</li>
+              <li>Les contraintes réelles qui influencent ton entraînement.</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <section className="public-section-stack">
+        <div className="public-two-grid">
+          <article className="public-panel reveal-up">
+            <h2 className="public-panel-title">Formulaire de candidature</h2>
+            <p className="public-panel-copy">
+              Remplis le formulaire avec des informations précises pour recevoir un retour plus pertinent.
+            </p>
+            <form className="stack" style={{ marginTop: "1rem" }}>
+              <div className="form-grid">
+                <label className="form-group">
+                  <span className="form-label">Prénom et nom</span>
+                  <input className="form-input" placeholder="Ex: Sophie Martin" type="text" />
+                </label>
+                <label className="form-group">
+                  <span className="form-label">Email</span>
+                  <input className="form-input" placeholder="votre@email.com" type="email" />
+                </label>
+                <label className="form-group">
+                  <span className="form-label">Téléphone</span>
+                  <input className="form-input" placeholder="+33 6 ..." type="tel" />
+                </label>
+                <label className="form-group">
+                  <span className="form-label">Score actuel</span>
+                  <input className="form-input" placeholder="Ex: 520" type="number" />
+                </label>
+                <label className="form-group">
+                  <span className="form-label">Score cible</span>
+                  <input className="form-input" placeholder="Ex: 785" type="number" />
+                </label>
+                <label className="form-group">
+                  <span className="form-label">Date prévue du test</span>
+                  <input className="form-input" type="date" />
+                </label>
+                <label className="form-group">
+                  <span className="form-label">Format TOEIC</span>
+                  <select className="form-select" defaultValue="">
+                    <option value="">Sélectionnez</option>
+                    <option>TOEIC 2h (full)</option>
+                    <option>TOEIC adaptatif 1h</option>
+                    <option>Je ne sais pas encore</option>
+                  </select>
+                </label>
+                <label className="form-group">
+                  <span className="form-label">Difficulté dominante</span>
+                  <select className="form-select" defaultValue="">
+                    <option value="">Sélectionnez</option>
+                    <option>Listening</option>
+                    <option>Reading</option>
+                    <option>Les deux</option>
+                    <option>Gestion du temps</option>
+                  </select>
+                </label>
+                <label className="form-group form-full">
+                  <span className="form-label">Contexte et contraintes</span>
+                  <textarea
+                    className="form-textarea"
+                    placeholder="Date limite, historique de scores, ressources déjà testées, disponibilité..."
+                  />
+                </label>
+              </div>
+              <div className="row-sb" style={{ flexWrap: "wrap", gap: "0.8rem" }}>
+                <p className="muted text-xs">
+                  Les informations partagées servent uniquement au cadrage de la candidature.
+                </p>
+                <button type="submit" className="btn-primary rounded-xl px-6 py-3 text-sm font-semibold">
+                  Envoyer ma candidature
+                </button>
+              </div>
+            </form>
+          </article>
+
+          <div className="stack">
+            <article className="public-panel reveal-up delay-1">
+              <p className="public-page-kicker">Suite du parcours</p>
+              <div className="steps-timeline mt-4">
+                {[
+                  ["1", "Analyse du profil", "Lecture du contexte, du score visé et de l'échéance."],
+                  ["2", "Retour de qualification", "Vérification de l'adéquation avec le parcours."],
+                  ["3", "Activation", "Transmission des accès et démarrage structuré."],
+                ].map(([num, title, desc], index) => (
+                  <div key={title} className="step-row">
+                    <div className="step-line">
+                      <span className="step-dot" style={{ width: "1.8rem", height: "1.8rem", fontSize: "0.74rem" }}>
+                        {num}
+                      </span>
+                      {index < 2 ? <span className="step-connector" /> : null}
+                    </div>
+                    <div className="step-body pb-4">
+                      <h3 className="card-title text-sm">{title}</h3>
+                      <p className="card-desc">{desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </article>
+
+            <article className="public-panel reveal-up delay-2">
+              <p className="public-page-kicker">Positionnement</p>
+              <h2 className="public-panel-title">Tu n&apos;achètes pas un simple cours.</h2>
+              <p className="public-panel-copy">
+                Tu entres dans une expérience de progression structurée, avec une navigation claire,
+                un design premium et une logique d&apos;entraînement cohérente.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }

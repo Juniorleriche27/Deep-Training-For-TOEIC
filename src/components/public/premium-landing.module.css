@@ -21,12 +21,12 @@
 }
 
 .pageShell::before {
-  background: radial-gradient(circle, rgba(0, 201, 255, 0.16) 0%, rgba(0, 201, 255, 0) 68%);
+  background: radial-gradient(circle, color-mix(in oklab, var(--accent) 26%, transparent) 0%, transparent 68%);
   animation: ambientDrift 19s ease-in-out infinite;
 }
 
 .pageShell::after {
-  background: radial-gradient(circle, rgba(245, 166, 35, 0.11) 0%, rgba(245, 166, 35, 0) 70%);
+  background: radial-gradient(circle, color-mix(in oklab, var(--gold) 18%, transparent) 0%, transparent 70%);
   animation: ambientDrift 23s ease-in-out infinite reverse;
 }
 
@@ -69,7 +69,7 @@
   position: absolute;
   inset: auto -10% -42% -8%;
   height: 56%;
-  background: radial-gradient(circle at center, rgba(0, 201, 255, 0.22), transparent 70%);
+  background: radial-gradient(circle at center, color-mix(in oklab, var(--accent) 28%, transparent), transparent 70%);
   filter: blur(26px);
   opacity: 0.7;
   pointer-events: none;
@@ -99,12 +99,12 @@
 }
 
 .heroTitle span {
-  background: linear-gradient(100deg, #ffffff 0%, #6ce8ff 28%, #f6bd53 52%, #ff8c5a 68%, #6ce8ff 88%, #ffffff 100%);
+  background: linear-gradient(100deg, #ffffff 0%, var(--accent) 22%, var(--success) 48%, var(--gold) 72%, var(--accent) 90%, #ffffff 100%);
   background-size: 220% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  filter: drop-shadow(0 0 36px rgba(0, 201, 255, 0.38));
+  filter: drop-shadow(0 0 36px color-mix(in oklab, var(--accent) 34%, transparent));
   animation: heroGradientSlide 5.5s ease-in-out infinite;
 }
 
@@ -150,9 +150,9 @@
 
 .primaryBtn {
   color: #03111a;
-  border: 1px solid rgba(0, 201, 255, 0.6);
-  background: linear-gradient(135deg, rgba(0, 201, 255, 0.95), rgba(114, 228, 255, 0.95));
-  box-shadow: 0 14px 34px rgba(0, 201, 255, 0.34);
+  border: 1px solid color-mix(in oklab, var(--accent) 66%, transparent);
+  background: linear-gradient(135deg, var(--accent), color-mix(in oklab, var(--success) 72%, white 28%));
+  box-shadow: 0 14px 34px color-mix(in oklab, var(--accent) 34%, transparent);
   position: relative;
   overflow: hidden;
 }
@@ -174,7 +174,7 @@
 
 .primaryBtn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 20px 44px rgba(0, 201, 255, 0.48);
+  box-shadow: 0 20px 44px color-mix(in oklab, var(--accent) 42%, transparent);
 }
 
 .primaryBtn:active {
@@ -189,7 +189,7 @@
 
 .secondaryBtn:hover {
   transform: translateY(-2px);
-  border-color: rgba(0, 201, 255, 0.45);
+  border-color: color-mix(in oklab, var(--accent) 45%, transparent);
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.28);
 }
 
@@ -242,7 +242,7 @@
 }
 
 .scrollCue::after {
-  content: "â†“";
+  content: "↓";
   font-size: 0.78rem;
   animation: scrollBounce 1.5s ease-in-out infinite;
 }
@@ -259,7 +259,7 @@
   width: 340px;
   height: 340px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 201, 255, 0.17) 0%, rgba(0, 201, 255, 0) 70%);
+  background: radial-gradient(circle, color-mix(in oklab, var(--accent) 22%, transparent) 0%, transparent 70%);
   animation: slowSpin 14s linear infinite;
   pointer-events: none;
 }
@@ -270,7 +270,7 @@
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(0, 201, 255, 0.65) 50%, transparent 100%);
+  background: linear-gradient(90deg, transparent 0%, color-mix(in oklab, var(--accent) 56%, transparent) 50%, transparent 100%);
   top: 0;
   animation: scanLine 4.5s ease-in-out infinite;
   pointer-events: none;
@@ -294,9 +294,9 @@
 
 .commandTag {
   border-radius: 999px;
-  border: 1px solid rgba(0, 201, 255, 0.36);
-  background: rgba(0, 201, 255, 0.12);
-  color: #9eeeff;
+  border: 1px solid color-mix(in oklab, var(--accent) 42%, transparent);
+  background: color-mix(in oklab, var(--accent-dim) 92%, transparent);
+  color: var(--accent);
   padding: 0.23rem 0.56rem;
   font-size: 0.61rem;
   text-transform: uppercase;
@@ -325,9 +325,9 @@
 }
 
 .scoreTarget {
-  border-color: rgba(245, 166, 35, 0.34);
-  color: #f8cc74;
-  background: rgba(245, 166, 35, 0.1);
+  border-color: color-mix(in oklab, var(--gold) 36%, transparent);
+  color: var(--gold);
+  background: color-mix(in oklab, var(--gold-dim) 90%, transparent);
 }
 
 .commandArrow {
@@ -369,8 +369,8 @@
   position: absolute;
   inset: 0 auto 0 0;
   border-radius: inherit;
-  background: linear-gradient(90deg, rgba(0, 201, 255, 0.92), rgba(90, 235, 255, 0.92));
-  box-shadow: 0 0 18px rgba(0, 201, 255, 0.35);
+  background: linear-gradient(90deg, var(--accent), color-mix(in oklab, var(--success) 72%, white 28%));
+  box-shadow: 0 0 18px color-mix(in oklab, var(--accent) 28%, transparent);
   transform-origin: left center;
   animation: meterEnter 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
@@ -398,7 +398,7 @@
 }
 
 .commandHint {
-  color: #f8cc74;
+  color: var(--gold);
   font-weight: 700;
 }
 
@@ -427,6 +427,36 @@
 
 .floatingBadge:nth-child(3) {
   animation-delay: 1.6s;
+}
+
+.commandProtocol {
+  margin-top: 1.15rem;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.protocolCard {
+  border-radius: 1rem;
+  border: 1px solid rgba(124, 149, 178, 0.24);
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--bg-2) 84%, transparent), color-mix(in oklab, var(--bg) 78%, transparent));
+  padding: 0.85rem 0.9rem;
+}
+
+.protocolLabel {
+  margin: 0;
+  color: var(--gold);
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.protocolBody {
+  margin: 0.45rem 0 0;
+  color: var(--text-soft);
+  font-size: 0.8rem;
+  line-height: 1.6;
 }
 
 .section {
@@ -494,20 +524,20 @@
 
 .valueCard:hover {
   transform: translateY(-6px) scale(1.012);
-  border-color: rgba(0, 201, 255, 0.6);
+  border-color: color-mix(in oklab, var(--accent) 58%, transparent);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
-    0 0 0 1px rgba(0, 201, 255, 0.15),
-    0 10px 36px rgba(0, 201, 255, 0.18),
+    0 0 0 1px color-mix(in oklab, var(--accent) 16%, transparent),
+    0 10px 36px color-mix(in oklab, var(--accent) 18%, transparent),
     0 32px 60px rgba(0, 0, 0, 0.46);
 }
 
 .valueTag {
   display: inline-flex;
   border-radius: 999px;
-  border: 1px solid rgba(0, 201, 255, 0.4);
-  background: rgba(0, 201, 255, 0.12);
-  color: #aaf1ff;
+  border: 1px solid color-mix(in oklab, var(--accent) 42%, transparent);
+  background: color-mix(in oklab, var(--accent-dim) 94%, transparent);
+  color: var(--accent);
   padding: 0.18rem 0.55rem;
   font-size: 0.6rem;
   letter-spacing: 0.09em;
@@ -651,21 +681,21 @@
 
 .stepCard:hover {
   transform: translateY(-4px);
-  border-color: rgba(0, 201, 255, 0.4);
+  border-color: color-mix(in oklab, var(--accent) 44%, transparent);
   box-shadow:
-    0 0 0 1px rgba(0, 201, 255, 0.1),
-    0 6px 24px rgba(0, 201, 255, 0.1),
+    0 0 0 1px color-mix(in oklab, var(--accent) 12%, transparent),
+    0 6px 24px color-mix(in oklab, var(--accent) 12%, transparent),
     0 20px 48px rgba(0, 0, 0, 0.38);
 }
 
 .stepCardActive {
-  border-color: rgba(0, 201, 255, 0.65) !important;
+  border-color: color-mix(in oklab, var(--accent) 62%, transparent) !important;
   background: linear-gradient(156deg, color-mix(in oklab, var(--accent) 7%, transparent) 0%, var(--bg-2) 60%) !important;
   box-shadow:
-    -3px 0 0 0 rgba(0, 201, 255, 0.85),
-    0 0 0 1px rgba(0, 201, 255, 0.22) inset,
+    -3px 0 0 0 color-mix(in oklab, var(--accent) 82%, transparent),
+    0 0 0 1px color-mix(in oklab, var(--accent) 22%, transparent) inset,
     0 12px 40px rgba(0, 0, 0, 0.3),
-    0 0 48px rgba(0, 201, 255, 0.07);
+    0 0 48px color-mix(in oklab, var(--accent) 10%, transparent);
 }
 
 .stepMeta {
@@ -676,9 +706,9 @@
 
 .stepIndex {
   border-radius: 999px;
-  border: 1px solid rgba(0, 201, 255, 0.38);
-  background: rgba(0, 201, 255, 0.12);
-  color: #a4f0ff;
+  border: 1px solid color-mix(in oklab, var(--accent) 42%, transparent);
+  background: color-mix(in oklab, var(--accent-dim) 94%, transparent);
+  color: var(--accent);
   padding: 0.15rem 0.56rem;
   font-size: 0.66rem;
   letter-spacing: 0.08em;
@@ -781,10 +811,10 @@
 
 .resourceCard:hover {
   transform: translateY(-4px);
-  border-color: rgba(245, 166, 35, 0.4);
+  border-color: color-mix(in oklab, var(--gold) 42%, transparent);
   box-shadow:
-    0 0 0 1px rgba(245, 166, 35, 0.1),
-    0 6px 24px rgba(245, 166, 35, 0.1),
+    0 0 0 1px color-mix(in oklab, var(--gold) 14%, transparent),
+    0 6px 24px color-mix(in oklab, var(--gold) 14%, transparent),
     0 24px 52px rgba(0, 0, 0, 0.38);
 }
 
@@ -795,9 +825,9 @@
   width: 2rem;
   height: 2rem;
   border-radius: 999px;
-  background: rgba(245, 166, 35, 0.15);
-  border: 1px solid rgba(245, 166, 35, 0.4);
-  color: #f9ce79;
+  background: color-mix(in oklab, var(--gold-dim) 92%, transparent);
+  border: 1px solid color-mix(in oklab, var(--gold) 42%, transparent);
+  color: var(--gold);
   font-size: 0.69rem;
   font-weight: 700;
 }
@@ -864,8 +894,8 @@
 
 .slideGain {
   border-radius: 999px;
-  border: 1px solid rgba(0, 201, 255, 0.35);
-  background: rgba(0, 201, 255, 0.14);
+  border: 1px solid color-mix(in oklab, var(--accent) 36%, transparent);
+  background: color-mix(in oklab, var(--accent-dim) 92%, transparent);
   color: var(--accent);
   padding: 0.24rem 0.62rem;
   font-size: 0.67rem;
@@ -928,7 +958,7 @@
 .sliderBtn:hover {
   transform: translateY(-2px);
   color: var(--text);
-  border-color: rgba(0, 201, 255, 0.45);
+  border-color: color-mix(in oklab, var(--accent) 44%, transparent);
 }
 
 .sliderDots {
@@ -952,7 +982,7 @@
 
 .sliderDotActive {
   width: 1.45rem;
-  background: rgba(0, 201, 255, 0.9);
+  background: var(--accent);
   opacity: 1;
 }
 

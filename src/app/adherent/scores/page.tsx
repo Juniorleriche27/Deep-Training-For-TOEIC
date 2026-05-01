@@ -67,7 +67,7 @@ export default async function AdherentScoresPage() {
               </div>
             </div>
             <div className="score-history">
-              {data.history.map((entry, index) => {
+              {data.history.map((entry) => {
                 const height = Math.round((entry.total / maxTotal) * 100);
                 return (
                   <div key={entry.date} className="sh-col">
