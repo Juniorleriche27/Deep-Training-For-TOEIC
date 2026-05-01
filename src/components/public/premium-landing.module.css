@@ -1188,12 +1188,51 @@
     width: min(1120px, 94vw);
   }
 
+  .hero {
+    padding: 2.2rem 0 2.8rem;
+  }
+
+  .heroGrid {
+    gap: 0.95rem;
+  }
+
   .heroPanel,
   .commandCard,
   .valueCard,
   .resourceCard,
   .finalCta {
     border-radius: 0.95rem;
+    padding: 1rem;
+  }
+
+  .heroTitle {
+    margin-top: 0.75rem;
+    font-size: clamp(2.2rem, 15vw, 3.5rem);
+    line-height: 0.92;
+  }
+
+  .heroLead {
+    margin-top: 0.95rem;
+    font-size: 0.9rem;
+    line-height: 1.62;
+  }
+
+  .heroActions {
+    margin-top: 1.15rem;
+    gap: 0.55rem;
+  }
+
+  .primaryBtn,
+  .secondaryBtn {
+    min-height: 3rem;
+    padding: 0.82rem 1rem;
+    font-size: 0.74rem;
+  }
+
+  .heroKicker,
+  .panelLabel,
+  .miniLabel {
+    letter-spacing: 0.1em;
   }
 
   .meterRow {

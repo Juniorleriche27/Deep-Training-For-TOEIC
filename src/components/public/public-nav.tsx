@@ -30,7 +30,7 @@ export function PublicNav() {
               alt="Deep Training For TOEIC"
               width={44}
               height={44}
-              className="h-11 w-11 shrink-0 object-contain"
+              className="h-9 w-9 shrink-0 object-contain md:h-11 md:w-11"
               priority
             />
             <span className="public-brand-copy">

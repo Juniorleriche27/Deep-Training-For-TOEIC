@@ -34,8 +34,7 @@ export default function RootLayout({
     (function () {
       try {
         var stored = localStorage.getItem('dtf-theme');
-        var systemLight = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches;
-        var theme = stored === 'light' || stored === 'dark' ? stored : (systemLight ? 'light' : 'dark');
+        var theme = stored === 'light' || stored === 'dark' ? stored : 'dark';
         document.documentElement.dataset.theme = theme;
       } catch (e) {}
     })();
