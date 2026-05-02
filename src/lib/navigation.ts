@@ -16,6 +16,8 @@ export const publicNav: NavItem[] = [
 
 export const adherentNav: NavItem[] = [
   { href: "/adherent/dashboard", label: "Dashboard", icon: "DB" },
+  { href: "/adherent/embarquement", label: "Embarquement", icon: "EM" },
+  { href: "/adherent/configuration", label: "Configuration", icon: "CF" },
   { href: "/adherent/programme", label: "Programme", icon: "PR" },
   { href: "/adherent/ressources", label: "Ressources", icon: "RS" },
   { href: "/adherent/notes", label: "Prise de notes", icon: "NT" },
