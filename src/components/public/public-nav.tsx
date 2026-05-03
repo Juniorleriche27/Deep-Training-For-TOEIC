@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { publicNav } from "@/lib/navigation";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { ProfileMenu } from "@/components/auth/profile-menu";
 
 export function PublicNav() {
   const pathname = usePathname();
@@ -57,12 +58,7 @@ export function PublicNav() {
           </nav>
           <div className="public-nav-actions">
             <ThemeToggle compact />
-            <Link
-              href="/login"
-              className="hidden rounded-xl border border-[var(--border)] px-4 py-3 text-sm font-semibold text-[var(--text-soft)] transition hover:border-[var(--accent)] hover:text-[var(--text)] md:inline-flex"
-            >
-              Accès Espace
-            </Link>
+            <ProfileMenu />
             <Link
               href="/contact"
               className="btn-primary hidden rounded-xl px-4 py-3 text-sm font-semibold tracking-[0.04em] md:inline-flex"
@@ -153,13 +149,6 @@ export function PublicNav() {
             );
           })}
           <div style={{ borderTop: "1px solid var(--border)", marginTop: "0.5rem", paddingTop: "0.75rem", display: "flex", gap: "0.5rem" }}>
-            <Link
-              href="/login"
-              onClick={() => setOpen(false)}
-              className="flex-1 rounded-xl border border-[var(--border)] px-3 py-3 text-center text-xs font-semibold text-[var(--text-soft)]"
-            >
-              Accès Espace
-            </Link>
             <Link
               href="/contact"
               onClick={() => setOpen(false)}
