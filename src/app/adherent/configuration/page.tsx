@@ -1,91 +1,207 @@
-const configCards = [
-  {
-    title: "Format TOEIC",
-    desc: "Choisir le bon format: PC / 2h, PC / 1h adaptatif, papier / 2h ou indecis.",
-    tone: "var(--accent)",
-  },
-  {
-    title: "Plateforme externe",
-    desc: "Connecter l'espace d'entrainement externe et verifier les identifiants.",
-    tone: "var(--gold)",
-  },
-  {
-    title: "Coach IA",
-    desc: "Charger l'etape active, les consignes et la logique de relance.",
-    tone: "var(--success)",
-  },
-  {
-    title: "Tableau de bord",
-    desc: "Renseigner score, objectif, echeance et contraintes initiales.",
-    tone: "var(--danger)",
-  },
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
+
+const STATUTS = ["Étudiant(e)", "Professionnel(le)", "Autre"];
+const NIVEAUX_ETUDE = ["Bac", "Bac+2", "Bac+3", "Bac+4", "Bac+5 et plus", "Autre"];
+const MOTIVATIONS = [
+  "Visa / immigration",
+  "Poste / promotion professionnelle",
+  "Admission en école ou université",
+  "Certification personnelle",
+  "Autre",
 ];
 
 export default function AdherentConfigurationPage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const [form, setForm] = useState({
+    first_name: "",
+    last_name: "",
+    score_objectif: "",
+    score_actuel: "",
+    date_toeic: "",
+    statut: "",
+    niveau_etude: "",
+    profession: "",
+    motivation: "",
+  });
+
+  const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
+    setForm((f) => ({ ...f, [k]: e.target.value }));
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    if (!form.first_name.trim() || !form.last_name.trim()) {
+      setError("Prénom et nom sont obligatoires.");
+      return;
+    }
+    setLoading(true);
+    const supabase = createClient();
+    const { error: err } = await supabase.auth.updateUser({ data: form });
+    setLoading(false);
+    if (err) {
+      setError(err.message);
+      return;
+    }
+    router.push("/adherent/dashboard");
+    router.refresh();
+  };
+
   return (
     <div>
       <div className="page-header">
-        <h1 className="page-title">Configuration de l&apos;espace</h1>
+        <h1 className="page-title">Configuration du profil</h1>
         <p className="page-sub">
-          Reglages initiaux du parcours, du format TOEIC et de la plateforme d&apos;entrainement.
+          Complète ton profil pour personnaliser ton parcours TOEIC.
         </p>
       </div>
 
-      <div className="widgets-4">
-        {configCards.map((card) => (
-          <article key={card.title} className="widget">
-            <p className="widget-label">Bloc de configuration</p>
-            <p className="widget-value" style={{ color: card.tone, fontSize: "1.05rem", paddingTop: "0.35rem" }}>
-              {card.title}
-            </p>
-            <p className="widget-trend">{card.desc}</p>
-          </article>
-        ))}
-      </div>
+      <form onSubmit={handleSubmit} style={{ maxWidth: 640 }}>
+        <div className="card" style={{ marginBottom: "1.5rem" }}>
+          <h2 className="card-title" style={{ marginBottom: "1.2rem" }}>
+            Identité
+          </h2>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+            <label style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+              <span style={{ fontSize: "0.8rem", color: "var(--text-soft)", fontWeight: 600 }}>
+                Prénom *
+              </span>
+              <input
+                className="input"
+                value={form.first_name}
+                onChange={set("first_name")}
+                placeholder="Ton prénom"
+                required
+              />
+            </label>
+            <label style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+              <span style={{ fontSize: "0.8rem", color: "var(--text-soft)", fontWeight: 600 }}>
+                Nom *
+              </span>
+              <input
+                className="input"
+                value={form.last_name}
+                onChange={set("last_name")}
+                placeholder="Ton nom"
+                required
+              />
+            </label>
+          </div>
 
-      <div className="grid-main">
-        <article className="card">
-          <div className="row-sb" style={{ marginBottom: "0.8rem", flexWrap: "wrap", gap: "0.6rem" }}>
-            <h2 className="card-title">Checklist de configuration</h2>
-            <span className="badge badge-accent">Avant demarrage</span>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginTop: "1rem" }}>
+            <label style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+              <span style={{ fontSize: "0.8rem", color: "var(--text-soft)", fontWeight: 600 }}>
+                Statut
+              </span>
+              <select className="input" value={form.statut} onChange={set("statut")}>
+                <option value="">Choisir…</option>
+                {STATUTS.map((s) => (
+                  <option key={s} value={s}>{s}</option>
+                ))}
+              </select>
+            </label>
+            <label style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+              <span style={{ fontSize: "0.8rem", color: "var(--text-soft)", fontWeight: 600 }}>
+                Niveau d&apos;étude
+              </span>
+              <select className="input" value={form.niveau_etude} onChange={set("niveau_etude")}>
+                <option value="">Choisir…</option>
+                {NIVEAUX_ETUDE.map((n) => (
+                  <option key={n} value={n}>{n}</option>
+                ))}
+              </select>
+            </label>
           </div>
-          <div className="stack" style={{ gap: "0.7rem" }}>
-            {[
-              "Valider le format TOEIC cible.",
-              "Configurer la plateforme externe d'entrainement.",
-              "Renseigner le score actuel et l'objectif.",
-              "Definir la date du test et les contraintes reelles.",
-              "Verifier que le Coach IA pointe sur la bonne etape.",
-            ].map((item) => (
-              <div key={item} className="alert-row info">
-                <div className="alert-row-icon">+</div>
-                <div>
-                  <div className="alert-row-title">{item}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </article>
 
-        <article className="card" style={{ borderColor: "rgba(245,166,35,.28)" }}>
-          <div className="row-sb" style={{ marginBottom: "0.8rem", flexWrap: "wrap", gap: "0.6rem" }}>
-            <h2 className="card-title">Formats a proposer</h2>
-            <span className="badge badge-gold">Cadrage</span>
+          <label style={{ display: "flex", flexDirection: "column", gap: "0.4rem", marginTop: "1rem" }}>
+            <span style={{ fontSize: "0.8rem", color: "var(--text-soft)", fontWeight: 600 }}>
+              Profession / domaine
+            </span>
+            <input
+              className="input"
+              value={form.profession}
+              onChange={set("profession")}
+              placeholder="Ex : Ingénieur, Étudiant en médecine…"
+            />
+          </label>
+        </div>
+
+        <div className="card" style={{ marginBottom: "1.5rem" }}>
+          <h2 className="card-title" style={{ marginBottom: "1.2rem" }}>
+            Objectif TOEIC
+          </h2>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+            <label style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+              <span style={{ fontSize: "0.8rem", color: "var(--text-soft)", fontWeight: 600 }}>
+                Score actuel (estimation)
+              </span>
+              <input
+                className="input"
+                type="number"
+                min={0}
+                max={990}
+                value={form.score_actuel}
+                onChange={set("score_actuel")}
+                placeholder="Ex : 450"
+              />
+            </label>
+            <label style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
+              <span style={{ fontSize: "0.8rem", color: "var(--text-soft)", fontWeight: 600 }}>
+                Score objectif
+              </span>
+              <input
+                className="input"
+                type="number"
+                min={0}
+                max={990}
+                value={form.score_objectif}
+                onChange={set("score_objectif")}
+                placeholder="Ex : 785"
+              />
+            </label>
           </div>
-          <div className="stack" style={{ gap: "0.55rem" }}>
-            {[
-              "Format : PC / 2h",
-              "Format PC : PC / 1h adaptatif",
-              "Format papier : 2h",
-              "Je ne sais pas",
-            ].map((item) => (
-              <div key={item} className="unlock-tag" style={{ width: "100%", padding: "0.55rem 0.7rem" }}>
-                {item}
-              </div>
-            ))}
-          </div>
-        </article>
-      </div>
+
+          <label style={{ display: "flex", flexDirection: "column", gap: "0.4rem", marginTop: "1rem" }}>
+            <span style={{ fontSize: "0.8rem", color: "var(--text-soft)", fontWeight: 600 }}>
+              Date prévue de passage TOEIC
+            </span>
+            <input
+              className="input"
+              type="date"
+              value={form.date_toeic}
+              onChange={set("date_toeic")}
+            />
+          </label>
+
+          <label style={{ display: "flex", flexDirection: "column", gap: "0.4rem", marginTop: "1rem" }}>
+            <span style={{ fontSize: "0.8rem", color: "var(--text-soft)", fontWeight: 600 }}>
+              Motivation principale
+            </span>
+            <select className="input" value={form.motivation} onChange={set("motivation")}>
+              <option value="">Choisir…</option>
+              {MOTIVATIONS.map((m) => (
+                <option key={m} value={m}>{m}</option>
+              ))}
+            </select>
+          </label>
+        </div>
+
+        {error && (
+          <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginBottom: "1rem" }}>
+            {error}
+          </p>
+        )}
+
+        <button type="submit" className="btn-primary" disabled={loading} style={{ width: "100%", padding: "0.9rem" }}>
+          {loading ? "Enregistrement…" : "Valider et accéder à mon espace →"}
+        </button>
+      </form>
     </div>
   );
 }

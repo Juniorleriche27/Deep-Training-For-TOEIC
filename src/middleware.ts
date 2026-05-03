@@ -32,6 +32,17 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(loginUrl);
   }
 
+  const isConfigurationPage =
+    request.nextUrl.pathname === "/adherent/configuration";
+  const profileComplete = Boolean(
+    user?.user_metadata?.first_name && user?.user_metadata?.last_name
+  );
+  if (isProtected && user && !profileComplete && !isConfigurationPage) {
+    return NextResponse.redirect(
+      new URL("/adherent/configuration", request.url)
+    );
+  }
+
   return response;
 }
 
