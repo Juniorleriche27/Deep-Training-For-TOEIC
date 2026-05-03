@@ -1,9 +1,20 @@
+import { createClient } from "./supabase/client";
+
 const BASE = process.env.NEXT_PUBLIC_API_URL ?? "";
 
 async function fetchApi<T>(path: string, init?: RequestInit): Promise<T> {
+  const supabase = createClient();
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+  const token = session?.access_token;
+
   const res = await fetch(`${BASE}${path}`, {
     credentials: "include",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
     ...init,
   });
   if (!res.ok) {
