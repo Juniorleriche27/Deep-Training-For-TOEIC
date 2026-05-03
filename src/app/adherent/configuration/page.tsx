@@ -44,11 +44,13 @@ export default function AdherentConfigurationPage() {
     setLoading(true);
     const supabase = createClient();
     const { error: err } = await supabase.auth.updateUser({ data: form });
-    setLoading(false);
     if (err) {
+      setLoading(false);
       setError(err.message);
       return;
     }
+    await supabase.auth.refreshSession();
+    setLoading(false);
     router.push("/adherent/dashboard");
     router.refresh();
   };
