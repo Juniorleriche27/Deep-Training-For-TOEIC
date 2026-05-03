@@ -9,13 +9,20 @@ async function fetchApi<T>(path: string, init?: RequestInit): Promise<T> {
   } = await supabase.auth.getSession();
   const token = session?.access_token;
 
+  if (process.env.NODE_ENV !== "production") {
+    console.log("Supabase session present:", Boolean(token));
+    console.log("API path:", path);
+  }
+
+  const { headers: initHeaders, ...initRest } = init ?? {};
   const res = await fetch(`${BASE}${path}`, {
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      ...(initHeaders as Record<string, string> | undefined),
     },
-    ...init,
+    ...initRest,
   });
   if (!res.ok) {
     const text = await res.text().catch(() => "");
