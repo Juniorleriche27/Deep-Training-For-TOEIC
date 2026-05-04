@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 export const dynamic = "force-dynamic";
 
@@ -14,11 +14,80 @@ const QUICK_ACTIONS = [
   "Que reviser maintenant ?",
 ];
 
+// Convert markdown to HTML
+function markdownToHtml(text: string): string {
+  return text
+    // Headers
+    .replace(/^### (.+)$/gm, "<h3>$1</h3>")
+    .replace(/^## (.+)$/gm, "<h2>$1</h2>")
+    .replace(/^# (.+)$/gm, "<h1>$1</h1>")
+    // Bold
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    // Italic
+    .replace(/\*(.+?)\*/g, "<em>$1</em>")
+    // Unordered lists
+    .replace(/^[-•] (.+)$/gm, "<li>$1</li>")
+    .replace(/(<li>.*<\/li>\n?)+/g, (m) => `<ul>${m}</ul>`)
+    // Ordered lists
+    .replace(/^\d+\. (.+)$/gm, "<li>$1</li>")
+    // Paragraphs: wrap lines not already wrapped
+    .split("\n\n")
+    .map((block) => {
+      const trimmed = block.trim();
+      if (!trimmed) return "";
+      if (/^<(h[123]|ul|ol|li)/.test(trimmed)) return trimmed;
+      return `<p>${trimmed.replace(/\n/g, "<br/>")}</p>`;
+    })
+    .join("\n");
+}
+
+function StreamingMessage({ content, isStreaming }: { content: string; isStreaming: boolean }) {
+  const [displayed, setDisplayed] = useState("");
+  const [done, setDone] = useState(false);
+  const indexRef = useRef(0);
+  const frameRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    if (!isStreaming) {
+      setDisplayed(content);
+      setDone(true);
+      return;
+    }
+    indexRef.current = 0;
+    setDisplayed("");
+    setDone(false);
+
+    function tick() {
+      indexRef.current += Math.ceil(Math.random() * 3 + 1);
+      const slice = content.slice(0, indexRef.current);
+      setDisplayed(slice);
+      if (indexRef.current < content.length) {
+        frameRef.current = setTimeout(tick, 18);
+      } else {
+        setDisplayed(content);
+        setDone(true);
+      }
+    }
+    frameRef.current = setTimeout(tick, 18);
+    return () => { if (frameRef.current) clearTimeout(frameRef.current); };
+  }, [content, isStreaming]);
+
+  const html = markdownToHtml(displayed);
+
+  return (
+    <div className="coach-msg-content">
+      <div dangerouslySetInnerHTML={{ __html: html }} />
+      {!done && <span className="cursor-blink" />}
+    </div>
+  );
+}
+
 export default function AdherentCoachIaPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [context, setContext] = useState<CoachContext | null>(null);
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
+  const [streamingId, setStreamingId] = useState<string | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const messageSeqRef = useRef(0);
 
@@ -31,7 +100,7 @@ export default function AdherentCoachIaPage() {
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+  }, [messages, streamingId]);
 
   async function send(text: string) {
     if (!text.trim() || sending) return;
@@ -47,7 +116,16 @@ export default function AdherentCoachIaPage() {
     setInput("");
     try {
       const reply = await api.sendChatMessage(text.trim());
-      setMessages((prev) => [...prev.filter((m) => m.id !== userMsg.id), { ...userMsg, id: `user-${tempId}` }, reply]);
+      const replyWithStream = { ...reply, id: reply.id ?? `ai-${tempId}` };
+      setStreamingId(replyWithStream.id);
+      setMessages((prev) => [
+        ...prev.filter((m) => m.id !== userMsg.id),
+        { ...userMsg, id: `user-${tempId}` },
+        replyWithStream,
+      ]);
+      // Clear streaming flag after animation (estimate: content.length * 20ms + buffer)
+      const duration = Math.min(reply.content.length * 20 + 800, 12000);
+      setTimeout(() => setStreamingId(null), duration);
     } catch {
       setMessages((prev) => prev.filter((m) => m.id !== userMsg.id));
     } finally {
@@ -91,15 +169,28 @@ export default function AdherentCoachIaPage() {
                       : { background: "var(--accent-dim)", color: "var(--accent)" }
                   }
                 >
-                  {msg.role === "assistant" ? "IA" : "AS"}
+                  {msg.role === "assistant" ? "IA" : "Moi"}
                 </div>
-                <div className="msg-bubble">{msg.content}</div>
+                {msg.role === "assistant" ? (
+                  <div className="msg-bubble msg-bubble-ai">
+                    <StreamingMessage
+                      content={msg.content}
+                      isStreaming={streamingId === msg.id}
+                    />
+                  </div>
+                ) : (
+                  <div className="msg-bubble">{msg.content}</div>
+                )}
               </div>
             ))}
             {sending && (
               <div className="msg msg-ai">
                 <div className="msg-avatar" style={{ background: "linear-gradient(135deg,var(--accent),#0070cc)", color: "#fff" }}>IA</div>
-                <div className="msg-bubble muted" style={{ fontStyle: "italic" }}>En train de repondre...</div>
+                <div className="msg-bubble msg-bubble-ai">
+                  <div className="typing-dots">
+                    <span /><span /><span />
+                  </div>
+                </div>
               </div>
             )}
             <div ref={bottomRef} />
@@ -122,7 +213,7 @@ export default function AdherentCoachIaPage() {
               onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && send(input)}
             />
             <button className="chat-send" onClick={() => send(input)} disabled={sending}>
-              -&gt;
+              &#8594;
             </button>
           </div>
         </section>
@@ -168,6 +259,81 @@ export default function AdherentCoachIaPage() {
           </article>
         </aside>
       </div>
+
+      <style>{`
+        .msg-bubble-ai {
+          background: var(--card-bg, #1a1f2e);
+          border: 1px solid var(--border, rgba(255,255,255,0.08));
+          max-width: 72%;
+        }
+        .coach-msg-content {
+          font-size: 0.875rem;
+          line-height: 1.7;
+          color: var(--text, #e2e8f0);
+        }
+        .coach-msg-content h1,
+        .coach-msg-content h2,
+        .coach-msg-content h3 {
+          font-weight: 700;
+          margin: 1rem 0 0.4rem;
+          color: var(--text-strong, #fff);
+          line-height: 1.3;
+        }
+        .coach-msg-content h1 { font-size: 1.1rem; }
+        .coach-msg-content h2 { font-size: 1rem; }
+        .coach-msg-content h3 { font-size: 0.93rem; color: var(--accent, #4f9cf9); }
+        .coach-msg-content p {
+          margin: 0.5rem 0;
+        }
+        .coach-msg-content ul,
+        .coach-msg-content ol {
+          margin: 0.5rem 0 0.5rem 1.2rem;
+          padding: 0;
+        }
+        .coach-msg-content li {
+          margin: 0.25rem 0;
+        }
+        .coach-msg-content strong {
+          color: var(--text-strong, #fff);
+          font-weight: 700;
+        }
+        .coach-msg-content em {
+          color: var(--text-soft, #94a3b8);
+          font-style: italic;
+        }
+        .cursor-blink {
+          display: inline-block;
+          width: 2px;
+          height: 1em;
+          background: var(--accent, #4f9cf9);
+          margin-left: 2px;
+          vertical-align: middle;
+          animation: blink 0.7s step-end infinite;
+        }
+        @keyframes blink {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
+        .typing-dots {
+          display: flex;
+          gap: 5px;
+          align-items: center;
+          padding: 4px 0;
+        }
+        .typing-dots span {
+          width: 7px;
+          height: 7px;
+          border-radius: 50%;
+          background: var(--accent, #4f9cf9);
+          animation: dot-bounce 1.2s infinite;
+        }
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes dot-bounce {
+          0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
+          40% { transform: translateY(-6px); opacity: 1; }
+        }
+      `}</style>
     </div>
   );
 }
