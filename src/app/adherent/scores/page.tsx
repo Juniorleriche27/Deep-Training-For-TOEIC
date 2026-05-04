@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import { api } from "@/lib/api";
+import { apiServer as api } from "@/lib/api-server";
 
 const PART_COLOR: Record<string, string> = {
   Fort: "var(--success)",

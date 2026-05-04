@@ -25,10 +25,22 @@ export async function fetchApiServer<T>(path: string, init?: RequestInit): Promi
   return res.json();
 }
 
-import type { AdherentUser } from "./types";
+import type { AdherentUser, DashboardData, ProgrammeStep, ScoreData, Resource } from "./types";
 
 export const apiServer = {
   getMe(): Promise<AdherentUser> {
     return fetchApiServer("/adherent/me");
+  },
+  getDashboard(): Promise<DashboardData> {
+    return fetchApiServer("/adherent/dashboard");
+  },
+  getProgramme(): Promise<ProgrammeStep[]> {
+    return fetchApiServer("/adherent/programme");
+  },
+  getScores(): Promise<ScoreData> {
+    return fetchApiServer("/adherent/scores");
+  },
+  getRessources(): Promise<Resource[]> {
+    return fetchApiServer("/adherent/ressources");
   },
 };

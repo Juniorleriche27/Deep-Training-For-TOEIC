@@ -1,6 +1,6 @@
 export const dynamic = "force-dynamic";
 
-import { api } from "@/lib/api";
+import { apiServer as api } from "@/lib/api-server";
 
 export default async function AdherentRessourcesPage() {
   const resources = await api.getRessources().catch(() => null);

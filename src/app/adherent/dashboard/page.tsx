@@ -1,7 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import Link from "next/link";
-import { api } from "@/lib/api";
+import { apiServer as api } from "@/lib/api-server";
 import type { DashboardData } from "@/lib/types";
 
 const PRIORITY_CLASS: Record<string, string> = {
