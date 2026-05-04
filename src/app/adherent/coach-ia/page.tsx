@@ -2,7 +2,7 @@
 
 export const dynamic = "force-dynamic";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { api } from "@/lib/api";
 import type { ChatMessage, CoachContext } from "@/lib/types";
 
@@ -14,65 +14,142 @@ const QUICK_ACTIONS = [
   "Que reviser maintenant ?",
 ];
 
-// Convert markdown to HTML
-function markdownToHtml(text: string): string {
+// Robust markdown → HTML, processes block by block then inline
+function markdownToHtml(raw: string): string {
+  // Split into paragraphs separated by blank lines
+  const blocks = raw.split(/\n{2,}/);
+
+  const processedBlocks = blocks.map((block) => {
+    const lines = block.trim().split("\n");
+    if (!lines.length || !lines[0]) return "";
+
+    // Heading
+    if (/^### /.test(lines[0])) {
+      return `<h3>${inlineMarkdown(lines[0].replace(/^### /, ""))}</h3>`;
+    }
+    if (/^## /.test(lines[0])) {
+      return `<h2>${inlineMarkdown(lines[0].replace(/^## /, ""))}</h2>`;
+    }
+    if (/^# /.test(lines[0])) {
+      return `<h1>${inlineMarkdown(lines[0].replace(/^# /, ""))}</h1>`;
+    }
+
+    // Ordered list — all lines start with digit+dot
+    if (lines.every((l) => /^\d+\.\s/.test(l.trim()) || l.trim() === "")) {
+      const items = lines
+        .filter((l) => /^\d+\.\s/.test(l.trim()))
+        .map((l) => `<li>${inlineMarkdown(l.trim().replace(/^\d+\.\s/, ""))}</li>`)
+        .join("");
+      return `<ol>${items}</ol>`;
+    }
+
+    // Unordered list — lines start with - or •
+    if (lines.every((l) => /^[-•*]\s/.test(l.trim()) || l.trim() === "")) {
+      const items = lines
+        .filter((l) => /^[-•*]\s/.test(l.trim()))
+        .map((l) => `<li>${inlineMarkdown(l.trim().replace(/^[-•*]\s/, ""))}</li>`)
+        .join("");
+      return `<ul>${items}</ul>`;
+    }
+
+    // Mixed block — render line by line, collecting list runs
+    const html: string[] = [];
+    let listBuffer: string[] = [];
+    let listType: "ul" | "ol" | null = null;
+
+    function flushList() {
+      if (!listBuffer.length) return;
+      const tag = listType!;
+      html.push(`<${tag}>${listBuffer.join("")}</${tag}>`);
+      listBuffer = [];
+      listType = null;
+    }
+
+    for (const line of lines) {
+      const t = line.trim();
+      if (/^#{1,3}\s/.test(t)) {
+        flushList();
+        const lvl = t.match(/^(#{1,3})\s/)![1].length;
+        html.push(`<h${lvl}>${inlineMarkdown(t.replace(/^#{1,3}\s/, ""))}</h${lvl}>`);
+      } else if (/^\d+\.\s/.test(t)) {
+        if (listType && listType !== "ol") flushList();
+        listType = "ol";
+        listBuffer.push(`<li>${inlineMarkdown(t.replace(/^\d+\.\s/, ""))}</li>`);
+      } else if (/^[-•*]\s/.test(t)) {
+        if (listType && listType !== "ul") flushList();
+        listType = "ul";
+        listBuffer.push(`<li>${inlineMarkdown(t.replace(/^[-•*]\s/, ""))}</li>`);
+      } else if (t === "") {
+        flushList();
+      } else {
+        flushList();
+        html.push(`<p>${inlineMarkdown(t)}</p>`);
+      }
+    }
+    flushList();
+    return html.join("");
+  });
+
+  return processedBlocks.filter(Boolean).join("\n");
+}
+
+// Handle inline markdown: bold, italic, inline code
+function inlineMarkdown(text: string): string {
   return text
-    // Headers
-    .replace(/^### (.+)$/gm, "<h3>$1</h3>")
-    .replace(/^## (.+)$/gm, "<h2>$1</h2>")
-    .replace(/^# (.+)$/gm, "<h1>$1</h1>")
-    // Bold
+    // Bold+italic ***text***
+    .replace(/\*\*\*(.+?)\*\*\*/g, "<strong><em>$1</em></strong>")
+    // Bold **text**
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-    // Italic
-    .replace(/\*(.+?)\*/g, "<em>$1</em>")
-    // Unordered lists
-    .replace(/^[-•] (.+)$/gm, "<li>$1</li>")
-    .replace(/(<li>.*<\/li>\n?)+/g, (m) => `<ul>${m}</ul>`)
-    // Ordered lists
-    .replace(/^\d+\. (.+)$/gm, "<li>$1</li>")
-    // Paragraphs: wrap lines not already wrapped
-    .split("\n\n")
-    .map((block) => {
-      const trimmed = block.trim();
-      if (!trimmed) return "";
-      if (/^<(h[123]|ul|ol|li)/.test(trimmed)) return trimmed;
-      return `<p>${trimmed.replace(/\n/g, "<br/>")}</p>`;
-    })
-    .join("\n");
+    // Italic *text* (not preceded/followed by *)
+    .replace(/(?<!\*)\*(?!\*)(.+?)(?<!\*)\*(?!\*)/g, "<em>$1</em>")
+    // Inline code `text`
+    .replace(/`([^`]+)`/g, "<code>$1</code>");
+}
+
+function useStreamingText(content: string, active: boolean) {
+  const [slice, setSlice] = useState(content);
+  const [animDone, setAnimDone] = useState(true);
+  const stateRef = useRef({ content, active, index: 0, timer: null as ReturnType<typeof setTimeout> | null });
+
+  useEffect(() => {
+    stateRef.current.content = content;
+    stateRef.current.active = active;
+    const s = stateRef.current;
+    if (s.timer) clearTimeout(s.timer);
+    if (!active) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setSlice(content);
+       
+      setAnimDone(true);
+      return;
+    }
+    s.index = 0;
+    const advance = () => {
+      s.index += Math.ceil(Math.random() * 3 + 1);
+      const next = s.content.slice(0, s.index);
+       
+      setSlice(next);
+      if (s.index < s.content.length) {
+        s.timer = setTimeout(advance, 18);
+      } else {
+         
+        setSlice(s.content);
+         
+        setAnimDone(true);
+      }
+    };
+     
+    setAnimDone(false);
+    s.timer = setTimeout(advance, 18);
+    return () => { if (s.timer) clearTimeout(s.timer); };
+  }, [active, content]);
+
+  return { slice: active ? slice : content, done: !active || animDone };
 }
 
 function StreamingMessage({ content, isStreaming }: { content: string; isStreaming: boolean }) {
-  const [displayed, setDisplayed] = useState("");
-  const [done, setDone] = useState(false);
-  const indexRef = useRef(0);
-  const frameRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => {
-    if (!isStreaming) {
-      setDisplayed(content);
-      setDone(true);
-      return;
-    }
-    indexRef.current = 0;
-    setDisplayed("");
-    setDone(false);
-
-    function tick() {
-      indexRef.current += Math.ceil(Math.random() * 3 + 1);
-      const slice = content.slice(0, indexRef.current);
-      setDisplayed(slice);
-      if (indexRef.current < content.length) {
-        frameRef.current = setTimeout(tick, 18);
-      } else {
-        setDisplayed(content);
-        setDone(true);
-      }
-    }
-    frameRef.current = setTimeout(tick, 18);
-    return () => { if (frameRef.current) clearTimeout(frameRef.current); };
-  }, [content, isStreaming]);
-
-  const html = markdownToHtml(displayed);
+  const { slice, done } = useStreamingText(content, isStreaming);
+  const html = useMemo(() => markdownToHtml(slice), [slice]);
 
   return (
     <div className="coach-msg-content">
