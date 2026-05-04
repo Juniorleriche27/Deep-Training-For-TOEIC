@@ -1,4 +1,5 @@
 import { PublicNav } from "@/components/public/public-nav";
+import { PublicChatbotWidget } from "@/components/public/PublicChatbotWidget";
 import Link from "next/link";
 
 export default function PublicLayout({
@@ -8,6 +9,7 @@ export default function PublicLayout({
     <>
       <PublicNav />
       <main className="public-site-main public-page-enter">{children}</main>
+      <PublicChatbotWidget />
       <footer className="surface-container pb-12">
         <section className="public-footer-shell reveal-up delay-2">
           <div className="public-footer-grid">
