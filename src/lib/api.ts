@@ -115,6 +115,24 @@ export const api = {
     return fetchApi(`/adherent/messages/${id}/read`, { method: "PUT" });
   },
 
+  // Profil
+  initProfil(data: {
+    firstName: string;
+    lastName: string;
+    currentScore: number;
+    targetScore: number;
+    toeicDate: string;
+    status: string;
+    studyLevel: string;
+    profession: string;
+    mainMotivation: string;
+  }): Promise<void> {
+    return fetchApi("/adherent/profil/init", {
+      method: "POST",
+      body: JSON.stringify(data),
+    });
+  },
+
   // Coach IA
   getCoachContext(): Promise<CoachContext> {
     return fetchApi("/adherent/coach-ia/context");

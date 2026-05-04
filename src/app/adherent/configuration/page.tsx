@@ -3,8 +3,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { api } from "@/lib/api";
 
-const STATUTS = ["Étudiant(e)", "Professionnel(le)", "Autre"];
+const STATUTS = [
+  { label: "Étudiant(e)", value: "student" },
+  { label: "Professionnel(le)", value: "professional" },
+  { label: "Autre", value: "other" },
+];
 const NIVEAUX_ETUDE = ["Bac", "Bac+2", "Bac+3", "Bac+4", "Bac+5 et plus", "Autre"];
 const MOTIVATIONS = [
   "Visa / immigration",
@@ -31,8 +36,10 @@ export default function AdherentConfigurationPage() {
     motivation: "",
   });
 
-  const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
-    setForm((f) => ({ ...f, [k]: e.target.value }));
+  const set =
+    (k: keyof typeof form) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) =>
+      setForm((f) => ({ ...f, [k]: e.target.value }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,17 +49,41 @@ export default function AdherentConfigurationPage() {
       return;
     }
     setLoading(true);
-    const supabase = createClient();
-    const { error: err } = await supabase.auth.updateUser({ data: form });
-    if (err) {
+    try {
+      const supabase = createClient();
+
+      // 1. Mettre à jour user_metadata Supabase (pour le header)
+      const { error: metaErr } = await supabase.auth.updateUser({
+        data: {
+          first_name: form.first_name.trim(),
+          last_name: form.last_name.trim(),
+        },
+      });
+      if (metaErr) throw new Error(metaErr.message);
+
+      // 2. Rafraîchir la session pour que le middleware voie la metadata à jour
+      await supabase.auth.refreshSession();
+
+      // 3. Envoyer au backend (source officielle du dashboard)
+      await api.initProfil({
+        firstName: form.first_name.trim(),
+        lastName: form.last_name.trim(),
+        currentScore: Number(form.score_actuel) || 0,
+        targetScore: Number(form.score_objectif) || 785,
+        toeicDate: form.date_toeic || "",
+        status: form.statut || "other",
+        studyLevel: form.niveau_etude || "",
+        profession: form.profession.trim(),
+        mainMotivation: form.motivation || "",
+      });
+
+      router.push("/adherent/dashboard");
+      router.refresh();
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : "Une erreur est survenue.";
+      setError(msg);
       setLoading(false);
-      setError(err.message);
-      return;
     }
-    await supabase.auth.refreshSession();
-    setLoading(false);
-    router.push("/adherent/dashboard");
-    router.refresh();
   };
 
   return (
@@ -104,7 +135,9 @@ export default function AdherentConfigurationPage() {
               <select className="input" value={form.statut} onChange={set("statut")}>
                 <option value="">Choisir…</option>
                 {STATUTS.map((s) => (
-                  <option key={s} value={s}>{s}</option>
+                  <option key={s.value} value={s.value}>
+                    {s.label}
+                  </option>
                 ))}
               </select>
             </label>
@@ -115,7 +148,9 @@ export default function AdherentConfigurationPage() {
               <select className="input" value={form.niveau_etude} onChange={set("niveau_etude")}>
                 <option value="">Choisir…</option>
                 {NIVEAUX_ETUDE.map((n) => (
-                  <option key={n} value={n}>{n}</option>
+                  <option key={n} value={n}>
+                    {n}
+                  </option>
                 ))}
               </select>
             </label>
@@ -188,19 +223,35 @@ export default function AdherentConfigurationPage() {
             <select className="input" value={form.motivation} onChange={set("motivation")}>
               <option value="">Choisir…</option>
               {MOTIVATIONS.map((m) => (
-                <option key={m} value={m}>{m}</option>
+                <option key={m} value={m}>
+                  {m}
+                </option>
               ))}
             </select>
           </label>
         </div>
 
         {error && (
-          <p style={{ color: "var(--danger)", fontSize: "0.85rem", marginBottom: "1rem" }}>
+          <p
+            style={{
+              color: "var(--danger)",
+              fontSize: "0.85rem",
+              marginBottom: "1rem",
+              padding: "0.75rem 1rem",
+              background: "var(--danger-subtle)",
+              borderRadius: "0.75rem",
+            }}
+          >
             {error}
           </p>
         )}
 
-        <button type="submit" className="btn-primary" disabled={loading} style={{ width: "100%", padding: "0.9rem" }}>
+        <button
+          type="submit"
+          className="btn-primary"
+          disabled={loading}
+          style={{ width: "100%", padding: "0.9rem" }}
+        >
           {loading ? "Enregistrement…" : "Valider et accéder à mon espace →"}
         </button>
       </form>
