@@ -879,7 +879,8 @@ a {
   display: grid;
   grid-template-columns: 220px 1fr;
   grid-template-rows: 56px 1fr;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .app-topbar {
@@ -1015,7 +1016,11 @@ a {
   padding: 1rem 0;
   display: flex;
   flex-direction: column;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: sticky;
+  top: 56px;
+  height: calc(100vh - 56px);
 }
 
 .sidebar-section {
@@ -1074,7 +1079,9 @@ a {
 .app-main {
   background: var(--bg);
   padding: 1.35rem;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: calc(100vh - 56px);
 }
 
 .page-header {
