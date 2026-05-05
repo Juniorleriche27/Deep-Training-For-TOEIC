@@ -3073,10 +3073,19 @@ textarea {
 @media (max-width: 1100px) {
   /* Le shell adhérent utilisait un viewport interne (100vh + overflow hidden)
      qui se recompose brutalement quand la barre navigateur mobile change de taille */
+  body {
+    background: var(--bg);
+    transition: none;
+  }
+
   .app-layout {
     height: auto;
     min-height: 100dvh;
     overflow: visible;
+  }
+
+  .app-topbar {
+    position: static;
   }
 
   .app-sidebar,
@@ -3085,8 +3094,39 @@ textarea {
   }
 
   .app-main {
+    background: var(--bg);
     min-height: 0;
     overflow: visible;
+  }
+
+  .reveal-up,
+  .reveal-up.delay-1,
+  .reveal-up.delay-2,
+  .reveal-up.delay-3,
+  .public-page-enter {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  .card,
+  .widget,
+  .unlock-card,
+  .res-card,
+  .profile-card,
+  .panel-card,
+  .rule-card,
+  .testi-card,
+  .pricing-card,
+  .scores-chart-fake,
+  .notes-list,
+  .note-editor,
+  .chat-main,
+  .sidebar-item,
+  .topbar-switch-link,
+  .theme-toggle,
+  .data-table tr {
+    transition: none;
   }
 
   /* backdrop-filter coûte une recomposition complète à chaque frame de scroll */
