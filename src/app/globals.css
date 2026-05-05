@@ -2692,6 +2692,7 @@ body::before {
   display: flex;
   align-items: center;
   gap: 0.7rem;
+  flex: 0 0 auto;
 }
 
 .public-mobile-cta,
@@ -2703,6 +2704,10 @@ body::before {
 
 .public-action-desktop {
   display: inline-flex;
+}
+
+.public-premium-badge {
+  flex: 0 0 auto;
 }
 
 .public-mobile-cta {
@@ -3424,11 +3429,12 @@ body::before {
   }
 
   .public-action-desktop,
-  .public-contact-desktop {
+  .public-contact-desktop,
+  .public-premium-badge,
+  .public-mobile-cta {
     display: none !important;
   }
 
-  .public-mobile-cta,
   .public-menu-btn,
   .public-mobile-backdrop {
     display: inline-flex;
@@ -3441,16 +3447,6 @@ body::before {
   .public-nav-shell {
     background: var(--bg-2);
     backdrop-filter: none;
-  }
-
-  .public-nav-bar {
-    justify-content: space-between;
-  }
-
-  .public-mobile-cta {
-    max-width: 5.9rem;
-    padding-inline: 0.8rem;
-    font-size: 0.74rem;
   }
 
   .app-topbar {
@@ -3547,10 +3543,13 @@ textarea {
     min-height: 4.9rem;
     justify-content: space-between;
     gap: 0.7rem;
+    flex-wrap: nowrap;
   }
 
   .public-brand-lockup {
+    flex: 1 1 auto;
     min-width: 0;
+    max-width: calc(100% - 3.6rem);
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
@@ -3564,11 +3563,12 @@ textarea {
   }
 
   .public-action-desktop,
-  .public-contact-desktop {
+  .public-contact-desktop,
+  .public-premium-badge,
+  .public-mobile-cta {
     display: none !important;
   }
 
-  .public-mobile-cta,
   .public-menu-btn,
   .public-mobile-backdrop {
     display: inline-flex;
@@ -3581,6 +3581,10 @@ textarea {
   .public-nav-shell {
     background: var(--bg-2);
     backdrop-filter: none;
+  }
+
+  .public-nav-actions {
+    margin-left: 0;
   }
 
   /* Le shell adhérent utilisait un viewport interne (100vh + overflow hidden)

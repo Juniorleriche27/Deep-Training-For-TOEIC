@@ -45,7 +45,7 @@ export function PublicNav() {
               </span>
             </span>
           </Link>
-          <span className="badge badge-accent hidden 2xl:inline-flex">Programme premium</span>
+          <span className="badge badge-accent public-premium-badge hidden 2xl:inline-flex">Programme premium</span>
           <nav className="public-nav-links hidden lg:flex">
             {publicNav.map((item) => {
               const active = pathname === item.href;
@@ -72,12 +72,6 @@ export function PublicNav() {
               className="btn-primary public-contact-desktop hidden rounded-xl px-4 py-3 text-sm font-semibold tracking-[0.04em] md:inline-flex"
             >
               Candidature →
-            </Link>
-            <Link
-              href="/contact"
-              className="public-mobile-cta lg:hidden"
-            >
-              Premium
             </Link>
             <button
               type="button"
