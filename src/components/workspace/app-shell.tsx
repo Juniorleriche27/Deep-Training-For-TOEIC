@@ -31,17 +31,29 @@ export function AppShell({
   const pathname = usePathname();
   const adminMode = accent === "gold";
   const workspaceHome = adminMode ? "/admin" : "/adherent/dashboard";
+  const avatarStyle = adminMode
+    ? {
+        background: "var(--gold-dim)",
+        color: "var(--gold)",
+        borderColor: "rgba(245,166,35,0.3)",
+      }
+    : undefined;
+  const roleStyle = adminMode ? { color: "var(--gold)" } : undefined;
 
   return (
     <div className="app-layout">
       <header className="app-topbar">
-        <Link href="/" className="topbar-logo">
-          Deep <span>Training</span> For TOEIC
-        </Link>
-        <span className={`badge ${adminMode ? "badge-gold" : "badge-accent"}`}>
-          {adminMode ? "Control Center" : "Mission Cockpit"}
-        </span>
-        <div className="topbar-sep" />
+        <div className="topbar-brand">
+          <Link href="/" className="topbar-logo">
+            Deep <span>Training</span> For TOEIC
+          </Link>
+          <span
+            className={`badge topbar-badge ${adminMode ? "badge-gold" : "badge-accent"}`}
+          >
+            {adminMode ? "Control Center" : "Mission Cockpit"}
+          </span>
+        </div>
+
         <div className="topbar-switch">
           <Link href="/" className={`topbar-switch-link ${pathname === "/" ? "topbar-switch-link-active" : ""}`}>
             Site public
@@ -57,36 +69,37 @@ export function AppShell({
             {context}
           </Link>
         </div>
+
         <div className="topbar-right">
-          <ThemeToggle compact />
-          <div className="notif-btn" aria-label="Notifications">
-            NT
-            <span className="notif-dot" />
-          </div>
-          <div className="topbar-user">
-            <div
-              className="user-avatar"
-              style={
-                adminMode
-                  ? {
-                      background: "var(--gold-dim)",
-                      color: "var(--gold)",
-                      borderColor: "rgba(245,166,35,0.3)",
-                    }
-                  : undefined
-              }
-            >
+          <div className="topbar-user topbar-user-desktop">
+            <div className="user-avatar" style={avatarStyle}>
               {user.avatar}
             </div>
             <div className="user-info">
               <div className="name">{user.name}</div>
-              <div
-                className="role"
-                style={adminMode ? { color: "var(--gold)" } : undefined}
-              >
+              <div className="role" style={roleStyle}>
                 {user.role}
               </div>
             </div>
+          </div>
+          <div className="topbar-actions">
+            <div className="topbar-avatar-mobile">
+              <div className="user-avatar" style={avatarStyle}>
+                {user.avatar}
+              </div>
+            </div>
+            <ThemeToggle compact />
+            <div className="notif-btn" aria-label="Notifications">
+              NT
+              <span className="notif-dot" />
+            </div>
+          </div>
+        </div>
+
+        <div className="topbar-mobile-user">
+          <div className="topbar-mobile-user-name">{user.name}</div>
+          <div className="topbar-mobile-user-role" style={roleStyle}>
+            {user.role}
           </div>
         </div>
       </header>

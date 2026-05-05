@@ -897,6 +897,13 @@ a {
   z-index: 40;
 }
 
+.topbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-width: 0;
+}
+
 .topbar-logo {
   display: inline-flex;
   align-items: center;
@@ -916,6 +923,10 @@ a {
   background: var(--border);
 }
 
+.topbar-badge {
+  flex: 0 0 auto;
+}
+
 .topbar-context {
   color: var(--text-soft);
   font-size: 0.76rem;
@@ -928,6 +939,9 @@ a {
 }
 
 .topbar-switch-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 0.5rem 0.85rem;
   border-radius: 999px;
   color: var(--text-soft);
@@ -955,6 +969,17 @@ a {
   display: flex;
   align-items: center;
   gap: 0.7rem;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.topbar-avatar-mobile,
+.topbar-mobile-user {
+  display: none;
 }
 
 .notif-btn {
@@ -2907,6 +2932,7 @@ body::before {
   .topbar-switch {
     order: 3;
     width: 100%;
+    margin-left: 0;
     overflow-x: auto;
     padding-bottom: 0.12rem;
     scrollbar-width: none;
@@ -2974,6 +3000,88 @@ body::before {
   .public-two-grid {
     grid-template-columns: 1fr;
   }
+
+  .app-topbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "brand actions"
+      "user user"
+      "switch switch";
+    align-items: start;
+    gap: 0.75rem 0.85rem;
+  }
+
+  .topbar-brand {
+    grid-area: brand;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.38rem;
+  }
+
+  .topbar-badge {
+    max-width: 100%;
+  }
+
+  .topbar-right {
+    grid-area: actions;
+    margin-left: 0;
+    justify-self: end;
+    align-self: start;
+  }
+
+  .topbar-user-desktop {
+    display: none;
+  }
+
+  .topbar-avatar-mobile {
+    display: block;
+  }
+
+  .topbar-mobile-user {
+    grid-area: user;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    min-width: 0;
+    padding: 0.72rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 0.95rem;
+    background: color-mix(in oklab, var(--bg-2) 86%, var(--accent) 14%);
+  }
+
+  .topbar-mobile-user-name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .topbar-mobile-user-role {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.68rem;
+    color: var(--text-soft);
+  }
+
+  .topbar-switch {
+    grid-area: switch;
+    width: 100%;
+    margin-left: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.45rem;
+  }
+
+  .topbar-switch-link {
+    min-width: 0;
+    text-align: center;
+  }
 }
 
 @media (max-width: 640px) {
@@ -3013,23 +3121,41 @@ body::before {
   }
 
   .topbar-logo {
-    font-size: 0.76rem;
+    max-width: 12rem;
+    font-size: 0.78rem;
     letter-spacing: 0.03em;
+    line-height: 1.05;
   }
 
-  .topbar-sep,
-  .user-info {
-    display: none;
+  .topbar-badge {
+    font-size: 0.64rem;
+    padding: 0.18rem 0.55rem;
   }
 
   .topbar-switch-link {
-    padding: 0.45rem 0.7rem;
+    padding: 0.55rem 0.7rem;
     font-size: 0.72rem;
-    white-space: nowrap;
+    white-space: normal;
   }
 
   .topbar-right {
-    margin-left: auto;
+    gap: 0.45rem;
+  }
+
+  .topbar-actions {
+    gap: 0.42rem;
+  }
+
+  .topbar-mobile-user {
+    padding: 0.68rem 0.72rem;
+  }
+
+  .topbar-mobile-user-name {
+    font-size: 0.78rem;
+  }
+
+  .topbar-mobile-user-role {
+    font-size: 0.66rem;
   }
 
   .notif-btn,
