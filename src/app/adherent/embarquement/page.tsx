@@ -42,9 +42,7 @@ export default function AdherentEmbarquementPage() {
                 <p className="card-desc">
                   Zone prevue pour la video de configuration de la plateforme externe d&apos;entrainement.
                 </p>
-                <button className="btn-secondary rounded-md px-4 py-2 text-sm font-semibold">
-                  Integrer la video
-                </button>
+                <p className="muted text-xs">La video de configuration sera disponible prochainement.</p>
               </div>
             </div>
           </article>

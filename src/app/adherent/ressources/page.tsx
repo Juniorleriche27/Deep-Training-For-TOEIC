@@ -23,18 +23,6 @@ export default async function AdherentRessourcesPage() {
         <p className="page-sub">Outils de travail disponibles selon ton etape.</p>
       </div>
 
-      <div className="filter-bar">
-        <button className="filter-btn active">Toutes</button>
-        <button className="filter-btn">Methode</button>
-        <button className="filter-btn">Exercices</button>
-        <button className="filter-btn">Non consultees</button>
-        <input
-          className="chat-input"
-          style={{ maxWidth: "260px", borderRadius: "20px" }}
-          placeholder="Rechercher une ressource..."
-        />
-      </div>
-
       <div className="cards-2">
         {resources.map((resource) => (
           <article

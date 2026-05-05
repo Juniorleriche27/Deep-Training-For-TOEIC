@@ -11,6 +11,7 @@ export default function AdherentSupportPage() {
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [sendError, setSendError] = useState("");
 
   useEffect(() => {
     api.getMessages()
@@ -21,10 +22,13 @@ export default function AdherentSupportPage() {
   async function handleSend() {
     if (!input.trim() || sending) return;
     setSending(true);
+    setSendError("");
     try {
       const msg = await api.sendMessage(input.trim());
       setMessages((prev) => [msg, ...prev]);
       setInput("");
+    } catch {
+      setSendError("Impossible d'envoyer le message. Réessayez.");
     } finally {
       setSending(false);
     }
@@ -79,6 +83,9 @@ export default function AdherentSupportPage() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
           />
+          {sendError && (
+            <p style={{ color: "var(--danger)", fontSize: "0.8rem", marginTop: "0.5rem" }}>{sendError}</p>
+          )}
           <button
             className="btn-primary mt-3 rounded-md px-4 py-2 text-sm font-semibold"
             onClick={handleSend}

@@ -1,6 +1,7 @@
 export const dynamic = "force-dynamic";
 
 import { apiServer as api } from "@/lib/api-server";
+import { AddScoreForm } from "./AddScoreForm";
 
 const PART_COLOR: Record<string, string> = {
   Fort: "var(--success)",
@@ -136,6 +137,8 @@ export default async function AdherentScoresPage() {
               </table>
             </div>
           </article>
+
+          <AddScoreForm />
 
           <article className="card" style={{ borderColor: "rgba(0,201,255,.3)" }}>
             <h2 className="card-title" style={{ marginBottom: "0.45rem" }}>Conseil Coach IA</h2>

@@ -164,6 +164,7 @@ export default function AdherentCoachIaPage() {
   const [context, setContext] = useState<CoachContext | null>(null);
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState("");
   const [streamingId, setStreamingId] = useState<string | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
   const messageSeqRef = useRef(0);
@@ -182,6 +183,7 @@ export default function AdherentCoachIaPage() {
   async function send(text: string) {
     if (!text.trim() || sending) return;
     setSending(true);
+    setSendError("");
     const tempId = `tmp-${messageSeqRef.current++}`;
     const userMsg: ChatMessage = {
       id: tempId,
@@ -205,6 +207,7 @@ export default function AdherentCoachIaPage() {
       setTimeout(() => setStreamingId(null), duration);
     } catch {
       setMessages((prev) => prev.filter((m) => m.id !== userMsg.id));
+      setSendError("Impossible d'envoyer le message. Vérifiez votre connexion et réessayez.");
     } finally {
       setSending(false);
     }
@@ -281,6 +284,9 @@ export default function AdherentCoachIaPage() {
             ))}
           </div>
 
+          {sendError && (
+            <p style={{ color: "var(--danger)", fontSize: "0.78rem", padding: "0.35rem 0.5rem" }}>{sendError}</p>
+          )}
           <div className="chat-input-row">
             <input
               className="chat-input"

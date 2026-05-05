@@ -11,6 +11,7 @@ export default function AdherentNotesPage() {
   const [selected, setSelected] = useState<Note | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [saveError, setSaveError] = useState("");
   const [editTitle, setEditTitle] = useState("");
   const [editContent, setEditContent] = useState("");
 
@@ -32,6 +33,7 @@ export default function AdherentNotesPage() {
   async function handleSave() {
     if (!selected || saving) return;
     setSaving(true);
+    setSaveError("");
     try {
       const updated = await api.updateNote(selected.id, {
         title: editTitle,
@@ -39,20 +41,27 @@ export default function AdherentNotesPage() {
       });
       setNotes((prev) => prev.map((n) => (n.id === updated.id ? updated : n)));
       setSelected(updated);
+    } catch {
+      setSaveError("Impossible de sauvegarder. Réessayez.");
     } finally {
       setSaving(false);
     }
   }
 
   async function handleNew() {
-    const note = await api.createNote({
-      title: "Nouvelle note",
-      etape: "",
-      content: "",
-      words: [],
-    });
-    setNotes((prev) => [note, ...prev]);
-    selectNote(note);
+    setSaveError("");
+    try {
+      const note = await api.createNote({
+        title: "Nouvelle note",
+        etape: "",
+        content: "",
+        words: [],
+      });
+      setNotes((prev) => [note, ...prev]);
+      selectNote(note);
+    } catch {
+      setSaveError("Impossible de créer la note. Réessayez.");
+    }
   }
 
   return (
@@ -87,12 +96,8 @@ export default function AdherentNotesPage() {
           <article className="note-editor">
             <div className="note-editor-toolbar">
               <span className="badge badge-accent">{selected.etape || "Sans etape"}</span>
-              <button className="tool-btn">Gras</button>
-              <button className="tool-btn">Italique</button>
-              <button className="tool-btn">Liste</button>
               <div className="row" style={{ marginLeft: "auto" }}>
                 {selected.tag && <span className="badge badge-gold">{selected.tag}</span>}
-                <button className="tool-btn">Tag</button>
                 <button
                   className="btn-primary rounded-md px-3 py-1 text-xs"
                   onClick={handleSave}
@@ -103,6 +108,9 @@ export default function AdherentNotesPage() {
               </div>
             </div>
 
+            {saveError && (
+              <p style={{ color: "var(--danger)", fontSize: "0.8rem", padding: "0.4rem 0" }}>{saveError}</p>
+            )}
             <div className="note-editor-body">
               <input
                 className="note-editor-title"
