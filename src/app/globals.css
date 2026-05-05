@@ -3048,3 +3048,120 @@ body::before {
     border-radius: 1.1rem;
   }
 }
+
+/* ===== Mobile scroll performance ===== */
+
+/* touch-action: manipulation supprime le délai 300ms sur tous les éléments cliquables */
+button,
+a,
+[role="button"],
+input,
+select,
+textarea {
+  touch-action: manipulation;
+}
+
+@media (max-width: 1100px) {
+  /* backdrop-filter coûte une recomposition complète à chaque frame de scroll */
+  .app-topbar,
+  .app-sidebar,
+  .public-nav-shell {
+    backdrop-filter: none;
+  }
+
+  /* will-change: transform crée un layer GPU par élément — trop lourd sur mobile */
+  .card,
+  .widget,
+  .unlock-card,
+  .res-card,
+  .profile-card,
+  .panel-card,
+  .rule-card,
+  .testi-card,
+  .pricing-card,
+  .scores-chart-fake,
+  .notes-list,
+  .note-editor,
+  .chat-main,
+  .public-page-copy,
+  .public-page-spotlight,
+  .public-stat-card,
+  .public-showcase-card,
+  .public-panel,
+  .public-cta-band,
+  .public-footer-shell {
+    will-change: auto;
+  }
+
+  /* L'animation de fond en boucle infinie force des repaints permanents */
+  .app-main {
+    animation: none;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Les deux pseudo-éléments fixed sont repeints à chaque frame de scroll sur iOS —
+     c'est la cause principale du "flash" signalé sur téléphone */
+  body::before,
+  body::after {
+    display: none;
+  }
+
+  /* Les transforms au hover n'ont aucun sens sur touch — les retirer évite les
+     sauts visuels déclenchés par :hover au relâchement du doigt */
+  .card:hover,
+  .widget:hover,
+  .unlock-card:hover,
+  .res-card:hover,
+  .profile-card:hover,
+  .panel-card:hover,
+  .rule-card:hover,
+  .testi-card:hover,
+  .pricing-card:hover,
+  .scores-chart-fake:hover,
+  .notes-list:hover,
+  .note-editor:hover,
+  .chat-main:hover,
+  .public-page-copy:hover,
+  .public-page-spotlight:hover,
+  .public-stat-card:hover,
+  .public-showcase-card:hover,
+  .public-panel:hover,
+  .public-cta-band:hover,
+  .public-footer-shell:hover,
+  .faq-item:hover,
+  .sidebar-item:hover,
+  .btn-primary:hover,
+  .btn-secondary:hover,
+  .filter-btn:hover,
+  .icon-btn:hover,
+  .tool-btn:hover,
+  .qa-btn:hover,
+  .chat-send:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* Animations en boucle infinie désactivées — elles forcent des repaints même
+     quand l'utilisateur ne fait rien */
+  .hero::before,
+  .hero::after {
+    animation: none;
+  }
+
+  .pb-fill,
+  .prog-fill {
+    animation: none;
+    background: linear-gradient(90deg, var(--accent), var(--gold));
+  }
+
+  .score-history .sh-bar,
+  .score-history .sh-col:nth-child(2) .sh-bar,
+  .score-history .sh-col:nth-child(3) .sh-bar,
+  .score-history .sh-col:nth-child(4) .sh-bar,
+  .score-history .sh-col:nth-child(5) .sh-bar,
+  .score-history .sh-col:nth-child(6) .sh-bar,
+  .score-history .sh-col:nth-child(7) .sh-bar {
+    animation: none;
+  }
+}
