@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { NavItem } from "@/lib/navigation";
@@ -31,6 +32,7 @@ export function AppShell({
   const pathname = usePathname();
   const adminMode = accent === "gold";
   const workspaceHome = adminMode ? "/admin" : "/adherent/dashboard";
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const avatarStyle = adminMode
     ? {
         background: "var(--gold-dim)",
@@ -39,6 +41,12 @@ export function AppShell({
       }
     : undefined;
   const roleStyle = adminMode ? { color: "var(--gold)" } : undefined;
+  const activeNavItem =
+    nav.find((item) => isNavActive(pathname, item.href)) ?? nav[0];
+
+  useEffect(() => {
+    setMobileNavOpen(false);
+  }, [pathname]);
 
   return (
     <div className="app-layout">
@@ -54,7 +62,7 @@ export function AppShell({
           </span>
         </div>
 
-        <div className="topbar-switch">
+        <div className="topbar-switch topbar-switch-desktop">
           <Link href="/" className={`topbar-switch-link ${pathname === "/" ? "topbar-switch-link-active" : ""}`}>
             Site public
           </Link>
@@ -83,24 +91,85 @@ export function AppShell({
             </div>
           </div>
           <div className="topbar-actions">
-            <div className="topbar-avatar-mobile">
-              <div className="user-avatar" style={avatarStyle}>
-                {user.avatar}
-              </div>
-            </div>
             <ThemeToggle compact />
             <div className="notif-btn" aria-label="Notifications">
               NT
               <span className="notif-dot" />
             </div>
+            <button
+              type="button"
+              className={`topbar-menu-btn ${mobileNavOpen ? "open" : ""}`}
+              aria-expanded={mobileNavOpen}
+              aria-controls="mobile-workspace-nav"
+              aria-label={mobileNavOpen ? "Fermer la navigation" : "Ouvrir la navigation"}
+              onClick={() => setMobileNavOpen((open) => !open)}
+            >
+              <span />
+              <span />
+              <span />
+            </button>
           </div>
         </div>
 
-        <div className="topbar-mobile-user">
-          <div className="topbar-mobile-user-name">{user.name}</div>
-          <div className="topbar-mobile-user-role" style={roleStyle}>
-            {user.role}
+        <div className="topbar-mobile-summary">
+          <div className="topbar-mobile-context">
+            <span className={`badge ${adminMode ? "badge-gold" : "badge-accent"}`}>{context}</span>
+            <span className="topbar-mobile-active">{activeNavItem?.label ?? context}</span>
           </div>
+          <div className="topbar-mobile-user-card">
+            <div className="user-avatar" style={avatarStyle}>
+              {user.avatar}
+            </div>
+            <div className="topbar-mobile-user-text">
+              <div className="topbar-mobile-user-name">{user.name}</div>
+              <div className="topbar-mobile-user-role" style={roleStyle}>
+                {user.role}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="topbar-switch topbar-switch-mobile">
+          <Link href="/" className={`topbar-switch-link ${pathname === "/" ? "topbar-switch-link-active" : ""}`}>
+            Site public
+          </Link>
+          <Link
+            href={workspaceHome}
+            className={`topbar-switch-link ${
+              pathname.startsWith(adminMode ? "/admin" : "/adherent")
+                ? "topbar-switch-link-active"
+                : ""
+            }`}
+          >
+            {context}
+          </Link>
+        </div>
+
+        <div
+          id="mobile-workspace-nav"
+          className={`mobile-nav-panel ${mobileNavOpen ? "open" : ""}`}
+        >
+          <div className="mobile-nav-grid">
+            {nav.map((item) => {
+              const active = isNavActive(pathname, item.href);
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`mobile-nav-link ${active ? "active" : ""}`}
+                >
+                  <span className="mobile-nav-icon">{item.icon ?? "--"}</span>
+                  <span className="mobile-nav-label">{item.label}</span>
+                  {item.badgeCount ? (
+                    <span className="badge-count">{item.badgeCount}</span>
+                  ) : null}
+                </Link>
+              );
+            })}
+          </div>
+          <Link href="/" className="mobile-nav-footer">
+            Retour au site public
+          </Link>
         </div>
       </header>
 
