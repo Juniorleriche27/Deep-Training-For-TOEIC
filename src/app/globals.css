@@ -2694,6 +2694,128 @@ body::before {
   gap: 0.7rem;
 }
 
+.public-mobile-cta,
+.public-menu-btn,
+.public-mobile-panel,
+.public-mobile-backdrop {
+  display: none;
+}
+
+.public-action-desktop {
+  display: inline-flex;
+}
+
+.public-mobile-cta {
+  align-items: center;
+  justify-content: center;
+  min-height: 2.5rem;
+  padding: 0.58rem 0.9rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--accent) 26%, var(--border) 74%);
+  background: color-mix(in oklab, var(--accent-dim) 72%, var(--bg-2) 28%);
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.public-menu-btn {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.95rem;
+  border: 1px solid var(--border);
+  background: var(--bg-2);
+  color: var(--text);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.26rem;
+  padding: 0;
+}
+
+.public-menu-btn span {
+  display: block;
+  width: 1rem;
+  height: 1.5px;
+  border-radius: 999px;
+  background: currentColor;
+  transition: transform 180ms ease, opacity 180ms ease;
+}
+
+.public-menu-btn span.is-open:nth-child(1) {
+  transform: translateY(0.245rem) rotate(45deg);
+}
+
+.public-menu-btn span.is-open:nth-child(2) {
+  opacity: 0;
+}
+
+.public-menu-btn span.is-open:nth-child(3) {
+  transform: translateY(-0.245rem) rotate(-45deg);
+}
+
+.public-mobile-backdrop {
+  background: rgba(8, 11, 18, 0.42);
+}
+
+.public-mobile-panel {
+  top: 4.6rem;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  border-radius: 1.2rem;
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.22);
+  padding: 0.9rem;
+  transform: translateY(-0.8rem);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 220ms ease;
+}
+
+.public-mobile-panel.open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.public-mobile-panel-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.7rem;
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.public-mobile-tools {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.public-mobile-nav {
+  display: grid;
+  gap: 0.42rem;
+}
+
+.public-mobile-link {
+  display: flex;
+  align-items: center;
+  min-height: 3rem;
+  padding: 0.8rem 0.95rem;
+  border-radius: 0.95rem;
+  color: var(--text-soft);
+  font-size: 0.92rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+.public-mobile-link-active {
+  color: var(--text);
+  border-color: color-mix(in oklab, var(--accent) 28%, transparent);
+  background: color-mix(in oklab, var(--accent-dim) 72%, transparent);
+}
+
 .public-footer-shell {
   border: 1px solid color-mix(in oklab, var(--border) 78%, var(--accent) 22%);
   border-radius: 1.6rem;
@@ -3265,34 +3387,70 @@ body::before {
 
 @media (max-width: 640px) {
   .public-site-main {
-    padding-top: 4.85rem;
+    padding-top: 5.4rem;
     padding-bottom: 2.8rem;
   }
 
   .public-nav-bar {
-    min-height: 4.5rem;
-    gap: 0.55rem;
+    min-height: 4.9rem;
+    gap: 0.65rem;
   }
 
   .public-brand-lockup {
-    min-width: 6.7rem;
-    gap: 0.18rem;
-    top: -0.14rem;
+    min-width: 0;
+    max-width: min(12.5rem, calc(100vw - 10.5rem));
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.55rem;
+    top: 0;
+  }
+
+  .public-brand-copy {
+    align-items: flex-start;
   }
 
   .public-brand-title {
-    font-size: 0.58rem;
+    align-items: flex-start;
+    font-size: 0.66rem;
     letter-spacing: 0.03em;
-    line-height: 0.98;
+    line-height: 0.94;
   }
 
   .public-nav-actions {
+    margin-left: 0;
     gap: 0.45rem;
+    flex: 0 0 auto;
   }
 
-  .public-nav-actions .theme-toggle {
-    width: 2.4rem;
-    height: 2.4rem;
+  .public-action-desktop,
+  .public-contact-desktop {
+    display: none !important;
+  }
+
+  .public-mobile-cta,
+  .public-menu-btn,
+  .public-mobile-backdrop {
+    display: inline-flex;
+  }
+
+  .public-mobile-panel {
+    display: block;
+  }
+
+  .public-nav-shell {
+    background: var(--bg-2);
+    backdrop-filter: none;
+  }
+
+  .public-nav-bar {
+    justify-content: space-between;
+  }
+
+  .public-mobile-cta {
+    max-width: 5.9rem;
+    padding-inline: 0.8rem;
+    font-size: 0.74rem;
   }
 
   .app-topbar {
@@ -3385,6 +3543,46 @@ textarea {
 }
 
 @media (max-width: 1100px) {
+  .public-nav-bar {
+    min-height: 4.9rem;
+    justify-content: space-between;
+    gap: 0.7rem;
+  }
+
+  .public-brand-lockup {
+    min-width: 0;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.55rem;
+    top: 0;
+  }
+
+  .public-brand-copy,
+  .public-brand-title {
+    align-items: flex-start;
+  }
+
+  .public-action-desktop,
+  .public-contact-desktop {
+    display: none !important;
+  }
+
+  .public-mobile-cta,
+  .public-menu-btn,
+  .public-mobile-backdrop {
+    display: inline-flex;
+  }
+
+  .public-mobile-panel {
+    display: block;
+  }
+
+  .public-nav-shell {
+    background: var(--bg-2);
+    backdrop-filter: none;
+  }
+
   /* Le shell adhérent utilisait un viewport interne (100vh + overflow hidden)
      qui se recompose brutalement quand la barre navigateur mobile change de taille */
   body {

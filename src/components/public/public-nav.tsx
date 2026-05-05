@@ -21,6 +21,10 @@ export function PublicNav() {
     return () => { document.body.style.overflow = ""; };
   }, [open]);
 
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50 border-b border-[var(--border)] public-nav-shell backdrop-blur-lg">
@@ -57,54 +61,34 @@ export function PublicNav() {
             })}
           </nav>
           <div className="public-nav-actions">
-            <ThemeToggle compact />
-            <ProfileMenu />
+            <div className="public-action-desktop">
+              <ThemeToggle compact />
+            </div>
+            <div className="public-action-desktop">
+              <ProfileMenu />
+            </div>
             <Link
               href="/contact"
-              className="btn-primary hidden rounded-xl px-4 py-3 text-sm font-semibold tracking-[0.04em] md:inline-flex"
+              className="btn-primary public-contact-desktop hidden rounded-xl px-4 py-3 text-sm font-semibold tracking-[0.04em] md:inline-flex"
             >
               Candidature →
+            </Link>
+            <Link
+              href="/contact"
+              className="public-mobile-cta lg:hidden"
+            >
+              Premium
             </Link>
             <button
               type="button"
               aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
               aria-expanded={open}
               onClick={() => setOpen((v) => !v)}
-              className="ml-1 flex h-10 w-10 flex-col items-center justify-center gap-[5px] rounded-xl border border-[var(--border)] bg-transparent lg:hidden"
+              className="public-menu-btn lg:hidden"
             >
-              <span
-                style={{
-                  display: "block",
-                  width: "18px",
-                  height: "2px",
-                  background: "var(--text)",
-                  borderRadius: "2px",
-                  transition: "transform 220ms ease, opacity 200ms ease",
-                  transform: open ? "translateY(7px) rotate(45deg)" : "none",
-                }}
-              />
-              <span
-                style={{
-                  display: "block",
-                  width: "18px",
-                  height: "2px",
-                  background: "var(--text)",
-                  borderRadius: "2px",
-                  transition: "opacity 200ms ease",
-                  opacity: open ? 0 : 1,
-                }}
-              />
-              <span
-                style={{
-                  display: "block",
-                  width: "18px",
-                  height: "2px",
-                  background: "var(--text)",
-                  borderRadius: "2px",
-                  transition: "transform 220ms ease, opacity 200ms ease",
-                  transform: open ? "translateY(-7px) rotate(-45deg)" : "none",
-                }}
-              />
+              <span className={open ? "is-open" : ""} />
+              <span className={open ? "is-open" : ""} />
+              <span className={open ? "is-open" : ""} />
             </button>
           </div>
         </div>
@@ -112,25 +96,28 @@ export function PublicNav() {
 
       {open && (
         <div
-          className="fixed inset-0 z-40 lg:hidden"
-          style={{ background: "rgba(7,11,18,0.72)", backdropFilter: "blur(4px)" }}
+          className="public-mobile-backdrop fixed inset-0 z-40 lg:hidden"
           onClick={() => setOpen(false)}
         />
       )}
 
       <div
-        className="fixed inset-x-3 top-[4.65rem] z-40 lg:hidden"
-        style={{
-          background: "var(--bg-2)",
-          border: "1px solid var(--border)",
-          borderRadius: "1.2rem",
-          boxShadow: "0 22px 60px rgba(0,0,0,0.28)",
-          transform: open ? "translateY(0)" : "translateY(-110%)",
-          transition: "transform 260ms cubic-bezier(0.22,0.68,0.2,1)",
-          pointerEvents: open ? "auto" : "none",
-        }}
+        className={`public-mobile-panel fixed inset-x-3 z-40 lg:hidden ${open ? "open" : ""}`}
       >
-        <nav className="flex flex-col p-3">
+        <div className="public-mobile-panel-top">
+          <div className="public-mobile-tools">
+            <ThemeToggle compact />
+            <ProfileMenu />
+          </div>
+          <Link
+            href="/contact"
+            onClick={() => setOpen(false)}
+            className="btn-primary rounded-xl px-3 py-3 text-center text-xs font-semibold"
+          >
+            Candidature
+          </Link>
+        </div>
+        <nav className="public-mobile-nav">
           {publicNav.map((item) => {
             const active = pathname === item.href;
             return (
@@ -138,25 +125,12 @@ export function PublicNav() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className={`rounded-xl px-3 py-3 text-sm font-semibold tracking-[0.02em] transition ${
-                  active
-                    ? "bg-[var(--accent-dim)] text-[var(--accent)]"
-                    : "text-[var(--text-soft)] hover:bg-[var(--accent-dim-2)] hover:text-[var(--text)]"
-                }`}
+                className={`public-mobile-link ${active ? "public-mobile-link-active" : ""}`}
               >
                 {item.label}
               </Link>
             );
           })}
-          <div style={{ borderTop: "1px solid var(--border)", marginTop: "0.5rem", paddingTop: "0.75rem", display: "flex", gap: "0.5rem" }}>
-            <Link
-              href="/contact"
-              onClick={() => setOpen(false)}
-              className="btn-primary flex-1 rounded-xl px-3 py-3 text-center text-xs font-semibold"
-            >
-              Candidature
-            </Link>
-          </div>
         </nav>
       </div>
     </>
