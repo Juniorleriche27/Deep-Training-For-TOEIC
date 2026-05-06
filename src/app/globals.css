@@ -2870,7 +2870,7 @@ body::before {
 
 .public-footer-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(180px, 0.7fr) minmax(0, 0.9fr);
+  grid-template-columns: minmax(0, 1.15fr) minmax(150px, 0.6fr) minmax(0, 0.85fr) minmax(170px, 0.65fr);
   gap: 1.25rem;
   align-items: start;
 }
@@ -2917,12 +2917,24 @@ body::before {
   font-size: 0.78rem;
 }
 
-.public-footer-legal a {
+.public-footer-legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.public-footer-legal a,
+.public-footer-legal-links a {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.34rem 0.62rem;
   color: var(--text);
   font-weight: 700;
 }
 
-.public-footer-legal a:hover {
+.public-footer-legal a:hover,
+.public-footer-legal-links a:hover {
+  border-color: color-mix(in oklab, var(--accent) 42%, var(--border) 58%);
   color: var(--accent);
 }
 
@@ -3687,6 +3699,7 @@ textarea {
     animation: none;
     background: var(--bg-2);
     box-shadow: none;
+    padding-bottom: 4.6rem;
   }
 
   .public-footer-shell:hover {
