@@ -7,7 +7,6 @@ import {
   useRef,
   useState,
   type CSSProperties,
-  type MouseEvent as ReactMouseEvent,
   type ReactNode,
 } from "react";
 import {
@@ -175,7 +174,6 @@ export function PremiumLanding() {
   const [activeStep, setActiveStep] = useState(0);
   const [slideIndex, setSlideIndex] = useState(0);
   const [sliderPaused, setSliderPaused] = useState(false);
-  const [pointer, setPointer] = useState({ x: 62, y: 34 });
   const stepRefs = useRef<Array<HTMLElement | null>>([]);
 
   const measurableTestimonials = useMemo(
@@ -251,10 +249,6 @@ export function PremiumLanding() {
   }, [featuredTestimonials.length, performanceMode, sliderPaused]);
 
   const activeProgramStep = programmeSteps[activeStep] ?? programmeSteps[0];
-  const heroStyle = {
-    ["--mx" as string]: `${pointer.x}%`,
-    ["--my" as string]: `${pointer.y}%`,
-  } as CSSProperties;
 
   const goPrev = () => {
     setSlideIndex((prev) =>
@@ -266,25 +260,17 @@ export function PremiumLanding() {
     setSlideIndex((prev) => (prev + 1) % featuredTestimonials.length);
   };
 
-  const handleHeroPointer = (event: ReactMouseEvent<HTMLElement>) => {
-    if (performanceMode) return;
-    const rect = event.currentTarget.getBoundingClientRect();
-    const x = ((event.clientX - rect.left) / rect.width) * 100;
-    const y = ((event.clientY - rect.top) / rect.height) * 100;
-    setPointer({ x: Math.max(8, Math.min(92, x)), y: Math.max(8, Math.min(88, y)) });
-  };
-
   return (
     <div className={styles.pageShell}>
       <section className={styles.hero}>
-        <div
-          className={styles.heroGrid}
-          onMouseMove={handleHeroPointer}
-          onMouseLeave={() => setPointer({ x: 62, y: 34 })}
-          style={heroStyle}
-        >
+        <div className={styles.heroGrid}>
+
+          {/* ── LEFT : texte ── */}
           <div className={styles.heroPanel}>
-            <p className={styles.heroKicker}>Deep Training For TOEIC - Performance System</p>
+            <div className={styles.heroPillRow}>
+              <span className={styles.heroPill}>⭐ 5/5 sur Google</span>
+              <span className={styles.heroPill}>Système numérique d&apos;entraînement</span>
+            </div>
             <h1 className={styles.heroTitle}>
               Tu ne révises plus au hasard.
               <br />
@@ -297,10 +283,10 @@ export function PremiumLanding() {
             </p>
             <div className={styles.heroActions}>
               <Link href="/contact" className={styles.primaryBtn}>
-                Entrer dans le système
+                Commencer maintenant →
               </Link>
               <Link href="/programme" className={styles.secondaryBtn}>
-                Explorer les 5 étapes
+                ▷ Voir le programme
               </Link>
             </div>
             <div className={styles.heroStats}>
@@ -325,77 +311,138 @@ export function PremiumLanding() {
                 hint="Performances elite"
               />
             </div>
-            <div className={styles.scrollCue}>Découvrir le système</div>
           </div>
 
-          <div className={styles.commandCard}>
-            <div className={styles.commandTop}>
-              <p className={styles.commandTitle}>Mission en cours</p>
-              <span className={styles.commandTag}>Coach IA actif</span>
+          {/* ── RIGHT : personne animée prenant des notes ── */}
+          <div className={styles.heroVisual} aria-hidden="true">
+            <div className={styles.personFrame}>
+              <svg
+                className={styles.personSvg}
+                viewBox="0 0 340 420"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                {/* Ambient glow */}
+                <ellipse cx="170" cy="215" rx="148" ry="178" fill="currentColor" opacity="0.04" />
+
+                {/* Desk */}
+                <ellipse cx="170" cy="378" rx="152" ry="16" fill="#0a1929" opacity="0.09" />
+                <rect x="18" y="298" width="304" height="10" rx="5" fill="var(--accent)" opacity="0.12" />
+                <rect x="22" y="298" width="296" height="7" rx="3.5" fill="var(--bg-3)" opacity="0.55" />
+
+                {/* Notebook (open, two pages) */}
+                <rect x="62" y="234" width="216" height="72" rx="8" fill="white" opacity="0.94" />
+                <rect x="62" y="234" width="216" height="72" rx="8" stroke="var(--border)" strokeWidth="1" />
+                {/* Spine */}
+                <line x1="170" y1="234" x2="170" y2="306" stroke="var(--border)" strokeWidth="2.2" />
+                {/* Left page — static lines */}
+                <line x1="78" y1="252" x2="158" y2="252" stroke="#c8d8ea" strokeWidth="1.1" />
+                <line x1="78" y1="263" x2="158" y2="263" stroke="#c8d8ea" strokeWidth="1.1" />
+                <line x1="78" y1="274" x2="158" y2="274" stroke="#c8d8ea" strokeWidth="1.1" />
+                <line x1="78" y1="285" x2="128" y2="285" stroke="#c8d8ea" strokeWidth="1.1" />
+                {/* Right page — static lines */}
+                <line x1="182" y1="252" x2="262" y2="252" stroke="#c8d8ea" strokeWidth="1.1" />
+                <line x1="182" y1="263" x2="262" y2="263" stroke="#c8d8ea" strokeWidth="1.1" />
+                <line x1="182" y1="274" x2="262" y2="274" stroke="#c8d8ea" strokeWidth="1.1" />
+                {/* Animated writing line */}
+                <line
+                  x1="182" y1="285"
+                  x2="182" y2="285"
+                  stroke="var(--accent)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  className={styles.writingLine}
+                />
+
+                {/* Writing glow */}
+                <ellipse cx="248" cy="282" rx="38" ry="22" fill="var(--accent)" opacity="0" className={styles.writingGlow} />
+
+                {/* Left arm — resting */}
+                <path d="M99 213 Q87 257 79 299" stroke="#f5c9a0" strokeWidth="22" strokeLinecap="round" fill="none" />
+                <ellipse cx="78" cy="302" rx="15" ry="11" fill="#f5c9a0" />
+
+                {/* Right arm + pen — animated writing */}
+                <g className={styles.writingArm}>
+                  <path d="M241 213 Q258 257 262 296" stroke="#f5c9a0" strokeWidth="22" strokeLinecap="round" fill="none" />
+                  <ellipse cx="261" cy="299" rx="14" ry="10" fill="#f5c9a0" />
+                  {/* Pen body */}
+                  <rect x="257" y="272" width="7" height="30" rx="3.5" fill="#f59e0b" transform="rotate(14 260.5 287)" />
+                  {/* Pen tip */}
+                  <polygon points="255,302 263,302 259,311" fill="#d97706" transform="rotate(14 260.5 287)" />
+                  {/* Eraser */}
+                  <rect x="257" y="272" width="7" height="7.5" rx="2.5" fill="#ef4444" transform="rotate(14 260.5 287)" />
+                  <rect x="258" y="273" width="3.5" height="2.5" rx="1" fill="white" opacity="0.45" transform="rotate(14 260.5 287)" />
+                </g>
+
+                {/* Torso / shirt (brand blue) */}
+                <path d="M91 187 C89 174 113 162 170 160 C227 162 251 174 249 187 L247 298 L93 298 Z" fill="#0284c7" opacity="0.9" />
+                {/* V-neck */}
+                <path d="M152 160 L170 187 L188 160" fill="white" opacity="0.22" />
+
+                {/* Neck */}
+                <rect x="158" y="148" width="24" height="20" rx="10" fill="#f5c9a0" />
+
+                {/* Head */}
+                <ellipse cx="170" cy="123" rx="40" ry="44" fill="#f5c9a0" />
+
+                {/* Hair */}
+                <path d="M130 107 Q132 77 152 71 Q170 65 188 71 Q208 77 210 107 Q200 83 170 81 Q140 83 130 107 Z" fill="#1a0e06" />
+                <path d="M130 107 Q126 124 130 141 Q128 122 132 109 Z" fill="#1a0e06" />
+                <path d="M210 107 Q214 124 210 141 Q212 122 208 109 Z" fill="#1a0e06" />
+
+                {/* Ears */}
+                <ellipse cx="129" cy="125" rx="7" ry="10" fill="#e8a882" />
+                <ellipse cx="211" cy="125" rx="7" ry="10" fill="#e8a882" />
+
+                {/* Left eye */}
+                <ellipse cx="156" cy="119" rx="5.5" ry="6" fill="#1a0e06" />
+                <circle cx="158" cy="117" r="2.2" fill="white" />
+
+                {/* Right eye */}
+                <ellipse cx="184" cy="119" rx="5.5" ry="6" fill="#1a0e06" />
+                <circle cx="186" cy="117" r="2.2" fill="white" />
+
+                {/* Eyebrows */}
+                <path d="M149 109 Q157 105 163 108" stroke="#1a0e06" strokeWidth="2.2" fill="none" strokeLinecap="round" />
+                <path d="M177 108 Q183 105 191 109" stroke="#1a0e06" strokeWidth="2.2" fill="none" strokeLinecap="round" />
+
+                {/* Nose */}
+                <path d="M166 131 Q170 136 174 131" stroke="#c47e5a" strokeWidth="1.5" fill="none" />
+
+                {/* Mouth — focused smile */}
+                <path d="M162 141 Q170 147 178 141" stroke="#c47e5a" strokeWidth="2" fill="none" strokeLinecap="round" />
+
+                {/* ── Floating keyword badges ── */}
+                <g className={styles.wordBadge1}>
+                  <rect x="10" y="156" width="82" height="25" rx="12.5" fill="var(--accent)" opacity="0.11" />
+                  <rect x="10" y="156" width="82" height="25" rx="12.5" stroke="var(--accent)" strokeWidth="1" opacity="0.28" />
+                  <text x="51" y="172.5" textAnchor="middle" fill="var(--accent)" fontSize="10.5" fontWeight="700" fontFamily="system-ui, sans-serif">Listening</text>
+                </g>
+                <g className={styles.wordBadge2}>
+                  <rect x="248" y="140" width="78" height="25" rx="12.5" fill="var(--gold)" opacity="0.11" />
+                  <rect x="248" y="140" width="78" height="25" rx="12.5" stroke="var(--gold)" strokeWidth="1" opacity="0.28" />
+                  <text x="287" y="156.5" textAnchor="middle" fill="var(--gold)" fontSize="10.5" fontWeight="700" fontFamily="system-ui, sans-serif">Reading</text>
+                </g>
+                <g className={styles.wordBadge3}>
+                  <rect x="16" y="326" width="70" height="25" rx="12.5" fill="var(--success)" opacity="0.11" />
+                  <rect x="16" y="326" width="70" height="25" rx="12.5" stroke="var(--success)" strokeWidth="1" opacity="0.28" />
+                  <text x="51" y="342.5" textAnchor="middle" fill="var(--success)" fontSize="10.5" fontWeight="700" fontFamily="system-ui, sans-serif">+450 pts</text>
+                </g>
+              </svg>
             </div>
-            <div className={styles.commandValueRow}>
-              <span className={styles.scoreBadge}>545</span>
-              <span className={styles.commandArrow}>-&gt;</span>
-              <span className={`${styles.scoreBadge} ${styles.scoreTarget}`}>
-                785
-              </span>
-            </div>
-            <div className={styles.meterStack}>
-              <div className={styles.meterRow}>
-                <span className={styles.meterLabel}>Listening</span>
-                <span className={styles.meterTrack}>
-                  <span className={styles.meterFill} style={{ width: "74%" }} />
-                </span>
-                <span className={styles.meterValue}>372</span>
+
+            {/* Floating score card */}
+            <div className={styles.heroFloatCard}>
+              <div className={styles.heroFloatCardInner}>
+                <span className={styles.heroFloatIcon}>📈</span>
+                <div>
+                  <p className={styles.heroFloatLabel}>Score moyen</p>
+                  <p className={styles.heroFloatValue}>850+ points</p>
+                </div>
               </div>
-              <div className={styles.meterRow}>
-                <span className={styles.meterLabel}>Reading</span>
-                <span className={styles.meterTrack}>
-                  <span className={styles.meterFill} style={{ width: "59%" }} />
-                </span>
-                <span className={styles.meterValue}>305</span>
-              </div>
-              <div className={styles.meterRow}>
-                <span className={styles.meterLabel}>Rigueur</span>
-                <span className={styles.meterTrack}>
-                  <span className={styles.meterFill} style={{ width: "83%" }} />
-                </span>
-                <span className={styles.meterValue}>83%</span>
-              </div>
-            </div>
-            <div className={styles.commandFoot}>
-              <span>Étape 3 - Reading sous chrono</span>
-              <span className={styles.commandHint}>J-34</span>
-            </div>
-            <div className={styles.floatingCluster}>
-              <span className={styles.floatingBadge}>Discipline</span>
-              <span className={styles.floatingBadge}>Méthode</span>
-              <span className={styles.floatingBadge}>Exécution</span>
-            </div>
-            <div className={styles.commandProtocol}>
-              <article className={styles.protocolCard}>
-                <p className={styles.protocolLabel}>Avant mission</p>
-                <p className={styles.protocolBody}>
-                  45 min au calme, guide d&apos;astuces, tableau de bord, notes
-                  et reprise ciblée des erreurs précédentes.
-                </p>
-              </article>
-              <article className={styles.protocolCard}>
-                <p className={styles.protocolLabel}>Pendant mission</p>
-                <p className={styles.protocolBody}>
-                  Concentration totale et exécution stricte vers l&apos;objectif
-                  de performance.
-                </p>
-              </article>
-              <article className={styles.protocolCard}>
-                <p className={styles.protocolLabel}>Après mission</p>
-                <p className={styles.protocolBody}>
-                  Capture des résultats, score de première tentative et feedbacks
-                  réintégrés au programme.
-                </p>
-              </article>
             </div>
           </div>
+
         </div>
       </section>
 
