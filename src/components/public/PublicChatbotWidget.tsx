@@ -222,10 +222,6 @@ export function PublicChatbotWidget() {
     }
   }
 
-  if (compactMobile) {
-    return null;
-  }
-
   return (
     <>
       {/* Floating button */}
@@ -546,8 +542,22 @@ export function PublicChatbotWidget() {
         .wcb-send:not(:disabled):hover { opacity: 0.85; }
 
         @media (max-width: 480px) {
-          .wcb-window { right: 0.75rem; left: 0.75rem; width: auto; }
-          .wcb-fab { bottom: 1rem; right: 1rem; }
+          .wcb-window {
+            right: 0.75rem;
+            left: 0.75rem;
+            bottom: 5rem;
+            width: auto;
+            max-height: min(68dvh, 520px);
+          }
+          .wcb-fab {
+            bottom: 1rem;
+            right: 1rem;
+            width: 3.1rem;
+            height: 3.1rem;
+          }
+          .wcb-fab:hover {
+            transform: none;
+          }
         }
       `}</style>
     </>

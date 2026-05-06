@@ -402,6 +402,44 @@ export function PremiumLanding() {
       <div className={styles.divider} />
 
       <section className={styles.section}>
+        <Reveal className={styles.experienceStrip}>
+          <div className={styles.experienceIntro}>
+            <p className={styles.sectionKicker}>Architecture claire</p>
+            <h2 className={styles.sectionTitle}>
+              Un site public pour convaincre.
+              <br />
+              Un espace adherent pour executer.
+            </h2>
+            <p className={styles.sectionLead}>
+              Le visiteur comprend la promesse, le candidat passe a l&apos;action,
+              puis l&apos;adherent retrouve un cockpit separe pour suivre son programme,
+              ses scores, ses ressources et son Coach IA.
+            </p>
+          </div>
+          <div className={styles.experienceGrid}>
+            <article className={styles.experienceCard}>
+              <span className={styles.valueTag}>SITE PUBLIC</span>
+              <h3>Comprendre, verifier, candidater.</h3>
+              <p>
+                Methode, programme, resultats, tarifs, FAQ et prise de contact
+                sont organises pour transformer la curiosite en decision.
+              </p>
+            </article>
+            <article className={styles.experienceCard}>
+              <span className={styles.valueTag}>ESPACE ADHERENT</span>
+              <h3>Piloter l&apos;execution.</h3>
+              <p>
+                Tableau de bord, missions, notes, ressources, scores et support
+                restent dans un environnement de travail distinct du site vitrine.
+              </p>
+            </article>
+          </div>
+        </Reveal>
+      </section>
+
+      <div className={styles.divider} />
+
+      <section className={styles.section}>
         <Reveal className={styles.sectionHeader}>
           <p className={styles.sectionKicker}>Proposition de valeur</p>
           <h2 className={styles.sectionTitle}>

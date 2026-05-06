@@ -501,6 +501,53 @@
   background: linear-gradient(90deg, transparent, rgba(135, 160, 190, 0.42), transparent);
 }
 
+.experienceStrip {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(1rem, 2.4vw, 1.5rem);
+  align-items: stretch;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(126, 151, 181, 0.26);
+  background:
+    linear-gradient(135deg, color-mix(in oklab, var(--accent-dim) 48%, transparent), transparent 44%),
+    var(--surface-glass);
+  padding: clamp(1rem, 2vw, 1.35rem);
+}
+
+.experienceIntro {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.experienceGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.78rem;
+}
+
+.experienceCard {
+  min-height: 13rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(124, 149, 178, 0.24);
+  background: color-mix(in oklab, var(--bg-2) 88%, transparent);
+  padding: 1rem;
+}
+
+.experienceCard h3 {
+  margin: 0.75rem 0 0;
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  line-height: 1.08;
+}
+
+.experienceCard p {
+  margin: 0.7rem 0 0;
+  color: var(--text-soft);
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
 .valueGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1220,6 +1267,8 @@
 @media (max-width: 860px) {
   .valueGrid,
   .resourceGrid,
+  .experienceStrip,
+  .experienceGrid,
   .mythGrid {
     grid-template-columns: 1fr;
   }
@@ -1340,6 +1389,7 @@
 
   .heroPanel,
   .commandCard,
+  .experienceStrip,
   .counterCard,
   .valueCard,
   .resourceCard,
@@ -1356,6 +1406,7 @@
 
   .heroPanel,
   .commandCard,
+  .experienceStrip,
   .valueCard,
   .resourceCard,
   .finalCta {
@@ -1394,6 +1445,7 @@
   }
 
   .valueGrid .reveal,
+  .experienceStrip.reveal,
   .mythGrid .reveal,
   .stepsList .reveal,
   .resourceGrid .reveal,
@@ -1403,6 +1455,7 @@
   }
 
   .valueGrid .revealVisible,
+  .experienceStrip.revealVisible,
   .mythGrid .revealVisible,
   .stepsList .revealVisible,
   .resourceGrid .revealVisible,

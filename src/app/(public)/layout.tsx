@@ -30,6 +30,8 @@ export default function PublicLayout({
                 <Link href="/programme">Programme</Link>
                 <Link href="/resultats">Résultats</Link>
                 <Link href="/tarifs">Tarifs</Link>
+                <Link href="/mentions-legales">Mentions legales</Link>
+                <Link href="/politique-confidentialite">Confidentialite</Link>
               </div>
             </div>
 
@@ -47,6 +49,10 @@ export default function PublicLayout({
                 </Link>
               </div>
             </div>
+          </div>
+          <div className="public-footer-legal">
+            <span>Copyright © {new Date().getFullYear()} Deep Training For TOEIC. Tous droits reserves.</span>
+            <Link href="/conditions-utilisation">Conditions d&apos;utilisation</Link>
           </div>
         </section>
       </footer>
