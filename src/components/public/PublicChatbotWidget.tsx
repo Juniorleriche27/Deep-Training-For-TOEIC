@@ -327,20 +327,20 @@ export function PublicChatbotWidget() {
           width: 3.25rem;
           height: 3.25rem;
           border-radius: 50%;
-          background: linear-gradient(135deg, #1a8fff, #0057cc);
-          color: #fff;
-          border: none;
+          background: linear-gradient(135deg, var(--accent), var(--success));
+          color: #03111a;
+          border: 1px solid color-mix(in oklab, var(--accent) 60%, transparent);
           cursor: pointer;
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 4px 20px rgba(26,143,255,0.45);
+          box-shadow: 0 16px 36px color-mix(in oklab, var(--accent) 34%, transparent);
           z-index: 9999;
           transition: transform 0.18s, box-shadow 0.18s;
         }
         .wcb-fab:hover {
           transform: scale(1.08);
-          box-shadow: 0 6px 28px rgba(26,143,255,0.6);
+          box-shadow: 0 20px 44px color-mix(in oklab, var(--accent) 42%, transparent);
         }
 
         .wcb-window {
@@ -350,13 +350,15 @@ export function PublicChatbotWidget() {
           width: 360px;
           max-width: calc(100vw - 2rem);
           max-height: 520px;
-          background: #0f1624;
-          border: 1px solid rgba(255,255,255,0.08);
+          background:
+            radial-gradient(280px 180px at 90% 0%, color-mix(in oklab, var(--accent) 12%, transparent), transparent 72%),
+            var(--bg-2);
+          border: 1px solid var(--border);
           border-radius: 1rem;
           display: flex;
           flex-direction: column;
           overflow: hidden;
-          box-shadow: 0 16px 48px rgba(0,0,0,0.55);
+          box-shadow: 0 24px 58px rgba(0,0,0,0.26);
           z-index: 9998;
           animation: wcb-pop 0.2s ease;
         }
@@ -370,16 +372,17 @@ export function PublicChatbotWidget() {
           align-items: center;
           gap: 0.6rem;
           padding: 0.8rem 1rem;
-          background: linear-gradient(90deg, #0f1e3a, #0b1628);
-          border-bottom: 1px solid rgba(255,255,255,0.07);
+          background:
+            linear-gradient(135deg, color-mix(in oklab, var(--accent-dim) 72%, var(--bg-2) 28%), var(--bg-2));
+          border-bottom: 1px solid var(--border);
           flex-shrink: 0;
         }
         .wcb-header-avatar {
           width: 2.2rem;
           height: 2.2rem;
           border-radius: 50%;
-          background: linear-gradient(135deg,#1a8fff,#0057cc);
-          color: #fff;
+          background: linear-gradient(135deg, var(--accent), var(--success));
+          color: #03111a;
           font-size: 0.7rem;
           font-weight: 800;
           display: flex;
@@ -391,16 +394,16 @@ export function PublicChatbotWidget() {
         .wcb-header-title {
           font-size: 0.8rem;
           font-weight: 700;
-          color: #e2e8f0;
+          color: var(--text);
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;
         }
-        .wcb-header-sub { font-size: 0.65rem; color: #64748b; margin-top: 1px; }
+        .wcb-header-sub { font-size: 0.65rem; color: var(--text-soft); margin-top: 1px; }
         .wcb-close {
           background: none;
           border: none;
-          color: #64748b;
+          color: var(--text-soft);
           cursor: pointer;
           padding: 0.25rem;
           display: flex;
@@ -408,7 +411,7 @@ export function PublicChatbotWidget() {
           flex-shrink: 0;
           transition: color 0.15s;
         }
-        .wcb-close:hover { color: #e2e8f0; }
+        .wcb-close:hover { color: var(--text); }
 
         .wcb-messages {
           flex: 1;
@@ -428,30 +431,30 @@ export function PublicChatbotWidget() {
         }
         .wcb-bubble-user {
           align-self: flex-end;
-          background: linear-gradient(135deg,#1a8fff,#0057cc);
-          color: #fff;
+          background: linear-gradient(135deg, var(--accent), var(--success));
+          color: #03111a;
           border-bottom-right-radius: 0.2rem;
         }
         .wcb-bubble-bot {
           align-self: flex-start;
-          background: rgba(255,255,255,0.05);
-          border: 1px solid rgba(255,255,255,0.07);
-          color: #cbd5e1;
+          background: color-mix(in oklab, var(--bg) 58%, var(--bg-2) 42%);
+          border: 1px solid var(--border);
+          color: var(--text);
           border-bottom-left-radius: 0.2rem;
         }
 
         .wcb-md p { margin: 0.3rem 0; }
         .wcb-md h1, .wcb-md h2, .wcb-md h3 {
-          font-weight: 700; color: #e2e8f0; margin: 0.5rem 0 0.25rem;
+          font-weight: 700; color: var(--text); margin: 0.5rem 0 0.25rem;
         }
-        .wcb-md h3 { font-size: 0.85rem; color: #60a5fa; }
+        .wcb-md h3 { font-size: 0.85rem; color: var(--accent); }
         .wcb-md h2 { font-size: 0.9rem; }
         .wcb-md ul, .wcb-md ol { margin: 0.3rem 0 0.3rem 1.1rem; padding: 0; }
         .wcb-md li { margin: 0.15rem 0; }
-        .wcb-md strong { color: #e2e8f0; font-weight: 700; }
-        .wcb-md em { color: #94a3b8; font-style: italic; }
+        .wcb-md strong { color: var(--text); font-weight: 700; }
+        .wcb-md em { color: var(--text-soft); font-style: italic; }
         .wcb-md code {
-          background: rgba(255,255,255,0.08);
+          background: color-mix(in oklab, var(--accent-dim) 70%, transparent);
           padding: 0.1rem 0.3rem;
           border-radius: 0.25rem;
           font-size: 0.78rem;
@@ -460,7 +463,7 @@ export function PublicChatbotWidget() {
         .wcb-cursor {
           display: inline-block;
           width: 2px; height: 1em;
-          background: #60a5fa;
+          background: var(--accent);
           margin-left: 2px;
           vertical-align: middle;
           animation: wcb-blink 0.7s step-end infinite;
@@ -470,7 +473,7 @@ export function PublicChatbotWidget() {
         .wcb-dots { display:flex; gap:4px; align-items:center; padding:2px 0; }
         .wcb-dots span {
           width:6px; height:6px; border-radius:50%;
-          background:#1a8fff;
+          background: var(--accent);
           animation: wcb-bounce 1.2s infinite;
         }
         .wcb-dots span:nth-child(2){animation-delay:.2s}
@@ -484,8 +487,8 @@ export function PublicChatbotWidget() {
           display: inline-block;
           margin-top: 0.55rem;
           padding: 0.4rem 0.85rem;
-          background: linear-gradient(135deg,#1a8fff,#0057cc);
-          color: #fff;
+          background: linear-gradient(135deg, var(--accent), var(--success));
+          color: #03111a;
           font-size: 0.75rem;
           font-weight: 700;
           border-radius: 0.5rem;
@@ -508,29 +511,29 @@ export function PublicChatbotWidget() {
           display: flex;
           gap: 0.4rem;
           padding: 0.65rem 0.75rem;
-          border-top: 1px solid rgba(255,255,255,0.07);
+          border-top: 1px solid var(--border);
           flex-shrink: 0;
         }
         .wcb-input {
           flex: 1;
-          background: rgba(255,255,255,0.05);
-          border: 1px solid rgba(255,255,255,0.1);
+          background: color-mix(in oklab, var(--bg) 62%, var(--bg-2) 38%);
+          border: 1px solid var(--border);
           border-radius: 0.5rem;
-          color: #e2e8f0;
+          color: var(--text);
           font-size: 0.8rem;
           padding: 0.45rem 0.7rem;
           outline: none;
           transition: border-color 0.15s;
         }
-        .wcb-input:focus { border-color: #1a8fff; }
-        .wcb-input::placeholder { color: #475569; }
+        .wcb-input:focus { border-color: var(--accent); }
+        .wcb-input::placeholder { color: var(--text-muted); }
         .wcb-send {
           width: 2rem;
           height: 2rem;
           border-radius: 0.5rem;
-          background: linear-gradient(135deg,#1a8fff,#0057cc);
+          background: linear-gradient(135deg, var(--accent), var(--success));
           border: none;
-          color: #fff;
+          color: #03111a;
           cursor: pointer;
           display: flex;
           align-items: center;
