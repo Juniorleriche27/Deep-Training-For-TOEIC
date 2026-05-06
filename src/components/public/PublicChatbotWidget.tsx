@@ -555,8 +555,8 @@ export function PublicChatbotWidget() {
             bottom: 5rem;
             width: 100%;
             max-width: none;
-            height: min(64dvh, 32rem);
-            max-height: min(64dvh, 32rem);
+            height: clamp(23rem, 56dvh, 29rem);
+            max-height: clamp(23rem, 56dvh, 29rem);
             border-radius: 1.35rem 1.35rem 0 0;
             border-inline: 0;
             border-bottom: 0;
@@ -597,43 +597,54 @@ export function PublicChatbotWidget() {
 
           .wcb-messages {
             min-height: 0;
-            padding: 0.75rem;
+            padding: 0.72rem;
             gap: 0.55rem;
             overscroll-behavior: contain;
           }
 
           .wcb-bubble {
             max-width: 88%;
-            padding: 0.58rem 0.72rem;
+            padding: 0.52rem 0.68rem;
             font-size: 0.78rem;
-            line-height: 1.52;
+            line-height: 1.48;
+          }
+
+          .wcb-bubble-bot {
+            max-width: 84%;
           }
 
           .wcb-book-bar {
-            padding: 0.45rem 0.75rem 0;
+            padding: 0.34rem 0.75rem 0;
           }
 
           .wcb-cta {
-            min-height: 2.55rem;
-            margin-top: 0.35rem;
-            padding: 0.65rem 0.85rem;
+            min-height: 2.4rem;
+            margin-top: 0.25rem;
+            padding: 0.58rem 0.85rem;
           }
 
           .wcb-input-row {
-            padding: 0.65rem 0.75rem calc(0.65rem + env(safe-area-inset-bottom));
+            padding: 0.58rem 0.75rem calc(0.58rem + env(safe-area-inset-bottom));
             gap: 0.45rem;
           }
 
           .wcb-input {
-            min-height: 2.65rem;
+            min-height: 2.55rem;
             border-radius: 0.8rem;
             font-size: 0.82rem;
           }
 
           .wcb-send {
-            width: 2.65rem;
-            height: 2.65rem;
+            width: 2.55rem;
+            height: 2.55rem;
             border-radius: 0.8rem;
+          }
+
+          .wcb-send:disabled {
+            opacity: 1;
+            color: color-mix(in oklab, var(--text-soft) 62%, transparent);
+            background: color-mix(in oklab, var(--accent-dim) 42%, var(--bg-2) 58%);
+            border: 1px solid var(--border);
           }
 
           .wcb-fab {
@@ -644,6 +655,30 @@ export function PublicChatbotWidget() {
           }
           .wcb-fab:hover {
             transform: none;
+          }
+        }
+
+        @media (max-width: 380px) {
+          .wcb-window {
+            height: clamp(21.5rem, 54dvh, 27rem);
+            max-height: clamp(21.5rem, 54dvh, 27rem);
+          }
+
+          .wcb-header {
+            padding-inline: 0.75rem;
+          }
+
+          .wcb-header-title {
+            font-size: 0.74rem;
+          }
+
+          .wcb-header-sub {
+            font-size: 0.6rem;
+          }
+
+          .wcb-bubble {
+            max-width: 92%;
+            font-size: 0.76rem;
           }
         }
       `}</style>
