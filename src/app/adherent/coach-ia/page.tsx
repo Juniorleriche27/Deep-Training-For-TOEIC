@@ -167,6 +167,7 @@ export default function AdherentCoachIaPage() {
   const [sending, setSending] = useState(false);
   const [sendError, setSendError] = useState("");
   const [streamingId, setStreamingId] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const messageSeqRef = useRef(0);
 
@@ -189,11 +190,13 @@ export default function AdherentCoachIaPage() {
     setInput("");
     setSendError("");
     setStreamingId(null);
+    setMobileMenuOpen(false);
   }
 
   function loadHistory() {
     setMessages(historyMessages);
     setSendError("");
+    setMobileMenuOpen(false);
   }
 
   useEffect(() => {
@@ -204,6 +207,7 @@ export default function AdherentCoachIaPage() {
     if (!text.trim() || sending) return;
     setSending(true);
     setSendError("");
+    setMobileMenuOpen(false);
     const tempId = `tmp-${messageSeqRef.current++}`;
     const userMsg: ChatMessage = {
       id: tempId,
@@ -253,6 +257,17 @@ export default function AdherentCoachIaPage() {
       <div className="chat-container">
         <section className="chat-main">
           <div className="chat-header">
+            <button
+              type="button"
+              className="coach-mobile-menu-btn"
+              aria-label="Ouvrir les informations du Coach IA"
+              aria-expanded={mobileMenuOpen}
+              onClick={() => setMobileMenuOpen((open) => !open)}
+            >
+              <span />
+              <span />
+              <span />
+            </button>
             <div className="ai-avatar">IA</div>
             <div>
               <div className="chat-ai-name">Coach Deep Training For TOEIC</div>
@@ -319,13 +334,16 @@ export default function AdherentCoachIaPage() {
             <div ref={bottomRef} />
           </div>
 
-          <div className="chat-quick-actions">
-            {QUICK_ACTIONS.map((action) => (
-              <button key={action} className="qa-btn" onClick={() => send(action)}>
-                {action}
-              </button>
-            ))}
-          </div>
+          <details className="chat-quick-actions">
+            <summary>Suggestions rapides</summary>
+            <div className="qa-list">
+              {QUICK_ACTIONS.map((action) => (
+                <button key={action} className="qa-btn" onClick={() => send(action)}>
+                  {action}
+                </button>
+              ))}
+            </div>
+          </details>
 
           {sendError && (
             <p style={{ color: "var(--danger)", fontSize: "0.78rem", padding: "0.35rem 0.5rem" }}>{sendError}</p>
@@ -344,7 +362,25 @@ export default function AdherentCoachIaPage() {
           </div>
         </section>
 
-        <aside className="chat-sidebar-panel">
+        {mobileMenuOpen && (
+          <button
+            type="button"
+            className="coach-mobile-drawer-backdrop"
+            aria-label="Fermer le menu Coach IA"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+        )}
+
+        <aside className={`chat-sidebar-panel ${mobileMenuOpen ? "coach-drawer-open" : ""}`}>
+          <div className="coach-drawer-head">
+            <div>
+              <strong>Coach IA</strong>
+              <span>Contexte et historique</span>
+            </div>
+            <button type="button" onClick={() => setMobileMenuOpen(false)} aria-label="Fermer">
+              ×
+            </button>
+          </div>
           <article className="panel-card">
             <h2 className="panel-title">Contexte actuel</h2>
             <div className="stack" style={{ gap: "0.45rem" }}>
@@ -418,6 +454,11 @@ export default function AdherentCoachIaPage() {
           flex-wrap: wrap;
           gap: 0.55rem;
         }
+        .coach-mobile-menu-btn,
+        .coach-mobile-drawer-backdrop,
+        .coach-drawer-head {
+          display: none;
+        }
         .coach-new-chat-btn {
           display: none;
           width: 2.35rem;
@@ -488,6 +529,30 @@ export default function AdherentCoachIaPage() {
           font-size: 0.74rem;
           line-height: 1.35;
           font-weight: 600;
+        }
+        .chat-quick-actions summary {
+          cursor: pointer;
+          list-style: none;
+          color: var(--text);
+          font-size: 0.78rem;
+          font-weight: 800;
+        }
+        .chat-quick-actions summary::-webkit-details-marker {
+          display: none;
+        }
+        .chat-quick-actions summary::after {
+          content: "⌄";
+          float: right;
+          color: var(--accent);
+        }
+        .chat-quick-actions[open] summary::after {
+          content: "⌃";
+        }
+        .qa-list {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.35rem;
+          margin-top: 0.55rem;
         }
         .msg-bubble-ai {
           background: var(--card-bg, #1a1f2e);
@@ -563,6 +628,10 @@ export default function AdherentCoachIaPage() {
         }
         @media (max-width: 700px) {
           .page-header {
+            display: none;
+          }
+
+          .page-header {
             align-items: stretch;
             gap: 0.75rem;
           }
@@ -579,25 +648,56 @@ export default function AdherentCoachIaPage() {
           }
 
           .chat-container {
-            gap: 0.85rem;
+            display: block;
+            gap: 0;
+            position: relative;
           }
 
           .chat-main {
-            height: auto;
-            min-height: calc(100dvh - 12.5rem);
+            height: calc(100dvh - 6.4rem);
+            min-height: 0;
             border-radius: 1rem;
             background: var(--bg-2);
+            overflow: hidden;
           }
 
           .chat-header {
-            align-items: flex-start;
-            padding: 0.85rem;
-            gap: 0.7rem;
+            align-items: center;
+            padding: 0.78rem 0.85rem;
+            gap: 0.62rem;
+            flex: 0 0 auto;
           }
 
           .chat-header > div:nth-child(2) {
             min-width: 0;
             flex: 1;
+          }
+
+          .coach-mobile-menu-btn {
+            display: inline-flex;
+            width: 2.4rem;
+            height: 2.4rem;
+            flex: 0 0 2.4rem;
+            border-radius: 0.85rem;
+            border: 1px solid var(--border);
+            background: var(--bg-2);
+            color: var(--text);
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 0.22rem;
+          }
+
+          .coach-mobile-menu-btn span {
+            width: 1rem;
+            height: 2px;
+            border-radius: 999px;
+            background: currentColor;
+          }
+
+          .ai-avatar {
+            width: 2.15rem;
+            height: 2.15rem;
           }
 
           .chat-header .row {
@@ -616,17 +716,23 @@ export default function AdherentCoachIaPage() {
           }
 
           .chat-ai-status {
+            max-width: 12rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
             margin-top: 0.18rem;
             font-size: 0.68rem;
             line-height: 1.45;
           }
 
           .chat-messages {
+            flex: 1 1 auto;
             padding: 0.85rem;
             gap: 0.8rem;
-            min-height: 42dvh;
+            min-height: 0;
             max-height: none;
-            overflow: visible;
+            overflow-y: auto;
+            overscroll-behavior: contain;
           }
 
           .msg {
@@ -667,11 +773,25 @@ export default function AdherentCoachIaPage() {
           }
 
           .chat-quick-actions {
+            flex: 0 0 auto;
+            display: block;
+            padding: 0.68rem 0.85rem;
+            background: color-mix(in oklab, var(--bg-2) 88%, transparent);
+          }
+
+          .chat-quick-actions summary {
+            min-height: 2.55rem;
+            border: 1px solid var(--border);
+            border-radius: 0.85rem;
+            background: color-mix(in oklab, var(--accent-dim) 30%, var(--bg-2) 70%);
+            padding: 0.72rem 0.85rem;
+          }
+
+          .qa-list {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 0.45rem;
-            padding: 0.85rem;
-            background: color-mix(in oklab, var(--bg-2) 88%, transparent);
+            gap: 0.42rem;
+            margin-top: 0.48rem;
           }
 
           .qa-btn {
@@ -685,9 +805,10 @@ export default function AdherentCoachIaPage() {
           }
 
           .chat-input-row {
-            position: sticky;
+            position: relative;
             bottom: 0;
             z-index: 4;
+            flex: 0 0 auto;
             padding: 0.78rem;
             gap: 0.55rem;
             background: var(--bg-2);
@@ -710,11 +831,64 @@ export default function AdherentCoachIaPage() {
           }
 
           .chat-sidebar-panel {
-            position: static;
+            position: fixed;
+            z-index: 60;
+            inset: 0 auto 0 0;
+            width: min(86vw, 21rem);
+            padding: 0.9rem;
+            background: var(--bg);
+            border-right: 1px solid var(--border);
+            transform: translateX(-105%);
+            transition: transform 220ms cubic-bezier(0.16, 0.84, 0.22, 1);
+            overflow-y: auto;
           }
 
-          .coach-history-card {
-            order: -1;
+          .chat-sidebar-panel.coach-drawer-open {
+            transform: translateX(0);
+          }
+
+          .coach-mobile-drawer-backdrop {
+            display: block;
+            position: fixed;
+            z-index: 55;
+            inset: 0;
+            border: 0;
+            background: rgba(0, 0, 0, 0.42);
+          }
+
+          .coach-drawer-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+            margin-bottom: 0.85rem;
+          }
+
+          .coach-drawer-head strong,
+          .coach-drawer-head span {
+            display: block;
+          }
+
+          .coach-drawer-head strong {
+            color: var(--text);
+            font-family: var(--font-heading), sans-serif;
+            font-size: 1rem;
+          }
+
+          .coach-drawer-head span {
+            margin-top: 0.15rem;
+            color: var(--text-soft);
+            font-size: 0.72rem;
+          }
+
+          .coach-drawer-head button {
+            width: 2.3rem;
+            height: 2.3rem;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--bg-2);
+            color: var(--text);
+            font-size: 1.25rem;
           }
 
           .coach-history-list {
