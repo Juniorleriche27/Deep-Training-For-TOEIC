@@ -161,6 +161,7 @@ function StreamingMessage({ content, isStreaming }: { content: string; isStreami
 
 export default function AdherentCoachIaPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [historyMessages, setHistoryMessages] = useState<ChatMessage[]>([]);
   const [context, setContext] = useState<CoachContext | null>(null);
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
@@ -171,10 +172,29 @@ export default function AdherentCoachIaPage() {
 
   useEffect(() => {
     Promise.all([api.getChatHistory(), api.getCoachContext()]).then(([history, ctx]) => {
-      setMessages(history);
+      setHistoryMessages(history);
       setContext(ctx);
     });
   }, []);
+
+  const recentHistory = useMemo(() => {
+    return historyMessages
+      .filter((msg) => msg.content.trim())
+      .slice(-8)
+      .reverse();
+  }, [historyMessages]);
+
+  function startNewConversation() {
+    setMessages([]);
+    setInput("");
+    setSendError("");
+    setStreamingId(null);
+  }
+
+  function loadHistory() {
+    setMessages(historyMessages);
+    setSendError("");
+  }
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -216,8 +236,18 @@ export default function AdherentCoachIaPage() {
   return (
     <div>
       <div className="page-header">
-        <h1 className="page-title">Coach IA</h1>
-        <p className="page-sub">Assistant de programme contextuel, relie a l&apos;etape et aux scores.</p>
+        <div>
+          <h1 className="page-title">Coach IA</h1>
+          <p className="page-sub">Assistant de programme contextuel, relie a l&apos;etape et aux scores.</p>
+        </div>
+        <div className="coach-page-actions">
+          <button type="button" className="btn-secondary rounded-xl px-4 py-3 text-xs font-semibold" onClick={loadHistory}>
+            Historique
+          </button>
+          <button type="button" className="btn-primary rounded-xl px-4 py-3 text-xs font-semibold" onClick={startNewConversation}>
+            Nouvelle conversation
+          </button>
+        </div>
       </div>
 
       <div className="chat-container">
@@ -236,9 +266,22 @@ export default function AdherentCoachIaPage() {
                 <span className="badge badge-gold">{context.deadline}</span>
               </div>
             )}
+            <button type="button" className="coach-new-chat-btn" onClick={startNewConversation}>
+              +
+            </button>
           </div>
 
           <div className="chat-messages">
+            {!messages.length && !sending && (
+              <div className="coach-empty-state">
+                <span className="coach-empty-kicker">Nouvelle conversation</span>
+                <h2>Que veux-tu travailler maintenant ?</h2>
+                <p>
+                  Pose une question au Coach IA ou lance une action rapide. Ton historique reste accessible,
+                  mais cette page demarre proprement comme un nouveau chat.
+                </p>
+              </div>
+            )}
             {messages.map((msg) => (
               <div key={msg.id} className={`msg ${msg.role === "user" ? "msg-user" : "msg-ai"}`}>
                 <div
@@ -340,10 +383,112 @@ export default function AdherentCoachIaPage() {
               ))}
             </div>
           </article>
+
+          <article className="panel-card coach-history-card">
+            <div className="row-sb" style={{ gap: "0.65rem", marginBottom: "0.65rem" }}>
+              <h2 className="panel-title" style={{ margin: 0 }}>Historique</h2>
+              <button type="button" className="btn-secondary rounded-md px-3 py-2 text-xs" onClick={loadHistory}>
+                Voir
+              </button>
+            </div>
+            <div className="coach-history-list">
+              {recentHistory.length ? (
+                recentHistory.map((msg) => (
+                  <button
+                    key={msg.id}
+                    type="button"
+                    className="coach-history-item"
+                    onClick={loadHistory}
+                  >
+                    <span>{msg.role === "assistant" ? "Coach IA" : "Moi"}</span>
+                    <strong>{msg.content.slice(0, 72)}{msg.content.length > 72 ? "..." : ""}</strong>
+                  </button>
+                ))
+              ) : (
+                <p className="card-desc" style={{ margin: 0 }}>Aucun historique disponible.</p>
+              )}
+            </div>
+          </article>
         </aside>
       </div>
 
       <style>{`
+        .coach-page-actions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.55rem;
+        }
+        .coach-new-chat-btn {
+          display: none;
+          width: 2.35rem;
+          height: 2.35rem;
+          border-radius: 999px;
+          border: 1px solid color-mix(in oklab, var(--accent) 36%, var(--border) 64%);
+          background: color-mix(in oklab, var(--accent-dim) 70%, var(--bg-2) 30%);
+          color: var(--accent);
+          font-size: 1.35rem;
+          font-weight: 700;
+          line-height: 1;
+        }
+        .coach-empty-state {
+          width: min(34rem, 100%);
+          margin: auto;
+          border: 1px solid var(--border);
+          border-radius: 1.2rem;
+          background:
+            radial-gradient(300px 180px at 88% 0%, color-mix(in oklab, var(--accent) 12%, transparent), transparent 72%),
+            var(--bg-2);
+          padding: clamp(1rem, 3vw, 1.35rem);
+          text-align: center;
+        }
+        .coach-empty-kicker {
+          color: var(--accent);
+          font-size: 0.68rem;
+          font-weight: 800;
+          letter-spacing: 0.11em;
+          text-transform: uppercase;
+        }
+        .coach-empty-state h2 {
+          margin: 0.62rem 0 0;
+          font-family: var(--font-heading), sans-serif;
+          font-size: clamp(1.35rem, 4vw, 2rem);
+          line-height: 1.08;
+        }
+        .coach-empty-state p {
+          margin: 0.65rem auto 0;
+          max-width: 38ch;
+          color: var(--text-soft);
+          font-size: 0.9rem;
+          line-height: 1.65;
+        }
+        .coach-history-list {
+          display: grid;
+          gap: 0.42rem;
+        }
+        .coach-history-item {
+          border: 1px solid var(--border);
+          border-radius: 0.75rem;
+          background: color-mix(in oklab, var(--bg-2) 76%, transparent);
+          color: var(--text);
+          padding: 0.62rem 0.7rem;
+          text-align: left;
+        }
+        .coach-history-item span {
+          display: block;
+          color: var(--accent);
+          font-size: 0.62rem;
+          font-weight: 800;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+        }
+        .coach-history-item strong {
+          display: block;
+          margin-top: 0.2rem;
+          color: var(--text-soft);
+          font-size: 0.74rem;
+          line-height: 1.35;
+          font-weight: 600;
+        }
         .msg-bubble-ai {
           background: var(--card-bg, #1a1f2e);
           border: 1px solid var(--border, rgba(255,255,255,0.08));
@@ -417,13 +562,29 @@ export default function AdherentCoachIaPage() {
           40% { transform: translateY(-6px); opacity: 1; }
         }
         @media (max-width: 700px) {
+          .page-header {
+            align-items: stretch;
+            gap: 0.75rem;
+          }
+
+          .coach-page-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.45rem;
+          }
+
+          .coach-page-actions > * {
+            min-height: 2.75rem;
+            padding-inline: 0.7rem;
+          }
+
           .chat-container {
             gap: 0.85rem;
           }
 
           .chat-main {
             height: auto;
-            min-height: calc(100dvh - 8.5rem);
+            min-height: calc(100dvh - 12.5rem);
             border-radius: 1rem;
             background: var(--bg-2);
           }
@@ -440,10 +601,13 @@ export default function AdherentCoachIaPage() {
           }
 
           .chat-header .row {
-            margin-left: 0 !important;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 0.35rem;
+            display: none;
+          }
+
+          .coach-new-chat-btn {
+            display: inline-grid;
+            place-items: center;
+            margin-left: auto;
           }
 
           .chat-ai-name {
@@ -460,6 +624,7 @@ export default function AdherentCoachIaPage() {
           .chat-messages {
             padding: 0.85rem;
             gap: 0.8rem;
+            min-height: 42dvh;
             max-height: none;
             overflow: visible;
           }
@@ -546,6 +711,16 @@ export default function AdherentCoachIaPage() {
 
           .chat-sidebar-panel {
             position: static;
+          }
+
+          .coach-history-card {
+            order: -1;
+          }
+
+          .coach-history-list {
+            max-height: 13rem;
+            overflow-y: auto;
+            padding-right: 0.15rem;
           }
         }
       `}</style>
