@@ -22,8 +22,7 @@ function isPerformanceViewport() {
   return (
     typeof window !== "undefined" &&
     !!window.matchMedia &&
-    window.matchMedia("(max-width: 900px), (prefers-reduced-motion: reduce)")
-      .matches
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
   );
 }
 
