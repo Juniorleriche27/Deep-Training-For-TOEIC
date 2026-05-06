@@ -3603,7 +3603,6 @@ textarea {
   .public-nav-shell {
     background: var(--bg-2);
     backdrop-filter: none;
-    animation: publicMobileHeaderIn 360ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
   }
 
   .public-nav-actions {
@@ -3633,35 +3632,6 @@ textarea {
 
   .public-menu-btn:active {
     transform: scale(0.96);
-  }
-
-  .public-mobile-link {
-    opacity: 0;
-    transform: translate3d(0, 8px, 0);
-  }
-
-  .public-mobile-panel.open .public-mobile-link {
-    animation: publicMobileItemIn 220ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
-  }
-
-  .public-mobile-panel.open .public-mobile-link:nth-child(2) {
-    animation-delay: 35ms;
-  }
-
-  .public-mobile-panel.open .public-mobile-link:nth-child(3) {
-    animation-delay: 70ms;
-  }
-
-  .public-mobile-panel.open .public-mobile-link:nth-child(4) {
-    animation-delay: 105ms;
-  }
-
-  .public-mobile-panel.open .public-mobile-link:nth-child(5) {
-    animation-delay: 140ms;
-  }
-
-  .public-mobile-panel.open .public-mobile-link:nth-child(6) {
-    animation-delay: 175ms;
   }
 
   /* Le shell adhérent utilisait un viewport interne (100vh + overflow hidden)
@@ -3756,6 +3726,58 @@ textarea {
   /* L'animation de fond en boucle infinie force des repaints permanents */
   .app-main {
     animation: none;
+  }
+}
+
+@media (max-width: 1100px) and (prefers-reduced-motion: no-preference) {
+  .public-nav-shell {
+    animation: publicMobileHeaderIn 340ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
+  }
+
+  .public-mobile-panel {
+    transition: opacity 180ms ease, transform 220ms cubic-bezier(0.22, 0.7, 0.2, 1);
+  }
+
+  .public-mobile-link {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+
+  .public-mobile-panel.open .public-mobile-link {
+    animation: publicMobileItemIn 220ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
+  }
+
+  .public-mobile-panel.open .public-mobile-link:nth-child(2) {
+    animation-delay: 35ms;
+  }
+
+  .public-mobile-panel.open .public-mobile-link:nth-child(3) {
+    animation-delay: 70ms;
+  }
+
+  .public-mobile-panel.open .public-mobile-link:nth-child(4) {
+    animation-delay: 105ms;
+  }
+
+  .public-mobile-panel.open .public-mobile-link:nth-child(5) {
+    animation-delay: 140ms;
+  }
+
+  .public-mobile-panel.open .public-mobile-link:nth-child(6) {
+    animation-delay: 175ms;
+  }
+}
+
+@media (max-width: 1100px) and (prefers-reduced-motion: reduce) {
+  .public-nav-shell,
+  .public-mobile-link {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .public-mobile-panel {
+    transition: none;
   }
 }
 

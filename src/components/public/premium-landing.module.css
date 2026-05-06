@@ -1315,26 +1315,6 @@
     border-color: rgba(120, 142, 170, 0.18);
   }
 
-  .heroPanel {
-    animation: mobileRiseIn 420ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
-  }
-
-  .commandCard {
-    animation: mobileRiseIn 520ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
-  }
-
-  .counterCard:nth-child(1) {
-    animation: mobileRiseIn 560ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
-  }
-
-  .counterCard:nth-child(2) {
-    animation: mobileRiseIn 620ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
-  }
-
-  .counterCard:nth-child(3) {
-    animation: mobileRiseIn 680ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
-  }
-
   .heroKicker,
   .heroTitle,
   .heroLead,
@@ -1392,14 +1372,6 @@
     grid-template-columns: 1fr;
   }
 
-  .heroActions > *:nth-child(1) {
-    animation: mobileRiseIn 720ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
-  }
-
-  .heroActions > *:nth-child(2) {
-    animation: mobileRiseIn 790ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
-  }
-
   .primaryBtn,
   .secondaryBtn,
   .valueCard,
@@ -1428,6 +1400,73 @@
   .secondaryBtn:active,
   .sliderBtn:active {
     transform: scale(0.985);
+  }
+}
+
+@media (max-width: 900px) and (prefers-reduced-motion: no-preference) {
+  .heroPanel {
+    animation: mobileRiseIn 420ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
+  }
+
+  .heroKicker {
+    animation: mobileRiseIn 470ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
+  }
+
+  .heroTitle {
+    animation: mobileRiseIn 540ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
+  }
+
+  .heroLead {
+    animation: mobileRiseIn 610ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
+  }
+
+  .heroActions > *:nth-child(1) {
+    animation: mobileRiseIn 680ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
+  }
+
+  .heroActions > *:nth-child(2) {
+    animation: mobileRiseIn 740ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
+  }
+
+  .commandCard {
+    animation: mobileRiseIn 520ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
+  }
+
+  .meterFill {
+    animation: meterEnter 620ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
+  }
+
+  .meterRow:nth-child(2) .meterFill {
+    animation-delay: 80ms;
+  }
+
+  .meterRow:nth-child(3) .meterFill {
+    animation-delay: 140ms;
+  }
+
+  .counterCard:nth-child(1) {
+    animation: mobileRiseIn 560ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
+  }
+
+  .counterCard:nth-child(2) {
+    animation: mobileRiseIn 620ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
+  }
+
+  .counterCard:nth-child(3) {
+    animation: mobileRiseIn 680ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
+  }
+}
+
+@media (max-width: 900px) and (prefers-reduced-motion: reduce) {
+  .heroPanel,
+  .heroKicker,
+  .heroTitle,
+  .heroLead,
+  .heroActions > *,
+  .commandCard,
+  .counterCard,
+  .meterFill {
+    animation: none;
   }
 }
 
