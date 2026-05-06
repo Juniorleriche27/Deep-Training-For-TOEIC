@@ -107,7 +107,13 @@ export function PublicNav() {
         <div className="public-mobile-panel-top">
           <div className="public-mobile-tools">
             <ThemeToggle compact />
-            <ProfileMenu />
+            <Link
+              href="/adherent/dashboard"
+              onClick={() => setOpen(false)}
+              className="public-mobile-workspace"
+            >
+              Espace adherent
+            </Link>
           </div>
           <Link
             href="/contact"
@@ -118,6 +124,13 @@ export function PublicNav() {
           </Link>
         </div>
         <nav className="public-mobile-nav">
+          <Link
+            href="/adherent/dashboard"
+            onClick={() => setOpen(false)}
+            className="public-mobile-link public-mobile-link-workspace"
+          >
+            Espace adherent
+          </Link>
           {publicNav.map((item) => {
             const active = pathname === item.href;
             return (

@@ -2787,12 +2787,17 @@ body::before {
 }
 
 .public-mobile-panel {
-  top: 4.6rem;
+  top: 5.15rem;
+  left: max(0.85rem, env(safe-area-inset-left));
+  right: max(0.85rem, env(safe-area-inset-right));
   background: var(--bg-2);
   border: 1px solid var(--border);
   border-radius: 1.2rem;
   box-shadow: 0 22px 60px rgba(0, 0, 0, 0.22);
   padding: 0.9rem;
+  max-height: calc(100dvh - 6.2rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
   transform: translate3d(0, -0.8rem, 0) scale(0.98);
   opacity: 0;
   pointer-events: none;
@@ -2809,7 +2814,8 @@ body::before {
 }
 
 .public-mobile-panel-top {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
   justify-content: space-between;
   gap: 0.7rem;
@@ -2822,6 +2828,25 @@ body::before {
   display: flex;
   align-items: center;
   gap: 0.55rem;
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.public-mobile-workspace {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.4rem;
+  max-width: 100%;
+  border-radius: 0.85rem;
+  border: 1px solid color-mix(in oklab, var(--accent) 34%, var(--border) 66%);
+  background: color-mix(in oklab, var(--accent-dim) 72%, var(--bg-2) 28%);
+  color: var(--text);
+  padding: 0.62rem 0.76rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
 }
 
 .public-mobile-nav {
@@ -2832,6 +2857,7 @@ body::before {
 .public-mobile-link {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   min-height: 3rem;
   padding: 0.8rem 0.95rem;
   border-radius: 0.95rem;
@@ -2839,6 +2865,25 @@ body::before {
   font-size: 0.92rem;
   font-weight: 600;
   border: 1px solid transparent;
+}
+
+.public-mobile-link-workspace {
+  border-color: color-mix(in oklab, var(--accent) 42%, transparent);
+  background:
+    linear-gradient(135deg, color-mix(in oklab, var(--accent-dim) 78%, transparent), color-mix(in oklab, var(--bg-2) 78%, transparent));
+  color: var(--text);
+  font-weight: 800;
+}
+
+.public-mobile-link-workspace::after {
+  content: "Adherent";
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--accent) 34%, transparent);
+  color: var(--accent);
+  padding: 0.18rem 0.48rem;
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
 
 .public-mobile-link-active {
@@ -3570,6 +3615,9 @@ body::before {
 
   .public-mobile-panel {
     display: block;
+    inset-inline: 0.75rem;
+    top: 5rem;
+    max-height: calc(100dvh - 5.8rem);
   }
 
   .public-nav-shell {
