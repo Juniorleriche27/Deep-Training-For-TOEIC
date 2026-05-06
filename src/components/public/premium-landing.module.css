@@ -566,8 +566,9 @@
 }
 
 .mythCard {
-  display: flex;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
   gap: 0.7rem;
   border-radius: 0.92rem;
   border: 1px solid rgba(118, 143, 174, 0.24);
@@ -576,6 +577,7 @@
 }
 
 .mythCross {
+  grid-row: 1 / span 2;
   width: 1.5rem;
   min-width: 1.5rem;
   height: 1.5rem;
@@ -592,13 +594,15 @@
 }
 
 .mythBelief {
+  grid-column: 2;
   margin: 0;
-  color: #f4f7ff;
+  color: var(--text);
   font-size: 0.86rem;
   line-height: 1.5;
 }
 
 .mythTruth {
+  grid-column: 2;
   margin: 0.38rem 0 0;
   color: var(--text-soft);
   font-size: 0.8rem;
@@ -1285,16 +1289,6 @@
   .hero,
   .section {
     width: min(1120px, 94vw);
-  }
-
-  .section {
-    content-visibility: auto;
-    contain-intrinsic-size: 1px 920px;
-  }
-
-  .divider {
-    content-visibility: auto;
-    contain-intrinsic-size: 1px 1px;
   }
 
   .heroPanel,

@@ -3610,6 +3610,20 @@ textarea {
     margin-left: 0;
   }
 
+  .public-footer-shell {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    animation: none;
+    background: var(--bg-2);
+    box-shadow: none;
+  }
+
+  .public-footer-shell:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
   .public-menu-btn {
     transition:
       transform 160ms ease,
