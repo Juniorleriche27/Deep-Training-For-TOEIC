@@ -38,26 +38,41 @@
 }
 
 .heroGrid {
+  --mx: 62%;
+  --my: 34%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: clamp(2rem, 4vw, 4.5rem);
+  grid-template-columns: minmax(0, 1.15fr) minmax(340px, 0.85fr);
+  align-items: stretch;
+  gap: clamp(1.2rem, 3vw, 2rem);
 }
 
+.heroPanel,
 .commandCard {
   position: relative;
   border-radius: 1.45rem;
   border: 1px solid rgba(120, 142, 170, 0.24);
-  background: var(--surface-glass);
+  background:
+    radial-gradient(520px 320px at var(--mx) var(--my), color-mix(in oklab, var(--accent) 10%, transparent), transparent 67%),
+    var(--surface-glass);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.06),
     0 30px 90px rgba(0, 0, 0, 0.38);
-  padding: clamp(1.1rem, 2vw, 1.65rem);
-  overflow: hidden;
 }
 
 .heroPanel {
-  position: relative;
+  padding: clamp(1.45rem, 2vw, 2rem) clamp(1.25rem, 2.3vw, 2rem);
+  overflow: hidden;
+}
+
+.heroPanel::after {
+  content: "";
+  position: absolute;
+  inset: auto -10% -42% -8%;
+  height: 56%;
+  background: radial-gradient(circle at center, color-mix(in oklab, var(--accent) 28%, transparent), transparent 70%);
+  filter: blur(26px);
+  opacity: 0.7;
+  pointer-events: none;
 }
 
 .heroKicker {
@@ -1026,211 +1041,6 @@
   opacity: 1;
   transform: translateY(0) scale(1);
   filter: blur(0px);
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   HERO PERSON VISUAL
-   ═══════════════════════════════════════════════════════════════ */
-
-.heroPillRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin-bottom: 1rem;
-  opacity: 0;
-  animation: fadeRise 0.8s ease forwards;
-}
-
-.heroPill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  border-radius: 999px;
-  border: 1px solid rgba(141, 175, 210, 0.32);
-  background: color-mix(in oklab, var(--bg-2) 82%, transparent);
-  padding: 0.32rem 0.78rem;
-  font-size: 0.71rem;
-  font-weight: 600;
-  color: var(--text-soft);
-  letter-spacing: 0.02em;
-}
-
-.heroVisual {
-  position: relative;
-  padding-bottom: 2.8rem;
-}
-
-.personFrame {
-  position: relative;
-  border-radius: 2rem;
-  overflow: hidden;
-  background:
-    radial-gradient(ellipse 75% 55% at 25% 15%, color-mix(in oklab, var(--accent) 16%, transparent), transparent 68%),
-    radial-gradient(ellipse 55% 75% at 78% 72%, color-mix(in oklab, var(--gold) 11%, transparent), transparent 68%),
-    var(--surface-glass);
-  border: 1px solid rgba(130, 158, 190, 0.22);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.07),
-    0 28px 70px rgba(0, 0, 0, 0.34);
-  aspect-ratio: 4 / 4.5;
-}
-
-.personSvg {
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-/* Writing line grows across the notebook page */
-.writingLine {
-  stroke-dasharray: 82;
-  stroke-dashoffset: 82;
-  animation: writeLineAnim 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-/* Writing arm moves left → right */
-.writingArm {
-  will-change: transform;
-  animation: armWriteAnim 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  transform-origin: 240px 212px;
-}
-
-/* Subtle pen-glow when writing */
-.writingGlow {
-  animation: glowPulse 2.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-/* Floating keyword badges around the person */
-.wordBadge1 {
-  animation: badgeFloat 5.2s ease-in-out infinite;
-}
-.wordBadge2 {
-  animation: badgeFloat 5.2s ease-in-out 1.8s infinite;
-}
-.wordBadge3 {
-  animation: badgeFloat 5.2s ease-in-out 3.5s infinite;
-}
-
-/* Floating score card (absolute, bottom-left of visual) */
-.heroFloatCard {
-  position: absolute;
-  bottom: 0;
-  left: 1.2rem;
-  opacity: 0;
-  transform: translateY(16px);
-  animation: fadeRise 0.9s 0.75s ease forwards;
-}
-
-.heroFloatCardInner {
-  display: flex;
-  align-items: center;
-  gap: 0.78rem;
-  border-radius: 1.1rem;
-  border: 1px solid rgba(130, 160, 195, 0.3);
-  background:
-    radial-gradient(180px 100px at 0% 50%, color-mix(in oklab, var(--accent) 12%, transparent), transparent 70%),
-    var(--surface-glass);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  padding: 0.72rem 1.1rem;
-  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.32);
-}
-
-.heroFloatIcon {
-  font-size: 1.45rem;
-  line-height: 1;
-}
-
-.heroFloatLabel {
-  margin: 0;
-  font-size: 0.65rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-soft);
-}
-
-.heroFloatValue {
-  margin: 0.16rem 0 0;
-  font-family: var(--font-heading);
-  font-size: 1.18rem;
-  font-weight: 800;
-  color: var(--accent);
-}
-
-/* ── HERO VISUAL: Mobile ─────────────────────────────────────── */
-
-@media (max-width: 900px) {
-  .heroGrid {
-    grid-template-columns: 1fr;
-  }
-  .heroVisual {
-    order: -1;
-    padding-bottom: 2.4rem;
-  }
-  .personFrame {
-    aspect-ratio: 4 / 3;
-    max-height: 310px;
-  }
-}
-
-@media (max-width: 640px) {
-  .personFrame {
-    aspect-ratio: 4 / 2.6;
-    max-height: 250px;
-    border-radius: 1.25rem;
-  }
-  .heroFloatCard {
-    bottom: -0.2rem;
-    left: 0.8rem;
-  }
-  .heroFloatCardInner {
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .writingArm,
-  .writingGlow,
-  .wordBadge1,
-  .wordBadge2,
-  .wordBadge3 {
-    animation: none;
-  }
-  .writingLine {
-    animation: none;
-    stroke-dashoffset: 0;
-  }
-  .writingArm {
-    transform: translateX(18px) translateY(3px);
-  }
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   KEYFRAMES
-   ═══════════════════════════════════════════════════════════════ */
-
-@keyframes writeLineAnim {
-  0%, 8%   { stroke-dashoffset: 82; opacity: 1; }
-  52%      { stroke-dashoffset: 0;  opacity: 1; }
-  78%, 100%{ stroke-dashoffset: 0;  opacity: 0.3; }
-}
-
-@keyframes armWriteAnim {
-  0%, 8%   { transform: translateX(0) translateY(0); }
-  52%      { transform: translateX(30px) translateY(4px); }
-  78%, 100%{ transform: translateX(30px) translateY(4px); }
-}
-
-@keyframes glowPulse {
-  0%, 8%   { opacity: 0; }
-  38%      { opacity: 0.2; }
-  78%, 100%{ opacity: 0.04; }
-}
-
-@keyframes badgeFloat {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-8px); }
 }
 
 @keyframes fadeRise {
