@@ -2770,14 +2770,17 @@ body::before {
   border-radius: 1.2rem;
   box-shadow: 0 22px 60px rgba(0, 0, 0, 0.22);
   padding: 0.9rem;
-  transform: translateY(-0.8rem);
+  transform: translate3d(0, -0.8rem, 0) scale(0.98);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 180ms ease, transform 220ms ease;
+  transform-origin: top center;
+  transition:
+    opacity 180ms ease,
+    transform 240ms cubic-bezier(0.18, 0.78, 0.22, 1);
 }
 
 .public-mobile-panel.open {
-  transform: translateY(0);
+  transform: translate3d(0, 0, 0) scale(1);
   opacity: 1;
   pointer-events: auto;
 }
@@ -2835,11 +2838,20 @@ body::before {
 @keyframes publicMobileItemIn {
   from {
     opacity: 0;
-    transform: translate3d(0, 8px, 0);
+    transform: translate3d(0, 14px, 0) scale(0.97);
   }
   to {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes publicMobileBackdropIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
 
@@ -3735,16 +3747,22 @@ textarea {
   }
 
   .public-mobile-panel {
-    transition: opacity 220ms ease, transform 260ms cubic-bezier(0.18, 0.78, 0.22, 1);
+    transition:
+      opacity 220ms ease,
+      transform 280ms cubic-bezier(0.16, 0.84, 0.22, 1);
+  }
+
+  .public-mobile-backdrop {
+    animation: publicMobileBackdropIn 180ms ease-out both;
   }
 
   .public-mobile-link {
     opacity: 0;
-    transform: translate3d(0, 8px, 0);
+    transform: translate3d(0, 14px, 0) scale(0.97);
   }
 
   .public-mobile-panel.open .public-mobile-link {
-    animation: publicMobileItemIn 280ms cubic-bezier(0.18, 0.78, 0.22, 1) both;
+    animation: publicMobileItemIn 340ms cubic-bezier(0.16, 0.84, 0.22, 1) both;
   }
 
   .public-mobile-panel.open .public-mobile-link:nth-child(2) {
@@ -3770,7 +3788,8 @@ textarea {
 
 @media (max-width: 1100px) and (prefers-reduced-motion: reduce) {
   .public-nav-shell,
-  .public-mobile-link {
+  .public-mobile-link,
+  .public-mobile-backdrop {
     animation: none;
     opacity: 1;
     transform: none;

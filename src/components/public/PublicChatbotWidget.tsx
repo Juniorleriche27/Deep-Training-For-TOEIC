@@ -150,7 +150,15 @@ export function PublicChatbotWidget() {
   }, [messages, streamingId]);
 
   useEffect(() => {
-    if (compactMobile) setOpen(false);
+    if (!compactMobile) return;
+
+    let mounted = true;
+    queueMicrotask(() => {
+      if (mounted) setOpen(false);
+    });
+    return () => {
+      mounted = false;
+    };
   }, [compactMobile]);
 
   async function send(text: string) {

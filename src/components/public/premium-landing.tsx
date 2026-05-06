@@ -47,10 +47,13 @@ function usePerformanceMode() {
 
 function useInViewOnce<T extends HTMLElement>(threshold = 0.25, disabled = false) {
   const ref = useRef<T | null>(null);
-  const [inView, setInView] = useState(disabled);
+  const [inView, setInView] = useState(() => disabled || isPerformanceViewport());
 
   useEffect(() => {
-    if (disabled || isPerformanceViewport()) setInView(true);
+    if (!disabled && !isPerformanceViewport()) return;
+
+    const frame = requestAnimationFrame(() => setInView(true));
+    return () => cancelAnimationFrame(frame);
   }, [disabled]);
 
   useEffect(() => {
@@ -77,10 +80,15 @@ function useInViewOnce<T extends HTMLElement>(threshold = 0.25, disabled = false
 }
 
 function useCountUp(target: number, start: boolean, duration = 1350, disabled = false) {
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(() =>
+    disabled || isPerformanceViewport() ? target : 0
+  );
 
   useEffect(() => {
-    if (disabled || isPerformanceViewport()) setValue(target);
+    if (!disabled && !isPerformanceViewport()) return;
+
+    const frame = requestAnimationFrame(() => setValue(target));
+    return () => cancelAnimationFrame(frame);
   }, [disabled, target]);
 
   useEffect(() => {
@@ -586,7 +594,8 @@ export function PremiumLanding() {
           </h2>
         </Reveal>
 
-        <div className={styles.resourceStage}>
+        <Reveal className={styles.resourceStageReveal}>
+          <div className={styles.resourceStage}>
           <div className={styles.resourceRail}>
             <div className={styles.resourceTrack}>
               {[...resources, ...resources].map((item, index) => (
@@ -605,7 +614,8 @@ export function PremiumLanding() {
               ))}
             </div>
           </div>
-        </div>
+          </div>
+        </Reveal>
 
         <div className={styles.resourceGrid}>
           {[
@@ -648,15 +658,16 @@ export function PremiumLanding() {
           </h2>
         </Reveal>
 
-        <div
-          className={styles.testiShell}
-          onMouseEnter={() => {
-            if (!performanceMode) setSliderPaused(true);
-          }}
-          onMouseLeave={() => {
-            if (!performanceMode) setSliderPaused(false);
-          }}
-        >
+        <Reveal className={styles.testiReveal}>
+          <div
+            className={styles.testiShell}
+            onMouseEnter={() => {
+              if (!performanceMode) setSliderPaused(true);
+            }}
+            onMouseLeave={() => {
+              if (!performanceMode) setSliderPaused(false);
+            }}
+          >
           <div className={styles.sliderViewport}>
             <div
               className={styles.sliderTrack}
@@ -739,7 +750,8 @@ export function PremiumLanding() {
               Suivant
             </button>
           </div>
-        </div>
+          </div>
+        </Reveal>
       </section>
 
       <div className={styles.divider} />

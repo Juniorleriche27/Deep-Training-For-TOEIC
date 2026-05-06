@@ -45,7 +45,13 @@ export function AppShell({
     nav.find((item) => isNavActive(pathname, item.href)) ?? nav[0];
 
   useEffect(() => {
-    setMobileNavOpen(false);
+    let mounted = true;
+    queueMicrotask(() => {
+      if (mounted) setMobileNavOpen(false);
+    });
+    return () => {
+      mounted = false;
+    };
   }, [pathname]);
 
   return (

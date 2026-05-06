@@ -22,7 +22,13 @@ export function PublicNav() {
   }, [open]);
 
   useEffect(() => {
-    setOpen(false);
+    let mounted = true;
+    queueMicrotask(() => {
+      if (mounted) setOpen(false);
+    });
+    return () => {
+      mounted = false;
+    };
   }, [pathname]);
 
   return (

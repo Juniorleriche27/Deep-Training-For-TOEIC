@@ -1151,6 +1151,53 @@
   }
 }
 
+@keyframes mobileButtonPress {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(0.965);
+  }
+  100% {
+    transform: scale(0.985);
+  }
+}
+
+@keyframes mobileButtonSheen {
+  from {
+    transform: translate3d(-140%, 0, 0) skewX(-16deg);
+  }
+  to {
+    transform: translate3d(140%, 0, 0) skewX(-16deg);
+  }
+}
+
+@keyframes mobileChipIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes mobileAccentPop {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0) scale(0.97);
+  }
+  72% {
+    opacity: 1;
+    transform: translate3d(0, -2px, 0) scale(1.01);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
 @media (max-width: 1100px) {
   .heroGrid {
     grid-template-columns: 1fr;
@@ -1328,12 +1375,12 @@
 
   .reveal {
     opacity: 0;
-    transform: translate3d(0, 28px, 0) scale(0.985);
+    transform: translate3d(0, 42px, 0) scale(0.96);
     filter: none;
     transition:
-      opacity 560ms cubic-bezier(0.18, 0.78, 0.22, 1),
-      transform 560ms cubic-bezier(0.18, 0.78, 0.22, 1);
-    transition-delay: min(var(--delay), 140ms);
+      opacity 720ms cubic-bezier(0.16, 0.84, 0.22, 1),
+      transform 720ms cubic-bezier(0.16, 0.84, 0.22, 1);
+    transition-delay: min(var(--delay), 220ms);
   }
 
   .revealVisible {
@@ -1342,11 +1389,34 @@
     filter: none;
   }
 
+  .sectionHeader.reveal {
+    transform: translate3d(0, 34px, 0) scale(0.975);
+  }
+
+  .valueGrid .reveal,
+  .mythGrid .reveal,
+  .stepsList .reveal,
+  .resourceGrid .reveal,
+  .resourceStageReveal,
+  .testiReveal {
+    transform: translate3d(0, 52px, 0) scale(0.952);
+  }
+
+  .valueGrid .revealVisible,
+  .mythGrid .revealVisible,
+  .stepsList .revealVisible,
+  .resourceGrid .revealVisible,
+  .resourceStageReveal.revealVisible,
+  .testiReveal.revealVisible {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+
   .heroTitle span {
     background: none;
     color: var(--accent);
     filter: none;
-    animation: none;
+    display: inline-block;
+    animation: mobileAccentPop 760ms 520ms cubic-bezier(0.16, 0.84, 0.22, 1) both;
     -webkit-text-fill-color: currentColor;
   }
 
@@ -1401,7 +1471,10 @@
   }
 
   .primaryBtn::after {
-    display: none;
+    display: block;
+    width: 46%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.32), transparent);
+    animation: mobileButtonSheen 860ms 980ms cubic-bezier(0.16, 0.84, 0.22, 1) both;
   }
 
   .primaryBtn,
@@ -1413,7 +1486,7 @@
   .primaryBtn:active,
   .secondaryBtn:active,
   .sliderBtn:active {
-    transform: scale(0.985);
+    animation: mobileButtonPress 180ms ease-out both;
   }
 
   .valueCard,
@@ -1423,6 +1496,31 @@
   .testiShell,
   .finalCta {
     transform: translateZ(0);
+  }
+
+  .resourceStageReveal .resourceChip {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0) scale(0.92);
+  }
+
+  .resourceStageReveal.revealVisible .resourceChip {
+    animation: mobileChipIn 440ms cubic-bezier(0.16, 0.84, 0.22, 1) both;
+  }
+
+  .resourceStageReveal.revealVisible .resourceChip:nth-child(2n) {
+    animation-delay: 55ms;
+  }
+
+  .resourceStageReveal.revealVisible .resourceChip:nth-child(3n) {
+    animation-delay: 110ms;
+  }
+
+  .resourceStageReveal.revealVisible .resourceChip:nth-child(4n) {
+    animation-delay: 165ms;
+  }
+
+  .testiReveal.revealVisible .slide {
+    animation: mobileRiseIn 560ms 120ms cubic-bezier(0.16, 0.84, 0.22, 1) both;
   }
 }
 
@@ -1455,6 +1553,26 @@
     animation: mobileRiseIn 720ms cubic-bezier(0.18, 0.78, 0.22, 1) both;
   }
 
+  .commandTop {
+    animation: mobileRiseIn 640ms 120ms cubic-bezier(0.18, 0.78, 0.22, 1) both;
+  }
+
+  .commandValueRow {
+    animation: mobileRiseIn 700ms 180ms cubic-bezier(0.18, 0.78, 0.22, 1) both;
+  }
+
+  .meterRow {
+    animation: mobileRiseIn 700ms 220ms cubic-bezier(0.18, 0.78, 0.22, 1) both;
+  }
+
+  .meterRow:nth-child(2) {
+    animation-delay: 280ms;
+  }
+
+  .meterRow:nth-child(3) {
+    animation-delay: 340ms;
+  }
+
   .meterFill {
     animation: meterEnter 780ms cubic-bezier(0.18, 0.78, 0.22, 1) both;
   }
@@ -1478,17 +1596,53 @@
   .counterCard:nth-child(3) {
     animation: mobileRiseIn 960ms cubic-bezier(0.18, 0.78, 0.22, 1) both;
   }
+
+  .floatingBadge {
+    animation: mobileChipIn 440ms 520ms cubic-bezier(0.16, 0.84, 0.22, 1) both;
+  }
+
+  .floatingBadge:nth-child(2) {
+    animation-delay: 590ms;
+  }
+
+  .floatingBadge:nth-child(3) {
+    animation-delay: 660ms;
+  }
+
+  .protocolCard {
+    animation: mobileRiseIn 620ms 620ms cubic-bezier(0.18, 0.78, 0.22, 1) both;
+  }
+
+  .protocolCard:nth-child(2) {
+    animation-delay: 700ms;
+  }
+
+  .protocolCard:nth-child(3) {
+    animation-delay: 780ms;
+  }
 }
 
 @media (max-width: 900px) and (prefers-reduced-motion: reduce) {
   .heroPanel,
   .heroKicker,
   .heroTitle,
+  .heroTitle span,
   .heroLead,
   .heroActions > *,
   .commandCard,
+  .commandTop,
+  .commandValueRow,
+  .meterRow,
   .counterCard,
-  .meterFill {
+  .meterFill,
+  .floatingBadge,
+  .protocolCard,
+  .resourceChip,
+  .slide {
+    animation: none;
+  }
+
+  .primaryBtn::after {
     animation: none;
   }
 
