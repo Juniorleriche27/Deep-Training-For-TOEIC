@@ -1248,4 +1248,133 @@
   }
 }
 
+@media (max-width: 900px) {
+  .pageShell {
+    overflow: clip;
+    background: var(--bg);
+  }
+
+  .pageShell::before,
+  .pageShell::after,
+  .heroPanel::after,
+  .commandCard::before,
+  .commandCard::after {
+    display: none;
+  }
+
+  .hero,
+  .section {
+    width: min(1120px, 94vw);
+  }
+
+  .section {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 920px;
+  }
+
+  .divider {
+    content-visibility: auto;
+    contain-intrinsic-size: 1px 1px;
+  }
+
+  .heroPanel,
+  .commandCard,
+  .counterCard,
+  .valueCard,
+  .resourceCard,
+  .mythCard,
+  .stickyPanel,
+  .stepCard,
+  .testiShell,
+  .slide,
+  .finalCta,
+  .protocolCard {
+    background: var(--bg-2);
+    box-shadow: none;
+  }
+
+  .heroPanel,
+  .commandCard,
+  .valueCard,
+  .resourceCard,
+  .finalCta {
+    border-color: rgba(120, 142, 170, 0.18);
+  }
+
+  .heroKicker,
+  .heroTitle,
+  .heroLead,
+  .heroActions,
+  .reveal,
+  .revealVisible {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    animation: none;
+    transition: none;
+  }
+
+  .heroTitle span {
+    background: none;
+    color: var(--accent);
+    filter: none;
+    animation: none;
+    -webkit-text-fill-color: currentColor;
+  }
+
+  .scrollCue,
+  .floatingBadge,
+  .resourceTrack,
+  .meterFill,
+  .sliderTrack {
+    animation: none;
+  }
+
+  .scrollCue::after {
+    animation: none;
+  }
+
+  .meterFill {
+    box-shadow: none;
+  }
+
+  .resourceRail {
+    overflow: visible;
+    border: 0;
+    background: transparent;
+  }
+
+  .resourceTrack {
+    min-width: 0;
+    flex-wrap: wrap;
+    padding: 0;
+  }
+
+  .stickyPanel {
+    display: none;
+  }
+
+  .timelineWrap {
+    grid-template-columns: 1fr;
+  }
+
+  .primaryBtn,
+  .secondaryBtn,
+  .valueCard,
+  .resourceCard,
+  .stepCard,
+  .sliderBtn,
+  .sliderDot,
+  .resourceChip,
+  .protocolCard,
+  .testiShell,
+  .slide {
+    transition: none;
+  }
+
+  .primaryBtn::after {
+    display: none;
+  }
+}
+
 

@@ -124,6 +124,7 @@ function BotBubble({ msg, streaming }: { msg: BotMessage; streaming: boolean }) 
 }
 
 export function PublicChatbotWidget() {
+  const [compactMobile, setCompactMobile] = useState(false);
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<BotMessage[]>([WELCOME]);
   const [input, setInput] = useState("");
@@ -133,8 +134,24 @@ export function PublicChatbotWidget() {
   const seqRef = useRef(0);
 
   useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+    const media = window.matchMedia(
+      "(max-width: 900px), (prefers-reduced-motion: reduce)"
+    );
+    const update = () => setCompactMobile(media.matches);
+
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, streamingId]);
+
+  useEffect(() => {
+    if (compactMobile) setOpen(false);
+  }, [compactMobile]);
 
   async function send(text: string) {
     if (!text.trim() || sending) return;
@@ -195,6 +212,10 @@ export function PublicChatbotWidget() {
     } finally {
       setSending(false);
     }
+  }
+
+  if (compactMobile) {
+    return null;
   }
 
   return (

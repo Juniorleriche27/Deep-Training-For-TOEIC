@@ -18,13 +18,45 @@ import {
 } from "@/lib/public-content";
 import styles from "./premium-landing.module.css";
 
-function useInViewOnce<T extends HTMLElement>(threshold = 0.25) {
+function isPerformanceViewport() {
+  return (
+    typeof window !== "undefined" &&
+    !!window.matchMedia &&
+    window.matchMedia("(max-width: 900px), (prefers-reduced-motion: reduce)")
+      .matches
+  );
+}
+
+function usePerformanceMode() {
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.matchMedia) return;
+
+    const media = window.matchMedia(
+      "(max-width: 900px), (prefers-reduced-motion: reduce)"
+    );
+    const update = () => setEnabled(media.matches);
+
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
+
+  return enabled;
+}
+
+function useInViewOnce<T extends HTMLElement>(threshold = 0.25, disabled = false) {
   const ref = useRef<T | null>(null);
-  const [inView, setInView] = useState(false);
+  const [inView, setInView] = useState(disabled);
+
+  useEffect(() => {
+    if (disabled || isPerformanceViewport()) setInView(true);
+  }, [disabled]);
 
   useEffect(() => {
     const node = ref.current;
-    if (!node || inView) return;
+    if (!node || inView || disabled || isPerformanceViewport()) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -40,16 +72,20 @@ function useInViewOnce<T extends HTMLElement>(threshold = 0.25) {
 
     observer.observe(node);
     return () => observer.disconnect();
-  }, [inView, threshold]);
+  }, [disabled, inView, threshold]);
 
   return [ref, inView] as const;
 }
 
-function useCountUp(target: number, start: boolean, duration = 1350) {
+function useCountUp(target: number, start: boolean, duration = 1350, disabled = false) {
   const [value, setValue] = useState(0);
 
   useEffect(() => {
-    if (!start) return;
+    if (disabled || isPerformanceViewport()) setValue(target);
+  }, [disabled, target]);
+
+  useEffect(() => {
+    if (disabled || isPerformanceViewport() || !start) return;
     let raf = 0;
     const startAt = performance.now();
 
@@ -64,7 +100,7 @@ function useCountUp(target: number, start: boolean, duration = 1350) {
 
     raf = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(raf);
-  }, [duration, start, target]);
+  }, [disabled, duration, start, target]);
 
   return value;
 }
@@ -73,19 +109,21 @@ function Reveal({
   children,
   delay = 0,
   className = "",
+  disabled = false,
 }: {
   children: ReactNode;
   delay?: number;
   className?: string;
+  disabled?: boolean;
 }) {
-  const [ref, inView] = useInViewOnce<HTMLDivElement>(0.18);
+  const [ref, inView] = useInViewOnce<HTMLDivElement>(0.18, disabled);
   const style = { ["--delay" as string]: `${delay}ms` } as CSSProperties;
 
   return (
     <div
       ref={ref}
       className={`${styles.reveal} ${
-        inView ? styles.revealVisible : ""
+        inView || disabled ? styles.revealVisible : ""
       } ${className}`}
       style={style}
     >
@@ -100,15 +138,17 @@ function CounterCard({
   suffix = "",
   prefix = "",
   hint,
+  disabled = false,
 }: {
   label: string;
   value: number;
   suffix?: string;
   prefix?: string;
   hint: string;
+  disabled?: boolean;
 }) {
-  const [ref, inView] = useInViewOnce<HTMLDivElement>(0.5);
-  const display = useCountUp(value, inView, 1450);
+  const [ref, inView] = useInViewOnce<HTMLDivElement>(0.5, disabled);
+  const display = useCountUp(value, inView, 1450, disabled);
 
   return (
     <article ref={ref} className={styles.counterCard}>
@@ -124,6 +164,7 @@ function CounterCard({
 }
 
 export function PremiumLanding() {
+  const performanceMode = usePerformanceMode();
   const [activeStep, setActiveStep] = useState(0);
   const [slideIndex, setSlideIndex] = useState(0);
   const [sliderPaused, setSliderPaused] = useState(false);
@@ -173,6 +214,7 @@ export function PremiumLanding() {
   }, [measurableTestimonials]);
 
   useEffect(() => {
+    if (performanceMode) return;
     const nodes = stepRefs.current.filter(Boolean) as HTMLElement[];
     if (!nodes.length) return;
 
@@ -191,15 +233,15 @@ export function PremiumLanding() {
 
     nodes.forEach((node) => observer.observe(node));
     return () => observer.disconnect();
-  }, []);
+  }, [performanceMode]);
 
   useEffect(() => {
-    if (featuredTestimonials.length < 2 || sliderPaused) return;
+    if (performanceMode || featuredTestimonials.length < 2 || sliderPaused) return;
     const timer = window.setInterval(() => {
       setSlideIndex((prev) => (prev + 1) % featuredTestimonials.length);
     }, 5200);
     return () => window.clearInterval(timer);
-  }, [featuredTestimonials.length, sliderPaused]);
+  }, [featuredTestimonials.length, performanceMode, sliderPaused]);
 
   const activeProgramStep = programmeSteps[activeStep] ?? programmeSteps[0];
   const heroStyle = {
@@ -218,6 +260,7 @@ export function PremiumLanding() {
   };
 
   const handleHeroPointer = (event: ReactMouseEvent<HTMLElement>) => {
+    if (performanceMode) return;
     const rect = event.currentTarget.getBoundingClientRect();
     const x = ((event.clientX - rect.left) / rect.width) * 100;
     const y = ((event.clientY - rect.top) / rect.height) * 100;
@@ -258,17 +301,20 @@ export function PremiumLanding() {
                 label="Gain moyen"
                 value={averageGain}
                 prefix="+"
+                disabled={performanceMode}
                 suffix=" pts"
                 hint="Progression mesurée"
               />
               <CounterCard
                 label="Scores 785+"
                 value={validatedCount}
+                disabled={performanceMode}
                 hint="Validation TOEIC"
               />
               <CounterCard
                 label="Scores 900+"
                 value={above900}
+                disabled={performanceMode}
                 hint="Performances elite"
               />
             </div>
@@ -501,7 +547,9 @@ export function PremiumLanding() {
                     stepRefs.current[index] = node;
                   }}
                   data-step-index={index}
-                  onMouseEnter={() => setActiveStep(index)}
+                  onMouseEnter={() => {
+                    if (!performanceMode) setActiveStep(index);
+                  }}
                   className={`${styles.stepCard} ${
                     activeStep === index ? styles.stepCardActive : ""
                   }`}
@@ -603,8 +651,12 @@ export function PremiumLanding() {
 
         <div
           className={styles.testiShell}
-          onMouseEnter={() => setSliderPaused(true)}
-          onMouseLeave={() => setSliderPaused(false)}
+          onMouseEnter={() => {
+            if (!performanceMode) setSliderPaused(true);
+          }}
+          onMouseLeave={() => {
+            if (!performanceMode) setSliderPaused(false);
+          }}
         >
           <div className={styles.sliderViewport}>
             <div
