@@ -308,20 +308,17 @@ export function PremiumLanding() {
                 label="Gain moyen"
                 value={averageGain}
                 prefix="+"
-                disabled={performanceMode}
                 suffix=" pts"
                 hint="Progression mesurée"
               />
               <CounterCard
                 label="Scores 785+"
                 value={validatedCount}
-                disabled={performanceMode}
                 hint="Validation TOEIC"
               />
               <CounterCard
                 label="Scores 900+"
                 value={above900}
-                disabled={performanceMode}
                 hint="Performances elite"
               />
             </div>
