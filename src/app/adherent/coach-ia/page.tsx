@@ -416,6 +416,138 @@ export default function AdherentCoachIaPage() {
           0%, 80%, 100% { transform: translateY(0); opacity: 0.4; }
           40% { transform: translateY(-6px); opacity: 1; }
         }
+        @media (max-width: 700px) {
+          .chat-container {
+            gap: 0.85rem;
+          }
+
+          .chat-main {
+            height: auto;
+            min-height: calc(100dvh - 8.5rem);
+            border-radius: 1rem;
+            background: var(--bg-2);
+          }
+
+          .chat-header {
+            align-items: flex-start;
+            padding: 0.85rem;
+            gap: 0.7rem;
+          }
+
+          .chat-header > div:nth-child(2) {
+            min-width: 0;
+            flex: 1;
+          }
+
+          .chat-header .row {
+            margin-left: 0 !important;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 0.35rem;
+          }
+
+          .chat-ai-name {
+            font-size: 0.82rem;
+            line-height: 1.25;
+          }
+
+          .chat-ai-status {
+            margin-top: 0.18rem;
+            font-size: 0.68rem;
+            line-height: 1.45;
+          }
+
+          .chat-messages {
+            padding: 0.85rem;
+            gap: 0.8rem;
+            max-height: none;
+            overflow: visible;
+          }
+
+          .msg {
+            max-width: 100%;
+            width: 100%;
+            gap: 0;
+          }
+
+          .msg-avatar {
+            display: none;
+          }
+
+          .msg-bubble,
+          .msg-bubble-ai,
+          .chat-main .msg-ai .msg-bubble,
+          .chat-main .msg-user .msg-bubble {
+            max-width: 100%;
+            width: 100%;
+            border-radius: 1rem;
+            padding: 0.9rem;
+            font-size: 0.9rem;
+          }
+
+          .msg-user .msg-bubble {
+            width: auto;
+            max-width: 88%;
+            margin-left: auto;
+            border-radius: 1rem 1rem 0.25rem 1rem;
+          }
+
+          .coach-msg-content {
+            font-size: 0.92rem;
+            line-height: 1.72;
+          }
+
+          .coach-msg-content p {
+            margin: 0.35rem 0;
+          }
+
+          .chat-quick-actions {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.45rem;
+            padding: 0.85rem;
+            background: color-mix(in oklab, var(--bg-2) 88%, transparent);
+          }
+
+          .qa-btn {
+            min-height: 2.55rem;
+            padding: 0.62rem 0.85rem;
+            border-radius: 0.85rem;
+            text-align: left;
+            font-size: 0.82rem;
+            color: var(--text);
+            background: color-mix(in oklab, var(--accent-dim) 34%, var(--bg-2) 66%);
+          }
+
+          .chat-input-row {
+            position: sticky;
+            bottom: 0;
+            z-index: 4;
+            padding: 0.78rem;
+            gap: 0.55rem;
+            background: var(--bg-2);
+            border-top: 1px solid var(--border);
+          }
+
+          .chat-input {
+            min-width: 0;
+            min-height: 3.1rem;
+            border-radius: 1rem;
+            padding: 0.78rem 0.95rem;
+            font-size: 0.9rem;
+          }
+
+          .chat-send {
+            width: 3.1rem;
+            height: 3.1rem;
+            flex: 0 0 3.1rem;
+            font-size: 1.05rem;
+          }
+
+          .chat-sidebar-panel {
+            position: static;
+          }
+        }
       `}</style>
     </div>
   );
