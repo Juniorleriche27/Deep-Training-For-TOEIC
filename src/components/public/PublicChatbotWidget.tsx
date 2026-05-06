@@ -552,11 +552,11 @@ export function PublicChatbotWidget() {
           .wcb-window {
             left: 0;
             right: 0;
-            bottom: 5rem;
+            bottom: 0;
             width: 100%;
             max-width: none;
-            height: clamp(23rem, 56dvh, 29rem);
-            max-height: clamp(23rem, 56dvh, 29rem);
+            height: auto;
+            max-height: min(calc(100dvh - 5.25rem), 29rem);
             border-radius: 1.35rem 1.35rem 0 0;
             border-inline: 0;
             border-bottom: 0;
@@ -596,7 +596,9 @@ export function PublicChatbotWidget() {
           }
 
           .wcb-messages {
-            min-height: 0;
+            flex: 0 1 auto;
+            min-height: 5.8rem;
+            max-height: clamp(8.5rem, 30dvh, 12rem);
             padding: 0.72rem;
             gap: 0.55rem;
             overscroll-behavior: contain;
@@ -614,13 +616,13 @@ export function PublicChatbotWidget() {
           }
 
           .wcb-book-bar {
-            padding: 0.34rem 0.75rem 0;
+            padding: 0.22rem 0.75rem 0;
           }
 
           .wcb-cta {
-            min-height: 2.4rem;
-            margin-top: 0.25rem;
-            padding: 0.58rem 0.85rem;
+            min-height: 2.35rem;
+            margin-top: 0.18rem;
+            padding: 0.55rem 0.85rem;
           }
 
           .wcb-input-row {
@@ -660,8 +662,7 @@ export function PublicChatbotWidget() {
 
         @media (max-width: 380px) {
           .wcb-window {
-            height: clamp(21.5rem, 54dvh, 27rem);
-            max-height: clamp(21.5rem, 54dvh, 27rem);
+            max-height: min(calc(100dvh - 4.75rem), 27rem);
           }
 
           .wcb-header {
@@ -679,6 +680,11 @@ export function PublicChatbotWidget() {
           .wcb-bubble {
             max-width: 92%;
             font-size: 0.76rem;
+          }
+
+          .wcb-messages {
+            min-height: 5.2rem;
+            max-height: clamp(7.2rem, 28dvh, 10.5rem);
           }
         }
       `}</style>
