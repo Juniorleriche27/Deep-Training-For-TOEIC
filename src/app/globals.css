@@ -2179,6 +2179,29 @@ html[data-theme="light"] .msg-ai .msg-bubble {
   border-color: #c7d9cb;
 }
 
+html[data-theme="light"] .msg-bubble-ai {
+  background: #f3f7f4;
+  border-color: #c7d9cb;
+}
+
+html[data-theme="light"] .coach-msg-content {
+  color: #203127;
+}
+
+html[data-theme="light"] .coach-msg-content h1,
+html[data-theme="light"] .coach-msg-content h2,
+html[data-theme="light"] .coach-msg-content h3 {
+  color: #111f16;
+}
+
+html[data-theme="light"] .coach-msg-content strong {
+  color: #111f16;
+}
+
+html[data-theme="light"] .coach-msg-content em {
+  color: #5e7464;
+}
+
 body {
   background:
     radial-gradient(circle at 15% 0%, color-mix(in oklab, var(--accent) 18%, transparent), transparent 36%),
