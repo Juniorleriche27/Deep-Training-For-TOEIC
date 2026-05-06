@@ -544,14 +544,98 @@ export function PublicChatbotWidget() {
         .wcb-send:disabled { opacity: 0.4; cursor: default; }
         .wcb-send:not(:disabled):hover { opacity: 0.85; }
 
-        @media (max-width: 480px) {
-          .wcb-window {
-            right: 0.75rem;
-            left: 0.75rem;
-            bottom: 5rem;
-            width: auto;
-            max-height: min(68dvh, 520px);
+        @media (max-width: 640px) {
+          .wcb-fab:has(+ .wcb-window) {
+            display: none;
           }
+
+          .wcb-window {
+            left: 0;
+            right: 0;
+            bottom: 5rem;
+            width: 100%;
+            max-width: none;
+            height: min(64dvh, 32rem);
+            max-height: min(64dvh, 32rem);
+            border-radius: 1.35rem 1.35rem 0 0;
+            border-inline: 0;
+            border-bottom: 0;
+            box-shadow: 0 -18px 50px rgba(0,0,0,0.24);
+            animation: wcb-sheet-in 220ms cubic-bezier(0.16, 0.84, 0.22, 1);
+          }
+
+          @keyframes wcb-sheet-in {
+            from { opacity: 0; transform: translate3d(0, 18px, 0); }
+            to { opacity: 1; transform: translate3d(0, 0, 0); }
+          }
+
+          .wcb-header {
+            padding: 0.72rem 0.9rem;
+          }
+
+          .wcb-header-avatar {
+            width: 2rem;
+            height: 2rem;
+          }
+
+          .wcb-header-title {
+            font-size: 0.78rem;
+          }
+
+          .wcb-header-sub {
+            font-size: 0.62rem;
+          }
+
+          .wcb-close {
+            width: 2.1rem;
+            height: 2.1rem;
+            justify-content: center;
+            border-radius: 999px;
+            border: 1px solid var(--border);
+            background: var(--bg-2);
+          }
+
+          .wcb-messages {
+            min-height: 0;
+            padding: 0.75rem;
+            gap: 0.55rem;
+            overscroll-behavior: contain;
+          }
+
+          .wcb-bubble {
+            max-width: 88%;
+            padding: 0.58rem 0.72rem;
+            font-size: 0.78rem;
+            line-height: 1.52;
+          }
+
+          .wcb-book-bar {
+            padding: 0.45rem 0.75rem 0;
+          }
+
+          .wcb-cta {
+            min-height: 2.55rem;
+            margin-top: 0.35rem;
+            padding: 0.65rem 0.85rem;
+          }
+
+          .wcb-input-row {
+            padding: 0.65rem 0.75rem calc(0.65rem + env(safe-area-inset-bottom));
+            gap: 0.45rem;
+          }
+
+          .wcb-input {
+            min-height: 2.65rem;
+            border-radius: 0.8rem;
+            font-size: 0.82rem;
+          }
+
+          .wcb-send {
+            width: 2.65rem;
+            height: 2.65rem;
+            border-radius: 0.8rem;
+          }
+
           .wcb-fab {
             bottom: 1rem;
             right: 1rem;
