@@ -3729,13 +3729,13 @@ textarea {
   }
 }
 
-@media (max-width: 1100px) and (prefers-reduced-motion: no-preference) {
+@media (max-width: 1100px) {
   .public-nav-shell {
-    animation: publicMobileHeaderIn 340ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
+    animation: publicMobileHeaderIn 460ms cubic-bezier(0.18, 0.78, 0.22, 1) both;
   }
 
   .public-mobile-panel {
-    transition: opacity 180ms ease, transform 220ms cubic-bezier(0.22, 0.7, 0.2, 1);
+    transition: opacity 220ms ease, transform 260ms cubic-bezier(0.18, 0.78, 0.22, 1);
   }
 
   .public-mobile-link {
@@ -3744,7 +3744,7 @@ textarea {
   }
 
   .public-mobile-panel.open .public-mobile-link {
-    animation: publicMobileItemIn 220ms cubic-bezier(0.22, 0.7, 0.2, 1) both;
+    animation: publicMobileItemIn 280ms cubic-bezier(0.18, 0.78, 0.22, 1) both;
   }
 
   .public-mobile-panel.open .public-mobile-link:nth-child(2) {
