@@ -111,7 +111,7 @@ export const api = {
     });
   },
 
-  markMessageRead(id: string): Promise<void> {
+  markMessageRead(id: string): Promise<Message> {
     return fetchApi(`/adherent/messages/${id}/read`, { method: "PUT" });
   },
 

@@ -12,6 +12,7 @@ export default function AdherentSupportPage() {
   const [sending, setSending] = useState(false);
   const [loading, setLoading] = useState(true);
   const [sendError, setSendError] = useState("");
+  const [readingId, setReadingId] = useState<string | null>(null);
 
   useEffect(() => {
     api.getMessages()
@@ -31,6 +32,20 @@ export default function AdherentSupportPage() {
       setSendError("Impossible d'envoyer le message. Réessayez.");
     } finally {
       setSending(false);
+    }
+  }
+
+  async function handleMarkRead(id: string) {
+    if (readingId) return;
+    setReadingId(id);
+    setSendError("");
+    try {
+      const updated = await api.markMessageRead(id);
+      setMessages((prev) => prev.map((message) => (message.id === id ? updated : message)));
+    } catch {
+      setSendError("Impossible de marquer le message comme lu. Réessayez.");
+    } finally {
+      setReadingId(null);
     }
   }
 
@@ -72,6 +87,15 @@ export default function AdherentSupportPage() {
               </span>
             </div>
             <p className="card-desc">{message.content}</p>
+            {!message.read && (
+              <button
+                className="btn-secondary mt-3 rounded-md px-3 py-2 text-xs font-semibold"
+                onClick={() => handleMarkRead(message.id)}
+                disabled={readingId === message.id}
+              >
+                {readingId === message.id ? "Mise à jour..." : "Marquer comme lu"}
+              </button>
+            )}
           </article>
         ))}
 

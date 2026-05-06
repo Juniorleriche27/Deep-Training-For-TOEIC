@@ -23,8 +23,8 @@ export const adherentNav: NavItem[] = [
   { href: "/adherent/notes", label: "Prise de notes", icon: "NT" },
   { href: "/adherent/scores", label: "Scores & retests", icon: "SC" },
   { href: "/adherent/coach-ia", label: "Coach IA", icon: "IA" },
-  { href: "/adherent/support", label: "Messages", icon: "MS", badgeCount: 2 },
-  { href: "/adherent/parametres", label: "Parametres", icon: "ST" },
+  { href: "/adherent/support", label: "Messages", icon: "MS" },
+  { href: "/adherent/parametres", label: "Paramètres", icon: "ST" },
 ];
 
 export const adminNav: NavItem[] = [

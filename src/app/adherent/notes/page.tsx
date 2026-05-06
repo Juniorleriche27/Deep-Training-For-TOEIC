@@ -11,6 +11,7 @@ export default function AdherentNotesPage() {
   const [selected, setSelected] = useState<Note | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
   const [saveError, setSaveError] = useState("");
   const [editTitle, setEditTitle] = useState("");
   const [editContent, setEditContent] = useState("");
@@ -64,6 +65,30 @@ export default function AdherentNotesPage() {
     }
   }
 
+  async function handleDelete() {
+    if (!selected || deleting) return;
+    const noteId = selected.id;
+    setDeleting(true);
+    setSaveError("");
+    try {
+      await api.deleteNote(noteId);
+      const next = notes.filter((note) => note.id !== noteId);
+      const nextSelected = next[0] ?? null;
+      setNotes(next);
+      if (nextSelected) {
+        selectNote(nextSelected);
+      } else {
+        setSelected(null);
+        setEditTitle("");
+        setEditContent("");
+      }
+    } catch {
+      setSaveError("Impossible de supprimer la note. Réessayez.");
+    } finally {
+      setDeleting(false);
+    }
+  }
+
   return (
     <div>
       <div className="page-header">
@@ -98,6 +123,13 @@ export default function AdherentNotesPage() {
               <span className="badge badge-accent">{selected.etape || "Sans etape"}</span>
               <div className="row" style={{ marginLeft: "auto" }}>
                 {selected.tag && <span className="badge badge-gold">{selected.tag}</span>}
+                <button
+                  className="btn-secondary rounded-md px-3 py-1 text-xs"
+                  onClick={handleDelete}
+                  disabled={deleting || saving}
+                >
+                  {deleting ? "Suppression..." : "Supprimer"}
+                </button>
                 <button
                   className="btn-primary rounded-md px-3 py-1 text-xs"
                   onClick={handleSave}
